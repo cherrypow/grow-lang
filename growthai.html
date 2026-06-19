@@ -226,9 +226,9 @@ var T={
   condition:  ['subject','time'],
   qstart:     ['subject'],
   time:       ['subject'],
-  subject:    ['preverb','verb','adj'],
+  subject:    ['time','preverb','verb'],
   preverb:    ['verb'],
-  verb:       ['object','qobject','adj','qend','postverb','preposition','final','condition','conjunction'],
+  verb:       ['object','qobject','qend','postverb','preposition','final','condition','conjunction'],
   object:     ['adj','degree','postverb','preposition','qend','final','condition','conjunction'],
   qobject:    ['postverb','final','condition','conjunction'],
   adj:        ['degree','postverb','preposition','final','condition','conjunction'],
@@ -257,27 +257,40 @@ function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.flo
    COMPLETENESS
 ═══════════════════════════════════ */
 function isComplete(){
-  var hasSub=false,hasVerb=false,hasAdj=false;
+  var hasSub=false,hasVerb=false;
   for(var i=0;i<chosen.length;i++){
     var s=chosen[i].word.s;
     if(s==='subject')hasSub=true;
     if(s==='verb')hasVerb=true;
-    if(s==='adj')hasAdj=true;
   }
-  return hasSub&&(hasVerb||hasAdj);
+  return hasSub&&hasVerb;
 }
 
 /* ═══════════════════════════════════
    CANDIDATES
 ═══════════════════════════════════ */
+function usedSlots(){
+  var slots={};
+  for(var i=0;i<chosen.length;i++) slots[chosen[i].word.s]=true;
+  return slots;
+}
+
 function getCandidates(depth){
   var possible=T[lastSlot]||T.START;
   if(!possible||possible.length===0)return[];
+  var used=usedSlots();
+  // Filter out slots that shouldn't repeat in a clause
+  var noRepeat=['time','subject','qstart','qobject','qend','postverb','degree'];
+  var filtered=possible.filter(function(s){
+    if(noRepeat.indexOf(s)!==-1&&used[s])return false;
+    return true;
+  });
+  if(filtered.length===0) filtered=possible;
   var pool=W.filter(function(w){
-    return possible.indexOf(w.s)!==-1&&!shownWords[w.t];
+    return filtered.indexOf(w.s)!==-1&&!shownWords[w.t];
   });
   if(pool.length===0){
-    pool=W.filter(function(w){return possible.indexOf(w.s)!==-1;});
+    pool=W.filter(function(w){return filtered.indexOf(w.s)!==-1;});
   }
   var count=BRANCH[Math.min(depth,BRANCH.length-1)];
   return shuffle(pool).slice(0,count);
