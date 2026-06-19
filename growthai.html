@@ -93,9 +93,9 @@ var W=[
 {t:'ดิฉัน',p:'dì-chǎn',e:'I (formal f)',s:'subject',lv:4},{t:'หล่อน',p:'lɔ̀ɔn',e:'she (formal)',s:'subject',lv:4},
 
 // ── TIME ──
-// lv1 (4)
-{t:'วันนี้',p:'wan-níi',e:'today',s:'time',lv:1},{t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time',lv:1},
-{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time',lv:1},{t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time',lv:1},
+// lv2 (4)
+{t:'วันนี้',p:'wan-níi',e:'today',s:'time',lv:2},{t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time',lv:2},
+{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time',lv:2},{t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time',lv:2},
 // lv2 (4)
 {t:'ตอนเช้า',p:'dtɔɔn-cháo',e:'morning',s:'time',lv:2},{t:'ตอนเย็น',p:'dtɔɔn-yen',e:'evening',s:'time',lv:2},
 {t:'ทุกวัน',p:'thúk-wan',e:'every day',s:'time',lv:2},{t:'บ่อยๆ',p:'bɔ̀i-bɔ̀i',e:'often',s:'time',lv:2},
@@ -135,54 +135,54 @@ var W=[
 // lv4 (2)
 {t:'เพิ่ง',p:'phêung',e:'just (now)',s:'preverb',lv:4},{t:'ไม่ได้',p:'mâi-dâai',e:'did not',s:'preverb',lv:4},
 
-// ── VERBS ──
+// ── VERBS ── tr:1 = transitive (needs object), tr:0 = intransitive (object optional)
 // lv1 (15)
-{t:'กิน',p:'gin',e:'eat',s:'verb',lv:1},{t:'ดื่ม',p:'dèum',e:'drink',s:'verb',lv:1},
-{t:'ไป',p:'bpai',e:'go',s:'verb',lv:1},{t:'มา',p:'maa',e:'come',s:'verb',lv:1},
-{t:'ชอบ',p:'chôp',e:'like',s:'verb',lv:1},{t:'มี',p:'mii',e:'have',s:'verb',lv:1},
-{t:'ดู',p:'duu',e:'watch',s:'verb',lv:1},{t:'นอน',p:'non',e:'sleep',s:'verb',lv:1},
-{t:'พูด',p:'phûut',e:'speak',s:'verb',lv:1},{t:'ทำ',p:'tam',e:'do/make',s:'verb',lv:1},
-{t:'รู้',p:'rúu',e:'know',s:'verb',lv:1},{t:'เป็น',p:'bpen',e:'be',s:'verb',lv:1},
-{t:'อยู่',p:'yùu',e:'live/be at',s:'verb',lv:1},{t:'ซื้อ',p:'séu',e:'buy',s:'verb',lv:1},
-{t:'หิว',p:'hǐw',e:'be hungry',s:'verb',lv:1},
+{t:'กิน',p:'gin',e:'eat',s:'verb',lv:1,tr:1},{t:'ดื่ม',p:'dèum',e:'drink',s:'verb',lv:1,tr:1},
+{t:'ไป',p:'bpai',e:'go',s:'verb',lv:1,tr:0},{t:'มา',p:'maa',e:'come',s:'verb',lv:1,tr:0},
+{t:'ชอบ',p:'chôp',e:'like',s:'verb',lv:1,tr:1},{t:'มี',p:'mii',e:'have',s:'verb',lv:1,tr:1},
+{t:'ดู',p:'duu',e:'watch',s:'verb',lv:1,tr:1},{t:'นอน',p:'non',e:'sleep',s:'verb',lv:1,tr:0},
+{t:'พูด',p:'phûut',e:'speak',s:'verb',lv:1,tr:1},{t:'ทำ',p:'tam',e:'do/make',s:'verb',lv:1,tr:1},
+{t:'รู้',p:'rúu',e:'know',s:'verb',lv:1,tr:1},{t:'เป็น',p:'bpen',e:'be',s:'verb',lv:1,tr:1},
+{t:'อยู่',p:'yùu',e:'live/be at',s:'verb',lv:1,tr:0},{t:'ซื้อ',p:'séu',e:'buy',s:'verb',lv:1,tr:1},
+{t:'หิว',p:'hǐw',e:'be hungry',s:'verb',lv:1,tr:0},
 // lv2 (15)
-{t:'ให้',p:'hâi',e:'give',s:'verb',lv:2},{t:'ขาย',p:'khǎai',e:'sell',s:'verb',lv:2},
-{t:'เรียน',p:'riian',e:'study',s:'verb',lv:2},{t:'รัก',p:'rák',e:'love',s:'verb',lv:2},
-{t:'อ่าน',p:'àan',e:'read',s:'verb',lv:2},{t:'เขียน',p:'khǐan',e:'write',s:'verb',lv:2},
-{t:'ฟัง',p:'fang',e:'listen',s:'verb',lv:2},{t:'วิ่ง',p:'wîng',e:'run',s:'verb',lv:2},
-{t:'เดิน',p:'doeen',e:'walk',s:'verb',lv:2},{t:'ทำงาน',p:'tam-ngaan',e:'work',s:'verb',lv:2},
-{t:'เล่น',p:'lên',e:'play',s:'verb',lv:2},{t:'เห็น',p:'hěn',e:'see',s:'verb',lv:2},
-{t:'เจอ',p:'jer',e:'meet',s:'verb',lv:2},{t:'กลับ',p:'glàp',e:'return',s:'verb',lv:2},
-{t:'รอ',p:'rɔɔ',e:'wait',s:'verb',lv:2},
+{t:'ให้',p:'hâi',e:'give',s:'verb',lv:2,tr:1},{t:'ขาย',p:'khǎai',e:'sell',s:'verb',lv:2,tr:1},
+{t:'เรียน',p:'riian',e:'study',s:'verb',lv:2,tr:1},{t:'รัก',p:'rák',e:'love',s:'verb',lv:2,tr:1},
+{t:'อ่าน',p:'àan',e:'read',s:'verb',lv:2,tr:1},{t:'เขียน',p:'khǐan',e:'write',s:'verb',lv:2,tr:1},
+{t:'ฟัง',p:'fang',e:'listen',s:'verb',lv:2,tr:1},{t:'วิ่ง',p:'wîng',e:'run',s:'verb',lv:2,tr:0},
+{t:'เดิน',p:'doeen',e:'walk',s:'verb',lv:2,tr:0},{t:'ทำงาน',p:'tam-ngaan',e:'work',s:'verb',lv:2,tr:0},
+{t:'เล่น',p:'lên',e:'play',s:'verb',lv:2,tr:1},{t:'เห็น',p:'hěn',e:'see',s:'verb',lv:2,tr:1},
+{t:'เจอ',p:'jer',e:'meet',s:'verb',lv:2,tr:1},{t:'กลับ',p:'glàp',e:'return',s:'verb',lv:2,tr:0},
+{t:'รอ',p:'rɔɔ',e:'wait',s:'verb',lv:2,tr:0},
 // lv3 (15)
-{t:'ช่วย',p:'chûai',e:'help',s:'verb',lv:3},{t:'คิด',p:'khít',e:'think',s:'verb',lv:3},
-{t:'เข้าใจ',p:'khâo-jai',e:'understand',s:'verb',lv:3},{t:'ลืม',p:'leum',e:'forget',s:'verb',lv:3},
-{t:'จำ',p:'jam',e:'remember',s:'verb',lv:3},{t:'ถาม',p:'thǎam',e:'ask',s:'verb',lv:3},
-{t:'ตอบ',p:'dtɔ̀ɔp',e:'answer',s:'verb',lv:3},{t:'ส่ง',p:'sòng',e:'send',s:'verb',lv:3},
-{t:'โทร',p:'thoo',e:'call',s:'verb',lv:3},{t:'หา',p:'hǎa',e:'look for',s:'verb',lv:3},
-{t:'เปิด',p:'bpèrt',e:'open',s:'verb',lv:3},{t:'ปิด',p:'bpìt',e:'close',s:'verb',lv:3},
-{t:'นั่ง',p:'nâng',e:'sit',s:'verb',lv:3},{t:'ยืน',p:'yeun',e:'stand',s:'verb',lv:3},
-{t:'ล้าง',p:'láang',e:'wash',s:'verb',lv:3},
+{t:'ช่วย',p:'chûai',e:'help',s:'verb',lv:3,tr:1},{t:'คิด',p:'khít',e:'think',s:'verb',lv:3,tr:0},
+{t:'เข้าใจ',p:'khâo-jai',e:'understand',s:'verb',lv:3,tr:1},{t:'ลืม',p:'leum',e:'forget',s:'verb',lv:3,tr:1},
+{t:'จำ',p:'jam',e:'remember',s:'verb',lv:3,tr:1},{t:'ถาม',p:'thǎam',e:'ask',s:'verb',lv:3,tr:1},
+{t:'ตอบ',p:'dtɔ̀ɔp',e:'answer',s:'verb',lv:3,tr:1},{t:'ส่ง',p:'sòng',e:'send',s:'verb',lv:3,tr:1},
+{t:'โทร',p:'thoo',e:'call',s:'verb',lv:3,tr:0},{t:'หา',p:'hǎa',e:'look for',s:'verb',lv:3,tr:1},
+{t:'เปิด',p:'bpèrt',e:'open',s:'verb',lv:3,tr:1},{t:'ปิด',p:'bpìt',e:'close',s:'verb',lv:3,tr:1},
+{t:'นั่ง',p:'nâng',e:'sit',s:'verb',lv:3,tr:0},{t:'ยืน',p:'yeun',e:'stand',s:'verb',lv:3,tr:0},
+{t:'ล้าง',p:'láang',e:'wash',s:'verb',lv:3,tr:1},
 // lv4 (15)
-{t:'เกลียด',p:'glìat',e:'hate',s:'verb',lv:4},{t:'ร้องเพลง',p:'rɔ́ɔng-phleng',e:'sing',s:'verb',lv:4},
-{t:'ขับรถ',p:'khàp-rót',e:'drive',s:'verb',lv:4},{t:'บิน',p:'bin',e:'fly',s:'verb',lv:4},
-{t:'ว่ายน้ำ',p:'wâai-náam',e:'swim',s:'verb',lv:4},{t:'ใส่',p:'sài',e:'wear',s:'verb',lv:4},
-{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb',lv:4},{t:'สอน',p:'sɔ̌ɔn',e:'teach',s:'verb',lv:4},
-{t:'เปลี่ยน',p:'bplìan',e:'change',s:'verb',lv:4},{t:'เดินทาง',p:'doeen-thaang',e:'travel',s:'verb',lv:4},
-{t:'ลอง',p:'lɔɔng',e:'try',s:'verb',lv:4},{t:'เลือก',p:'lêuak',e:'choose',s:'verb',lv:4},
-{t:'จ่าย',p:'jàai',e:'pay',s:'verb',lv:4},{t:'สั่ง',p:'sàng',e:'order',s:'verb',lv:4},
-{t:'ได้ยิน',p:'dâai-yin',e:'hear',s:'verb',lv:4},
+{t:'เกลียด',p:'glìat',e:'hate',s:'verb',lv:4,tr:1},{t:'ร้องเพลง',p:'rɔ́ɔng-phleng',e:'sing',s:'verb',lv:4,tr:0},
+{t:'ขับรถ',p:'khàp-rót',e:'drive',s:'verb',lv:4,tr:0},{t:'บิน',p:'bin',e:'fly',s:'verb',lv:4,tr:0},
+{t:'ว่ายน้ำ',p:'wâai-náam',e:'swim',s:'verb',lv:4,tr:0},{t:'ใส่',p:'sài',e:'wear',s:'verb',lv:4,tr:1},
+{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb',lv:4,tr:0},{t:'สอน',p:'sɔ̌ɔn',e:'teach',s:'verb',lv:4,tr:1},
+{t:'เปลี่ยน',p:'bplìan',e:'change',s:'verb',lv:4,tr:1},{t:'เดินทาง',p:'doeen-thaang',e:'travel',s:'verb',lv:4,tr:0},
+{t:'ลอง',p:'lɔɔng',e:'try',s:'verb',lv:4,tr:1},{t:'เลือก',p:'lêuak',e:'choose',s:'verb',lv:4,tr:1},
+{t:'จ่าย',p:'jàai',e:'pay',s:'verb',lv:4,tr:1},{t:'สั่ง',p:'sàng',e:'order',s:'verb',lv:4,tr:1},
+{t:'ได้ยิน',p:'dâai-yin',e:'hear',s:'verb',lv:4,tr:1},
 // lv5 (20)
-{t:'พักผ่อน',p:'phák-phɔ̀ɔn',e:'relax',s:'verb',lv:5},{t:'ตื่น',p:'dtèun',e:'wake up',s:'verb',lv:5},
-{t:'แต่งตัว',p:'dtàeng-dtua',e:'get dressed',s:'verb',lv:5},{t:'ออกกำลังกาย',p:'ɔ̀ɔk-gam-lang-gaai',e:'exercise',s:'verb',lv:5},
-{t:'ตัดสินใจ',p:'dtàt-sǐn-jai',e:'decide',s:'verb',lv:5},{t:'แนะนำ',p:'náe-nam',e:'recommend',s:'verb',lv:5},
-{t:'ออก',p:'ɔ̀ɔk',e:'leave',s:'verb',lv:5},{t:'เบื่อ',p:'bèua',e:'be bored',s:'verb',lv:5},
-{t:'โกรธ',p:'gròht',e:'be angry',s:'verb',lv:5},{t:'กลัว',p:'glua',e:'be afraid',s:'verb',lv:5},
-{t:'ยิ้ม',p:'yím',e:'smile',s:'verb',lv:5},{t:'ร้องไห้',p:'rɔ́ɔng-hâi',e:'cry',s:'verb',lv:5},
-{t:'วางแผน',p:'waang-phǎen',e:'plan',s:'verb',lv:5},{t:'แก้ไข',p:'gâe-khǎi',e:'fix/solve',s:'verb',lv:5},
-{t:'สมัคร',p:'sà-màk',e:'apply/sign up',s:'verb',lv:5},{t:'ยกเลิก',p:'yók-lêrk',e:'cancel',s:'verb',lv:5},
-{t:'จอง',p:'jɔɔng',e:'book/reserve',s:'verb',lv:5},{t:'ขอ',p:'khɔ̌ɔ',e:'request',s:'verb',lv:5},
-{t:'ปฏิเสธ',p:'bpà-dtì-sèet',e:'refuse',s:'verb',lv:5},{t:'ยอมรับ',p:'yɔɔm-ráp',e:'accept',s:'verb',lv:5},
+{t:'พักผ่อน',p:'phák-phɔ̀ɔn',e:'relax',s:'verb',lv:5,tr:0},{t:'ตื่น',p:'dtèun',e:'wake up',s:'verb',lv:5,tr:0},
+{t:'แต่งตัว',p:'dtàeng-dtua',e:'get dressed',s:'verb',lv:5,tr:0},{t:'ออกกำลังกาย',p:'ɔ̀ɔk-gam-lang-gaai',e:'exercise',s:'verb',lv:5,tr:0},
+{t:'ตัดสินใจ',p:'dtàt-sǐn-jai',e:'decide',s:'verb',lv:5,tr:0},{t:'แนะนำ',p:'náe-nam',e:'recommend',s:'verb',lv:5,tr:1},
+{t:'ออก',p:'ɔ̀ɔk',e:'leave',s:'verb',lv:5,tr:0},{t:'เบื่อ',p:'bèua',e:'be bored',s:'verb',lv:5,tr:0},
+{t:'โกรธ',p:'gròht',e:'be angry',s:'verb',lv:5,tr:0},{t:'กลัว',p:'glua',e:'be afraid',s:'verb',lv:5,tr:1},
+{t:'ยิ้ม',p:'yím',e:'smile',s:'verb',lv:5,tr:0},{t:'ร้องไห้',p:'rɔ́ɔng-hâi',e:'cry',s:'verb',lv:5,tr:0},
+{t:'วางแผน',p:'waang-phǎen',e:'plan',s:'verb',lv:5,tr:1},{t:'แก้ไข',p:'gâe-khǎi',e:'fix/solve',s:'verb',lv:5,tr:1},
+{t:'สมัคร',p:'sà-màk',e:'apply/sign up',s:'verb',lv:5,tr:0},{t:'ยกเลิก',p:'yók-lêrk',e:'cancel',s:'verb',lv:5,tr:1},
+{t:'จอง',p:'jɔɔng',e:'book/reserve',s:'verb',lv:5,tr:1},{t:'ขอ',p:'khɔ̌ɔ',e:'request',s:'verb',lv:5,tr:1},
+{t:'ปฏิเสธ',p:'bpà-dtì-sèet',e:'refuse',s:'verb',lv:5,tr:0},{t:'ยอมรับ',p:'yɔɔm-ráp',e:'accept',s:'verb',lv:5,tr:1},
 
 // ── OBJECTS / NOUNS ──
 // lv1 (15)
@@ -372,6 +372,7 @@ var chosen=[];
 var rows=[];
 var shownWords={};
 var lastSlot='START';
+var lastVerb=null; // track last verb for transitivity
 var pattern=PATTERNS[0];
 
 function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
@@ -414,6 +415,15 @@ function usedSlots(){
 
 function getCandidates(depth){
   if(depth>=MAX_DEPTH[level])return[];
+  // Transitive debt: if last word was a transitive verb, MUST show objects
+  if(lastSlot==='verb'&&lastVerb&&lastVerb.tr===1){
+    var objPool=W.filter(function(w){
+      return w.lv<=level&&(w.s==='object'||w.s==='qobject')&&!shownWords[w.t];
+    });
+    if(objPool.length===0)objPool=W.filter(function(w){return w.lv<=level&&(w.s==='object'||w.s==='qobject');});
+    var ct=pattern[Math.min(depth,pattern.length-1)];
+    return shuffle(objPool).slice(0,ct);
+  }
   var possible=T[lastSlot]||T.START;
   if(!possible||possible.length===0)return[];
   var used=usedSlots();
@@ -499,6 +509,7 @@ function tapNode(depth,word,el){
   chosen.push({word:word,depth:depth});
   chosen.sort(function(a,b){return a.depth-b.depth;});
   lastSlot=word.s;
+  if(word.s==='verb')lastVerb=word; else if(word.s!=='verb')lastVerb=null;
   renderSentence();
   showBranches(depth+1);
 }
@@ -514,7 +525,7 @@ function undo(){
     var lr=rows[rows.length-1];
     var ch=null;
     for(var i=0;i<lr.nodes.length;i++){if(lr.nodes[i].state==='chosen'){ch=lr.nodes[i];break;}}
-    if(ch){lastSlot=ch.word.s;}
+    if(ch){lastSlot=ch.word.s;lastVerb=(ch.word.s==='verb'?ch.word:null);}
     else{
       lastSlot=lr.savedSlot;
       for(var i=0;i<lr.nodes.length;i++){
@@ -523,12 +534,12 @@ function undo(){
         (function(n,d){n.el.onclick=function(){tapNode(d,n.word,n.el);};})(lr.nodes[i],lr.depth);
       }
     }
-  }else{lastSlot='START';}
+  }else{lastSlot='START';lastVerb=null;}
   renderSentence();
 }
 
 function reset(){
-  chosen=[];rows=[];shownWords={};lastSlot='START';
+  chosen=[];rows=[];shownWords={};lastSlot='START';lastVerb=null;
   grow.innerHTML='';sentDisplay.innerHTML='';sentBar.classList.remove('complete');
   pickPattern();
   start();
