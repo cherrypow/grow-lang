@@ -234,6 +234,10 @@ var W=[
 {t:'แก้ปัญหา',p:'gâe-pan-hǎa',e:'solve problem',s:'verb',lv:5},{t:'ดูแล',p:'duu-lae',e:'take care of',s:'verb',lv:5},
 {t:'สังเกต',p:'sǎng-gèet',e:'observe',s:'verb',lv:5},{t:'ทดลอง',p:'thót-lɔɔng',e:'experiment',s:'verb',lv:5},
 {t:'สร้าง',p:'sâang',e:'build/create',s:'verb',lv:5},
+// daily activities
+{t:'อาบน้ำ',p:'àap-náam',e:'take a shower',s:'verb',lv:2},{t:'แปรงฟัน',p:'bpraeng-fan',e:'brush teeth',s:'verb',lv:2},
+{t:'ซื้อของ',p:'séu-khɔ̌ɔng',e:'go shopping',s:'verb',lv:2},{t:'คุย',p:'khui',e:'chat',s:'verb',lv:2},
+{t:'ถ่ายรูป',p:'thàai-rûup',e:'take a photo',s:'verb',lv:3},{t:'ส่งข้อความ',p:'sòng-khɔ̂ɔ-khwaam',e:'send a message',s:'verb',lv:3},
 
 // ── OBJECTS / NOUNS ──
 // lv1 (15)
@@ -302,33 +306,62 @@ var W=[
 {t:'ความรัก',p:'khwaam-rák',e:'love (n)',s:'object',lv:5},{t:'ความคิด',p:'khwaam-khít',e:'idea',s:'object',lv:5},
 {t:'โอกาส',p:'oo-gàat',e:'opportunity',s:'object',lv:5},{t:'ประสบการณ์',p:'bprà-sòp-gaan',e:'experience',s:'object',lv:5},
 {t:'วัฒนธรรม',p:'wát-tá-ná-tam',e:'culture',s:'object',lv:5},{t:'สิ่งแวดล้อม',p:'sìng-wâet-lɔ́ɔm',e:'environment',s:'object',lv:5},
-{t:'เศรษฐกิจ',p:'sèet-tà-gìt',e:'economy',s:'object',lv:5},{t:'การศึกษา',p:'gaan-sèuk-sǎa',e:'education',s:'object',lv:5},
+{t:'การศึกษา',p:'gaan-sèuk-sǎa',e:'education',s:'object',lv:5},
 {t:'สุขภาพ',p:'sùk-kà-phâap',e:'health',s:'object',lv:5},{t:'อนาคต',p:'à-naa-khót',e:'future',s:'object',lv:5},
 {t:'อดีต',p:'à-dìit',e:'past',s:'object',lv:5},{t:'ความฝัน',p:'khwaam-fǎn',e:'dream',s:'object',lv:5},
 {t:'ความจริง',p:'khwaam-jing',e:'truth',s:'object',lv:5},{t:'คำตอบ',p:'kam-dtɔ̀ɔp',e:'answer (n)',s:'object',lv:5},
 {t:'คำถาม',p:'kam-thǎam',e:'question (n)',s:'object',lv:5},{t:'ข้อมูล',p:'khɔ̂ɔ-muun',e:'information',s:'object',lv:5},
 {t:'ความหมาย',p:'khwaam-mǎai',e:'meaning',s:'object',lv:5},{t:'เหตุผล',p:'hèet-phǒn',e:'reason',s:'object',lv:5},
-{t:'ความเชื่อ',p:'khwaam-chêua',e:'belief',s:'object',lv:5},{t:'ทัศนคติ',p:'thát-sà-ná-ká-dtì',e:'attitude',s:'object',lv:5},
-{t:'บทเรียน',p:'bòt-riian',e:'lesson',s:'object',lv:5},{t:'ผลลัพธ์',p:'phǒn-láp',e:'result',s:'object',lv:5},
+{t:'บทเรียน',p:'bòt-riian',e:'lesson',s:'object',lv:5},
 {t:'ความสำเร็จ',p:'khwaam-sǎm-rèt',e:'success',s:'object',lv:5},
-// lv5 new (20)
-{t:'สังคม',p:'sǎng-khom',e:'society',s:'object',lv:5},{t:'การเมือง',p:'gaan-meuang',e:'politics',s:'object',lv:5},
-{t:'กฎหมาย',p:'gòt-mǎai',e:'law',s:'object',lv:5},{t:'ศาสนา',p:'sàat-sà-nǎa',e:'religion',s:'object',lv:5},
+// lv5 new
+{t:'สังคม',p:'sǎng-khom',e:'society',s:'object',lv:5},
 {t:'ศิลปะ',p:'sǐn-lá-bpà',e:'art',s:'object',lv:5},{t:'เทคโนโลยี',p:'thék-noo-loo-yii',e:'technology',s:'object',lv:5},
-{t:'ธรรมชาติ',p:'tham-má-châat',e:'nature',s:'object',lv:5},{t:'ทรัพยากร',p:'sáp-phá-yaa-gɔɔn',e:'resource',s:'object',lv:5},
-{t:'ประชากร',p:'bprà-chaa-gɔɔn',e:'population',s:'object',lv:5},{t:'ความยุติธรรม',p:'khwaam-yút-dtì-tam',e:'justice',s:'object',lv:5},
+{t:'ธรรมชาติ',p:'tham-má-châat',e:'nature',s:'object',lv:5},
+{t:'ความยุติธรรม',p:'khwaam-yút-dtì-tam',e:'justice',s:'object',lv:5},
 {t:'เสรีภาพ',p:'sǎy-rii-phâap',e:'freedom',s:'object',lv:5},{t:'ความรับผิดชอบ',p:'khwaam-ráp-phìt-chɔ̂ɔp',e:'responsibility',s:'object',lv:5},
 {t:'ความพยายาม',p:'khwaam-phá-yaa-yaam',e:'effort',s:'object',lv:5},{t:'ความสัมพันธ์',p:'khwaam-sǎm-phan',e:'relationship',s:'object',lv:5},
-{t:'ข้อตกลง',p:'khɔ̂ɔ-dtòk-long',e:'agreement',s:'object',lv:5},{t:'นโยบาย',p:'ná-yoo-baai',e:'policy',s:'object',lv:5},
-{t:'โครงการ',p:'khroo-ngaan',e:'project',s:'object',lv:5},{t:'งบประมาณ',p:'ngóp-bprà-maan',e:'budget',s:'object',lv:5},
+{t:'โครงการ',p:'khroo-ngaan',e:'project',s:'object',lv:5},
 {t:'ความเห็น',p:'khwaam-hěn',e:'opinion',s:'object',lv:5},{t:'ทักษะ',p:'thák-sà',e:'skill',s:'object',lv:5},
-{t:'สิทธิ์',p:'sìt',e:'right (n)',s:'object',lv:5},{t:'หน้าที่',p:'nâa-thîi',e:'duty',s:'object',lv:5},
-{t:'ความก้าวหน้า',p:'khwaam-gâao-nâa',e:'progress',s:'object',lv:5},{t:'ความเสี่ยง',p:'khwaam-sìang',e:'risk',s:'object',lv:5},
-{t:'ผลกระทบ',p:'phǒn-grà-thóp',e:'impact',s:'object',lv:5},{t:'ความแตกต่าง',p:'khwaam-dtàek-dtàang',e:'difference',s:'object',lv:5},
 {t:'เป้าหมาย',p:'bpâo-mǎai',e:'goal',s:'object',lv:5},{t:'แผน',p:'phǎen',e:'plan (n)',s:'object',lv:5},
 {t:'วิธี',p:'wí-thii',e:'method',s:'object',lv:5},{t:'สาเหตุ',p:'sǎa-hèet',e:'cause',s:'object',lv:5},
-{t:'ผลที่ตามมา',p:'phǒn-thîi-dtaam-maa',e:'consequence',s:'object',lv:5},{t:'ข้อเสนอ',p:'khɔ̂ɔ-sà-nǒe',e:'proposal',s:'object',lv:5},
 {t:'ความรู้',p:'khwaam-rúu',e:'knowledge',s:'object',lv:5},{t:'ประโยชน์',p:'bprà-yòot',e:'benefit',s:'object',lv:5},
+// locations
+{t:'ร้านกาแฟ',p:'ráan-gaa-fae',e:'café',s:'object',lv:3},{t:'ซูเปอร์มาร์เก็ต',p:'suu-bpoe-máa-gèt',e:'supermarket',s:'object',lv:3},
+{t:'ห้างสรรพสินค้า',p:'hâang-sàp-pá-sǐn-kháa',e:'mall',s:'object',lv:4},{t:'สวนสาธารณะ',p:'sǔan-sǎa-thaa-rá-ná',e:'public park',s:'object',lv:3},
+{t:'ชายหาด',p:'chaai-hàat',e:'beach',s:'object',lv:3},{t:'เกาะ',p:'gɔ̀',e:'island',s:'object',lv:4},
+{t:'มหาวิทยาลัย',p:'má-hǎa-wít-tá-yaa-lai',e:'university',s:'object',lv:4},{t:'ห้องเรียน',p:'hɔ̂ɔng-riian',e:'classroom',s:'object',lv:3},
+{t:'ห้องประชุม',p:'hɔ̂ɔng-bprà-chum',e:'meeting room',s:'object',lv:4},{t:'โรงหนัง',p:'roong-nǎng',e:'cinema',s:'object',lv:3},
+{t:'ฟิตเนส',p:'fít-nét',e:'gym',s:'object',lv:3},{t:'สนามกีฬา',p:'sà-nǎam-gii-laa',e:'stadium',s:'object',lv:4},
+{t:'สระว่ายน้ำ',p:'sà-wâai-náam',e:'swimming pool',s:'object',lv:4},{t:'โรงงาน',p:'roong-ngaan',e:'factory',s:'object',lv:5},
+{t:'คอนโด',p:'khɔɔn-doo',e:'condo',s:'object',lv:4},{t:'อพาร์ตเมนต์',p:'à-pháat-men',e:'apartment',s:'object',lv:4},
+{t:'ร้านยา',p:'ráan-yaa',e:'pharmacy',s:'object',lv:4},{t:'คลินิก',p:'khlí-ník',e:'clinic',s:'object',lv:4},
+{t:'สถานทูต',p:'sà-thǎan-thûut',e:'embassy',s:'object',lv:5},
+// transport
+{t:'มอเตอร์ไซค์',p:'mɔɔ-dtoe-sai',e:'motorcycle',s:'object',lv:3},{t:'จักรยาน',p:'jàk-grà-yaan',e:'bicycle',s:'object',lv:3},
+{t:'เรือ',p:'reua',e:'boat',s:'object',lv:3},{t:'แท็กซี่',p:'tháek-sîi',e:'taxi',s:'object',lv:2},
+{t:'รถไฟฟ้า',p:'rót-fai-fáa',e:'BTS/skytrain',s:'object',lv:3},{t:'รถตู้',p:'rót-dtûu',e:'minivan',s:'object',lv:4},
+{t:'สามล้อ',p:'sǎam-lɔ́ɔ',e:'tuk-tuk',s:'object',lv:3},
+// professions
+{t:'นักธุรกิจ',p:'nák-thú-rá-gìt',e:'businessman',s:'object',lv:4},{t:'พนักงาน',p:'phá-nák-ngaan',e:'employee',s:'object',lv:3},
+{t:'ผู้จัดการ',p:'phûu-jàt-gaan',e:'manager',s:'object',lv:4},{t:'เชฟ',p:'chéf',e:'chef',s:'object',lv:3},
+{t:'นักบิน',p:'nák-bin',e:'pilot',s:'object',lv:4},{t:'โปรแกรมเมอร์',p:'bproo-graem-moe',e:'programmer',s:'object',lv:4},
+{t:'นักออกแบบ',p:'nák-ɔ̀ɔk-bàep',e:'designer',s:'object',lv:4},{t:'ช่างภาพ',p:'châang-phâap',e:'photographer',s:'object',lv:4},
+{t:'นักบัญชี',p:'nák-ban-chii',e:'accountant',s:'object',lv:5},{t:'เกษตรกร',p:'gà-sèet-dtà-gɔɔn',e:'farmer',s:'object',lv:4},
+{t:'พนักงานขาย',p:'phá-nák-ngaan-khǎai',e:'salesperson',s:'object',lv:4},{t:'เจ้าของบริษัท',p:'jâo-khɔ̌ɔng-bɔɔ-rí-sàt',e:'company owner',s:'object',lv:5},
+// nationalities
+{t:'คนไทย',p:'khon-tai',e:'Thai person',s:'object',lv:2},{t:'คนอเมริกัน',p:'khon-à-mee-rí-gan',e:'American',s:'object',lv:3},
+{t:'คนอังกฤษ',p:'khon-ang-grìt',e:'British',s:'object',lv:3},{t:'คนจีน',p:'khon-jiin',e:'Chinese',s:'object',lv:3},
+{t:'คนญี่ปุ่น',p:'khon-yîi-bpùn',e:'Japanese',s:'object',lv:3},{t:'คนฝรั่งเศส',p:'khon-fà-ràng-sèet',e:'French',s:'object',lv:4},
+// food
+{t:'ก๋วยเตี๋ยว',p:'gǔai-dtǐao',e:'noodle soup',s:'object',lv:2},{t:'ข้าวผัด',p:'khâao-phàt',e:'fried rice',s:'object',lv:2},
+{t:'ผัดไทย',p:'phàt-tai',e:'pad thai',s:'object',lv:2},{t:'แกง',p:'gaeng',e:'curry',s:'object',lv:2},
+{t:'ส้มตำ',p:'sôm-dtam',e:'papaya salad',s:'object',lv:3},{t:'ขนมปัง',p:'khà-nǒm-bpang',e:'bread',s:'object',lv:2},
+{t:'ไอศกรีม',p:'ai-sà-griim',e:'ice cream',s:'object',lv:2},
+// family
+{t:'พี่ชาย',p:'phîi-chaai',e:'older brother',s:'object',lv:2},{t:'พี่สาว',p:'phîi-sǎao',e:'older sister',s:'object',lv:2},
+{t:'น้องชาย',p:'nɔ́ɔng-chaai',e:'younger brother',s:'object',lv:2},{t:'น้องสาว',p:'nɔ́ɔng-sǎao',e:'younger sister',s:'object',lv:2},
+{t:'ปู่',p:'bpùu',e:'paternal grandfather',s:'object',lv:3},{t:'ย่า',p:'yâa',e:'paternal grandmother',s:'object',lv:3},
 
 // ── QUESTION OBJECTS ──
 // lv2
