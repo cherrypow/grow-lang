@@ -5,693 +5,414 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>GrowThai</title>
 <style>
-:root{
-  --bg:#0a0814;
-  --root:#E8B020;
-  --branch:#c8dce8;
-  --branch-dim:#c8dce830;
-  --leaf:#6ee87a;
-  --complete:#4ade80;
-  --text:#f0e8d0;
-  --text2:#9a8a6a;
-  --phon:#E8B020;
-}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0814;color:#f0e8d0}
 body{display:flex;flex-direction:column}
-
 .top-bar{padding:14px 16px 10px;text-align:center;flex-shrink:0;border-bottom:1px solid #C8951A33}
-.top-bar h1{font-size:18px;font-weight:700;color:var(--root);letter-spacing:.5px}
-.top-bar .sub{font-size:11px;color:var(--text2);margin-top:2px}
-
-.sentence-bar{padding:12px 16px;min-height:58px;border-bottom:1px solid #ffffff10;display:flex;align-items:center;flex-wrap:wrap;gap:4px;flex-shrink:0;transition:background .5s}
+.top-bar h1{font-size:18px;font-weight:700;color:#E8B020;letter-spacing:.5px}
+.top-bar .sub{font-size:11px;color:#9a8a6a;margin-top:2px}
+.sentence-bar{padding:10px 16px;min-height:52px;border-bottom:1px solid #ffffff10;display:flex;align-items:center;flex-wrap:wrap;gap:4px;flex-shrink:0;transition:background .5s}
 .sentence-bar.complete{background:#0d1f0d;border-bottom-color:#4ade8033}
 .sent-word{display:inline-flex;flex-direction:column;align-items:center;padding:3px 8px;border-radius:8px}
-.sent-word .sw-thai{font-size:18px;color:var(--text)}
-.sent-word .sw-phon{font-size:9px;color:var(--phon)}
-.sent-word .sw-eng{font-size:8px;color:var(--text2)}
-.complete-badge{font-size:10px;color:var(--complete);font-weight:700;margin-left:auto;white-space:nowrap;opacity:0;transition:opacity .4s;letter-spacing:.03em}
-.sentence-bar.complete .complete-badge{opacity:1}
-
+.sent-word .sw-t{font-size:17px;color:#f0e8d0}
+.sent-word .sw-p{font-size:9px;color:#E8B020}
+.sent-word .sw-e{font-size:8px;color:#9a8a6a}
+.badge{font-size:10px;color:#4ade80;font-weight:700;margin-left:auto;white-space:nowrap;opacity:0;transition:opacity .4s}
+.sentence-bar.complete .badge{opacity:1}
 .grow-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 16px 100px;display:flex;flex-direction:column;align-items:center}
-
-.depth-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:6px;position:relative;width:100%}
-.connector{width:2px;height:14px;background:var(--branch-dim);flex-shrink:0;margin:0 auto}
-
-.node{position:relative;display:flex;flex-direction:column;align-items:center;padding:14px 16px 10px;border-radius:20px;cursor:pointer;transition:all .3s ease;border:2px solid transparent;min-width:76px;text-align:center;touch-action:manipulation}
+.depth-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:6px;width:100%}
+.conn{width:2px;height:14px;background:#c8dce830;flex-shrink:0;margin:0 auto}
+.node{display:flex;flex-direction:column;align-items:center;padding:14px 16px 10px;border-radius:20px;cursor:pointer;transition:all .3s ease;border:2px solid transparent;min-width:76px;text-align:center;touch-action:manipulation;position:relative}
 .node:active{transform:scale(.94)}
-.node .n-thai{font-size:22px;font-weight:600;line-height:1.2}
-.node .n-phon{font-size:10px;margin-top:3px;opacity:.8}
-.node .n-eng{font-size:9px;margin-top:1px}
-.node .n-slot{font-size:7px;text-transform:uppercase;letter-spacing:.1em;margin-top:4px;opacity:.45}
-
-.node.s-subject{background:#2a1800;border-color:#C8951A66}
-.node.s-subject .n-thai{color:#E8B020}
-.node.s-subject .n-phon{color:#C8951A}
-.node.s-subject .n-eng{color:#9a8a6a}
-
-.node.s-time{background:#1a1a08;border-color:#fbbf2444}
-.node.s-time .n-thai{color:#fbbf24}
-.node.s-time .n-phon{color:#d4a020}
-.node.s-time .n-eng{color:#9a8a6a}
-
-.node.s-preverb{background:#1a0820;border-color:#c084fc44}
-.node.s-preverb .n-thai{color:#c084fc}
-.node.s-preverb .n-phon{color:#a06adc}
-.node.s-preverb .n-eng{color:#9a8a6a}
-
-.node.s-verb{background:#081a20;border-color:#60b0e844}
-.node.s-verb .n-thai{color:#c8dce8}
-.node.s-verb .n-phon{color:#80b0cc}
-.node.s-verb .n-eng{color:#9a8a6a}
-
-.node.s-object{background:#0a1a10;border-color:#4ade8044}
-.node.s-object .n-thai{color:#6ee87a}
-.node.s-object .n-phon{color:#4abe60}
-.node.s-object .n-eng{color:#9a8a6a}
-
-.node.s-adj{background:#1a100a;border-color:#fb923c44}
-.node.s-adj .n-thai{color:#fb923c}
-.node.s-adj .n-phon{color:#d07830}
-.node.s-adj .n-eng{color:#9a8a6a}
-
-.node.s-degree{background:#1a100a;border-color:#fb923c33}
-.node.s-degree .n-thai{color:#d07830}
-.node.s-degree .n-phon{color:#b06020}
-.node.s-degree .n-eng{color:#9a8a6a}
-
-.node.s-postverb{background:#101018;border-color:#9090c044}
-.node.s-postverb .n-thai{color:#b0b0e0}
-.node.s-postverb .n-phon{color:#8888b0}
-.node.s-postverb .n-eng{color:#9a8a6a}
-
-.node.s-preposition{background:#0a1820;border-color:#5ac8e844}
-.node.s-preposition .n-thai{color:#5ac8e8}
-.node.s-preposition .n-phon{color:#40a0c0}
-.node.s-preposition .n-eng{color:#9a8a6a}
-
-.node.s-final{background:#200a18;border-color:#e878a844}
-.node.s-final .n-thai{color:#e878a8}
-.node.s-final .n-phon{color:#c06088}
-.node.s-final .n-eng{color:#9a8a6a}
-
-.node.s-conjunction{background:#20180a;border-color:#E8B02066}
-.node.s-conjunction .n-thai{color:#E8B020}
-.node.s-conjunction .n-phon{color:#C8951A}
-.node.s-conjunction .n-eng{color:#9a8a6a}
-
-.node.chosen{transform:scale(1.05);box-shadow:0 0 16px #4ade8030;z-index:2}
-.node.chosen.s-subject{border-color:#E8B020}
-.node.chosen.s-time{border-color:#fbbf24}
-.node.chosen.s-preverb{border-color:#c084fc}
-.node.chosen.s-verb{border-color:#60b0e8}
-.node.chosen.s-object{border-color:#4ade80}
-.node.chosen.s-adj{border-color:#fb923c}
-.node.chosen.s-degree{border-color:#fb923c}
-.node.chosen.s-postverb{border-color:#9090c0}
-.node.chosen.s-preposition{border-color:#5ac8e8}
-.node.chosen.s-final{border-color:#e878a8}
-.node.chosen.s-conjunction{border-color:#E8B020}
-
-.node.faded{opacity:.25;transform:scale(.82);pointer-events:none}
-
-.controls{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;display:flex;gap:10px;background:linear-gradient(transparent,var(--bg) 30%);padding-top:40px}
-.ctrl-btn{flex:1;padding:13px;border-radius:12px;border:1.5px solid #C8951A55;background:#14101f;color:var(--text2);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+.node .nt{font-size:22px;font-weight:600;line-height:1.2}
+.node .np{font-size:10px;margin-top:3px;opacity:.8}
+.node .ne{font-size:9px;margin-top:2px;max-height:0;overflow:hidden;opacity:0;transition:max-height .3s,opacity .3s}
+.node.revealed .ne{max-height:30px;opacity:1}
+.node .ns{font-size:7px;text-transform:uppercase;letter-spacing:.1em;margin-top:4px;opacity:.35}
+/* Slot colors */
+.node.s-subject{background:#2a1800;border-color:#C8951A55}.node.s-subject .nt{color:#E8B020}.node.s-subject .np{color:#C8951A}
+.node.s-time{background:#1a1a08;border-color:#fbbf2444}.node.s-time .nt{color:#fbbf24}.node.s-time .np{color:#d4a020}
+.node.s-condition{background:#201008;border-color:#E8B02044}.node.s-condition .nt{color:#E8B020}.node.s-condition .np{color:#C8951A}
+.node.s-qstart{background:#200820;border-color:#e878a844}.node.s-qstart .nt{color:#e878a8}.node.s-qstart .np{color:#c06088}
+.node.s-preverb{background:#1a0820;border-color:#c084fc44}.node.s-preverb .nt{color:#c084fc}.node.s-preverb .np{color:#a06adc}
+.node.s-verb{background:#081a20;border-color:#60b0e844}.node.s-verb .nt{color:#c8dce8}.node.s-verb .np{color:#80b0cc}
+.node.s-object{background:#0a1a10;border-color:#4ade8044}.node.s-object .nt{color:#6ee87a}.node.s-object .np{color:#4abe60}
+.node.s-qobject{background:#200820;border-color:#e878a844}.node.s-qobject .nt{color:#e878a8}.node.s-qobject .np{color:#c06088}
+.node.s-qend{background:#200820;border-color:#e878a844}.node.s-qend .nt{color:#e878a8}.node.s-qend .np{color:#c06088}
+.node.s-adj{background:#1a100a;border-color:#fb923c44}.node.s-adj .nt{color:#fb923c}.node.s-adj .np{color:#d07830}
+.node.s-degree{background:#1a100a;border-color:#fb923c33}.node.s-degree .nt{color:#d07830}.node.s-degree .np{color:#b06020}
+.node.s-postverb{background:#101018;border-color:#9090c044}.node.s-postverb .nt{color:#b0b0e0}.node.s-postverb .np{color:#8888b0}
+.node.s-preposition{background:#0a1820;border-color:#5ac8e844}.node.s-preposition .nt{color:#5ac8e8}.node.s-preposition .np{color:#40a0c0}
+.node.s-final{background:#200a18;border-color:#e878a844}.node.s-final .nt{color:#e878a8}.node.s-final .np{color:#c06088}
+.node.s-conjunction{background:#20180a;border-color:#E8B02055}.node.s-conjunction .nt{color:#E8B020}.node.s-conjunction .np{color:#C8951A}
+.node .ne{color:#9a8a6a}
+/* States */
+.node.chosen{transform:scale(1.05);box-shadow:0 0 16px #4ade8030;z-index:2;border-color:#4ade80!important}
+.node.faded{opacity:.22;transform:scale(.82);pointer-events:none}
+.controls{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;display:flex;gap:10px;background:linear-gradient(transparent,#0a0814 30%);padding-top:40px}
+.ctrl-btn{flex:1;padding:13px;border-radius:12px;border:1.5px solid #C8951A55;background:#14101f;color:#9a8a6a;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
 .ctrl-btn:active{transform:scale(.96)}
-.ctrl-btn.primary{border-color:var(--root);color:var(--root);background:#1a1000}
-
+.ctrl-btn.primary{border-color:#E8B020;color:#E8B020;background:#1a1000}
 @keyframes nodeIn{from{opacity:0;transform:translateY(8px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
 .node{animation:nodeIn .3s ease-out both}
 </style>
 </head>
 <body>
-
-<div class="top-bar">
-  <h1>GrowThai</h1>
-  <div class="sub">Tap to grow sentences</div>
-</div>
-
-<div class="sentence-bar" id="sentence-bar">
-  <div id="sentence-display"></div>
-  <div class="complete-badge" id="complete-badge"></div>
-</div>
-
-<div class="grow-area" id="grow-area"></div>
-
-<div class="controls">
-  <button class="ctrl-btn" onclick="undoLast()">Undo</button>
-  <button class="ctrl-btn primary" onclick="resetGrow()">New</button>
-</div>
-
+<div class="top-bar"><h1>GrowThai</h1><div class="sub">Tap to grow sentences</div></div>
+<div class="sentence-bar" id="sent-bar"><div id="sent-display"></div><div class="badge" id="badge"></div></div>
+<div class="grow-area" id="grow"></div>
+<div class="controls"><button class="ctrl-btn" onclick="undo()">Undo</button><button class="ctrl-btn primary" onclick="reset()">New</button></div>
 <script>
-/* ═══════════════════════════════════════════
-   250-WORD THAI VOCABULARY — slot-tagged
-   ═══════════════════════════════════════════ */
-var W = [
-// ── SUBJECTS (15) ──
-{t:'ฉัน',p:'chǎn',e:'I (casual)',s:'subject'},
-{t:'ผม',p:'phǒm',e:'I (male)',s:'subject'},
-{t:'ดิฉัน',p:'dì-chǎn',e:'I (female, formal)',s:'subject'},
-{t:'เรา',p:'rao',e:'we / I (informal)',s:'subject'},
-{t:'พวกเรา',p:'phûak rao',e:'we (group)',s:'subject'},
-{t:'คุณ',p:'khun',e:'you (polite)',s:'subject'},
-{t:'เธอ',p:'thoe',e:'she / you',s:'subject'},
-{t:'นาย',p:'naai',e:'you (informal, m)',s:'subject'},
-{t:'พวกคุณ',p:'phûak khun',e:'you all',s:'subject'},
-{t:'เขา',p:'khǎo',e:'he / she',s:'subject'},
-{t:'หล่อน',p:'lɔ̀ɔn',e:'she (formal)',s:'subject'},
-{t:'พวกเขา',p:'phûak khǎo',e:'they',s:'subject'},
-{t:'มัน',p:'man',e:'it',s:'subject'},
-{t:'พี่',p:'phîi',e:'older person',s:'subject'},
+/* ═══════════════════════════════════
+   VOCABULARY — ~260 words
+   s = slot type
+═══════════════════════════════════ */
+var W=[
+// SUBJECTS (15)
+{t:'ฉัน',p:'chǎn',e:'I (casual)',s:'subject'},{t:'ผม',p:'phǒm',e:'I (male)',s:'subject'},
+{t:'ดิฉัน',p:'dì-chǎn',e:'I (female)',s:'subject'},{t:'เรา',p:'rao',e:'we',s:'subject'},
+{t:'พวกเรา',p:'phûak-rao',e:'we (group)',s:'subject'},{t:'คุณ',p:'khun',e:'you',s:'subject'},
+{t:'เธอ',p:'thoe',e:'she / you',s:'subject'},{t:'นาย',p:'naai',e:'you (m, casual)',s:'subject'},
+{t:'พวกคุณ',p:'phûak-khun',e:'you all',s:'subject'},{t:'เขา',p:'khǎo',e:'he / she',s:'subject'},
+{t:'หล่อน',p:'lɔ̀ɔn',e:'she (formal)',s:'subject'},{t:'พวกเขา',p:'phûak-khǎo',e:'they',s:'subject'},
+{t:'มัน',p:'man',e:'it',s:'subject'},{t:'พี่',p:'phîi',e:'older person',s:'subject'},
 {t:'น้อง',p:'nɔ́ɔng',e:'younger person',s:'subject'},
-
-// ── TIME (15) ──
-{t:'วันนี้',p:'wan-níi',e:'today',s:'time'},
-{t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time'},
-{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time'},
-{t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time'},
-{t:'ตอนเช้า',p:'dtɔɔn-cháo',e:'in the morning',s:'time'},
-{t:'ตอนเย็น',p:'dtɔɔn-yen',e:'in the evening',s:'time'},
-{t:'ตอนกลางคืน',p:'dtɔɔn-glaang-kheun',e:'at night',s:'time'},
-{t:'ทุกวัน',p:'thúk-wan',e:'every day',s:'time'},
-{t:'บ่อยๆ',p:'bɔ̀i-bɔ̀i',e:'often',s:'time'},
-{t:'เสมอ',p:'sà-mǒe',e:'always',s:'time'},
-{t:'บางครั้ง',p:'baang-khráng',e:'sometimes',s:'time'},
-{t:'เร็วๆนี้',p:'reo-reo-níi',e:'soon',s:'time'},
-{t:'อาทิตย์หน้า',p:'aa-thít-nâa',e:'next week',s:'time'},
-{t:'เดือนหน้า',p:'deuan-nâa',e:'next month',s:'time'},
+// TIME (15)
+{t:'วันนี้',p:'wan-níi',e:'today',s:'time'},{t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time'},
+{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time'},{t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time'},
+{t:'ตอนเช้า',p:'dtɔɔn-cháo',e:'morning',s:'time'},{t:'ตอนเย็น',p:'dtɔɔn-yen',e:'evening',s:'time'},
+{t:'ตอนกลางคืน',p:'dtɔɔn-glaang-kheun',e:'at night',s:'time'},{t:'ทุกวัน',p:'thúk-wan',e:'every day',s:'time'},
+{t:'บ่อยๆ',p:'bɔ̀i-bɔ̀i',e:'often',s:'time'},{t:'เสมอ',p:'sà-mǒe',e:'always',s:'time'},
+{t:'บางครั้ง',p:'baang-khráng',e:'sometimes',s:'time'},{t:'เร็วๆนี้',p:'reo-reo-níi',e:'soon',s:'time'},
+{t:'อาทิตย์หน้า',p:'aa-thít-nâa',e:'next week',s:'time'},{t:'เดือนหน้า',p:'deuan-nâa',e:'next month',s:'time'},
 {t:'ปีหน้า',p:'bpii-nâa',e:'next year',s:'time'},
-
-// ── PRE-VERB MARKERS (10) ──
-{t:'จะ',p:'jà',e:'will',s:'preverb'},
-{t:'กำลัง',p:'gam-lang',e:'(doing now)',s:'preverb'},
-{t:'ไม่',p:'mâi',e:'not',s:'preverb'},
-{t:'ไม่ได้',p:'mâi-dâai',e:'did not',s:'preverb'},
-{t:'เพิ่ง',p:'phêung',e:'just (now)',s:'preverb'},
-{t:'เคย',p:'khoei',e:'ever / used to',s:'preverb'},
-{t:'ต้อง',p:'dtɔ̂ng',e:'must',s:'preverb'},
-{t:'ควร',p:'khuan',e:'should',s:'preverb'},
-{t:'อยาก',p:'yàak',e:'want to',s:'preverb'},
-{t:'ยัง',p:'yang',e:'still',s:'preverb'},
-
-// ── VERBS (70) ──
-{t:'กิน',p:'gin',e:'eat',s:'verb'},
-{t:'ดื่ม',p:'dèum',e:'drink',s:'verb'},
-{t:'ไป',p:'bpai',e:'go',s:'verb'},
-{t:'มา',p:'maa',e:'come',s:'verb'},
-{t:'ชอบ',p:'chôp',e:'like',s:'verb'},
-{t:'ให้',p:'hâi',e:'give',s:'verb'},
-{t:'ซื้อ',p:'séu',e:'buy',s:'verb'},
-{t:'ขาย',p:'khǎai',e:'sell',s:'verb'},
-{t:'ดู',p:'duu',e:'watch / look',s:'verb'},
-{t:'พูด',p:'phûut',e:'speak / talk',s:'verb'},
-{t:'ทำ',p:'tam',e:'do / make',s:'verb'},
-{t:'รู้',p:'rúu',e:'know',s:'verb'},
-{t:'นอน',p:'non',e:'sleep',s:'verb'},
-{t:'เรียน',p:'riian',e:'study',s:'verb'},
-{t:'รัก',p:'rák',e:'love',s:'verb'},
-{t:'เกลียด',p:'glìat',e:'hate',s:'verb'},
-{t:'อ่าน',p:'àan',e:'read',s:'verb'},
-{t:'เขียน',p:'khǐan',e:'write',s:'verb'},
-{t:'ฟัง',p:'fang',e:'listen',s:'verb'},
-{t:'ร้องเพลง',p:'rɔ́ɔng-phleng',e:'sing',s:'verb'},
-{t:'วิ่ง',p:'wîng',e:'run',s:'verb'},
-{t:'เดิน',p:'doeen',e:'walk',s:'verb'},
-{t:'ขับรถ',p:'khàp-rót',e:'drive',s:'verb'},
-{t:'บิน',p:'bin',e:'fly',s:'verb'},
-{t:'ว่ายน้ำ',p:'wâai-náam',e:'swim',s:'verb'},
-{t:'ทำงาน',p:'tam-ngaan',e:'work',s:'verb'},
-{t:'เล่น',p:'lên',e:'play',s:'verb'},
-{t:'หา',p:'hǎa',e:'look for',s:'verb'},
-{t:'ลอง',p:'lɔɔng',e:'try',s:'verb'},
-{t:'ช่วย',p:'chûai',e:'help',s:'verb'},
-{t:'เปิด',p:'bpèrt',e:'open',s:'verb'},
-{t:'ปิด',p:'bpìt',e:'close',s:'verb'},
-{t:'ถาม',p:'thǎam',e:'ask',s:'verb'},
-{t:'ตอบ',p:'dtɔ̀ɔp',e:'answer',s:'verb'},
-{t:'คิด',p:'khít',e:'think',s:'verb'},
-{t:'เข้าใจ',p:'khâo-jai',e:'understand',s:'verb'},
-{t:'จำ',p:'jam',e:'remember',s:'verb'},
-{t:'ลืม',p:'leum',e:'forget',s:'verb'},
-{t:'โทร',p:'thoo',e:'call (phone)',s:'verb'},
-{t:'ส่ง',p:'sòng',e:'send',s:'verb'},
-{t:'รอ',p:'rɔɔ',e:'wait',s:'verb'},
-{t:'นั่ง',p:'nâng',e:'sit',s:'verb'},
-{t:'ยืน',p:'yeun',e:'stand',s:'verb'},
-{t:'ใส่',p:'sài',e:'wear / put',s:'verb'},
-{t:'ล้าง',p:'láang',e:'wash',s:'verb'},
-{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb'},
-{t:'สอน',p:'sɔ̌ɔn',e:'teach',s:'verb'},
-{t:'เปลี่ยน',p:'bplìan',e:'change',s:'verb'},
-{t:'เดินทาง',p:'doeen-thaang',e:'travel',s:'verb'},
-{t:'พักผ่อน',p:'phák-phɔ̀ɔn',e:'relax',s:'verb'},
-{t:'เป็น',p:'bpen',e:'be / am / is',s:'verb'},
-{t:'อยู่',p:'yùu',e:'be at / live',s:'verb'},
-{t:'มี',p:'mii',e:'have',s:'verb'},
-{t:'ได้ยิน',p:'dâai-yin',e:'hear',s:'verb'},
-{t:'เห็น',p:'hěn',e:'see',s:'verb'},
-{t:'ตื่น',p:'dtèun',e:'wake up',s:'verb'},
-{t:'แต่งตัว',p:'dtàeng-dtua',e:'get dressed',s:'verb'},
-{t:'ออกกำลังกาย',p:'ɔ̀ɔk-gam-lang-gaai',e:'exercise',s:'verb'},
-{t:'จ่าย',p:'jàai',e:'pay',s:'verb'},
-{t:'เลือก',p:'lêuak',e:'choose',s:'verb'},
-{t:'ตัดสินใจ',p:'dtàt-sǐn-jai',e:'decide',s:'verb'},
-{t:'สั่ง',p:'sàng',e:'order (food)',s:'verb'},
-{t:'แนะนำ',p:'náe-nam',e:'recommend',s:'verb'},
-{t:'เจอ',p:'jer',e:'meet',s:'verb'},
-{t:'กลับ',p:'glàp',e:'return',s:'verb'},
-{t:'ออก',p:'ɔ̀ɔk',e:'leave / exit',s:'verb'},
-{t:'หิว',p:'hǐw',e:'be hungry',s:'verb'},
-{t:'เบื่อ',p:'bèua',e:'be bored',s:'verb'},
-{t:'โกรธ',p:'gròht',e:'be angry',s:'verb'},
-{t:'กลัว',p:'glua',e:'be afraid',s:'verb'},
-
-// ── NOUNS / OBJECTS (65) ──
-{t:'ข้าว',p:'khâao',e:'rice',s:'object'},
-{t:'น้ำ',p:'nám',e:'water',s:'object'},
-{t:'อาหาร',p:'aa-hǎan',e:'food',s:'object'},
-{t:'กาแฟ',p:'gaa-fae',e:'coffee',s:'object'},
-{t:'ชา',p:'chaa',e:'tea',s:'object'},
-{t:'เบียร์',p:'biia',e:'beer',s:'object'},
-{t:'ผลไม้',p:'phǒn-lá-máai',e:'fruit',s:'object'},
-{t:'ผัก',p:'phàk',e:'vegetables',s:'object'},
-{t:'เนื้อ',p:'néua',e:'meat',s:'object'},
-{t:'ปลา',p:'bplaa',e:'fish',s:'object'},
-{t:'บ้าน',p:'bâan',e:'house / home',s:'object'},
-{t:'โรงเรียน',p:'roong-riian',e:'school',s:'object'},
-{t:'โรงพยาบาล',p:'roong-phá-yaa-baan',e:'hospital',s:'object'},
-{t:'ตลาด',p:'dtà-làat',e:'market',s:'object'},
-{t:'ร้านอาหาร',p:'ráan-aa-hǎan',e:'restaurant',s:'object'},
-{t:'สำนักงาน',p:'sǎm-nák-ngaan',e:'office',s:'object'},
-{t:'สนามบิน',p:'sà-nǎam-bin',e:'airport',s:'object'},
-{t:'โรงแรม',p:'roong-raem',e:'hotel',s:'object'},
-{t:'รถ',p:'rót',e:'car',s:'object'},
-{t:'รถไฟ',p:'rót-fai',e:'train',s:'object'},
-{t:'รถเมล์',p:'rót-may',e:'bus',s:'object'},
-{t:'เครื่องบิน',p:'khrêuang-bin',e:'airplane',s:'object'},
-{t:'หนังสือ',p:'nǎng-sěu',e:'book',s:'object'},
-{t:'หนัง',p:'nǎng',e:'movie',s:'object'},
-{t:'เพลง',p:'phleng',e:'song / music',s:'object'},
-{t:'โทรศัพท์',p:'thoo-rá-sàp',e:'phone',s:'object'},
-{t:'คอมพิวเตอร์',p:'khɔɔm-phiu-dtêr',e:'computer',s:'object'},
-{t:'เงิน',p:'ngern',e:'money',s:'object'},
-{t:'งาน',p:'ngaan',e:'work / job',s:'object'},
-{t:'ภาษาไทย',p:'phaa-sǎa-tai',e:'Thai language',s:'object'},
-{t:'ภาษาอังกฤษ',p:'phaa-sǎa-ang-grìt',e:'English',s:'object'},
-{t:'เพื่อน',p:'phêuan',e:'friend',s:'object'},
-{t:'ครอบครัว',p:'khrɔ̂ɔp-khrua',e:'family',s:'object'},
-{t:'พ่อ',p:'phɔ̂ɔ',e:'father',s:'object'},
-{t:'แม่',p:'mâe',e:'mother',s:'object'},
-{t:'ลูก',p:'lûuk',e:'child',s:'object'},
-{t:'สามี',p:'sǎa-mii',e:'husband',s:'object'},
-{t:'ภรรยา',p:'phan-rá-yaa',e:'wife',s:'object'},
-{t:'หมอ',p:'mǒɔ',e:'doctor',s:'object'},
-{t:'ครู',p:'khruu',e:'teacher',s:'object'},
-{t:'นักเรียน',p:'nák-riian',e:'student',s:'object'},
-{t:'คน',p:'khon',e:'person',s:'object'},
-{t:'อาหารไทย',p:'aa-hǎan-tai',e:'Thai food',s:'object'},
-{t:'ของ',p:'khɔ̌ɔng',e:'thing / stuff',s:'object'},
-{t:'เรื่อง',p:'rêuang',e:'story / matter',s:'object'},
-{t:'ปัญหา',p:'pan-hǎa',e:'problem',s:'object'},
-{t:'ถนน',p:'thà-nǒn',e:'road',s:'object'},
-{t:'ทะเล',p:'thá-lee',e:'sea / beach',s:'object'},
-{t:'ภูเขา',p:'phuu-khǎo',e:'mountain',s:'object'},
-{t:'สวน',p:'sǔan',e:'park / garden',s:'object'},
-{t:'ห้อง',p:'hɔ̂ɔng',e:'room',s:'object'},
-{t:'ข่าว',p:'khàao',e:'news',s:'object'},
-{t:'กีฬา',p:'gii-laa',e:'sport',s:'object'},
-{t:'ดนตรี',p:'don-dtrii',e:'music',s:'object'},
-{t:'อากาศ',p:'aa-gàat',e:'weather',s:'object'},
-{t:'ฝน',p:'fǒn',e:'rain',s:'object'},
-{t:'เสื้อผ้า',p:'sêua-phâa',e:'clothes',s:'object'},
-{t:'กระเป๋า',p:'grà-bpǎo',e:'bag',s:'object'},
-{t:'ดอกไม้',p:'dɔ̀ɔk-máai',e:'flower',s:'object'},
-{t:'แมว',p:'maaeo',e:'cat',s:'object'},
-{t:'หมา',p:'mǎa',e:'dog',s:'object'},
-{t:'ต้นไม้',p:'dtôn-máai',e:'tree',s:'object'},
-{t:'ท้องฟ้า',p:'thɔ́ɔng-fáa',e:'sky',s:'object'},
-{t:'ทาง',p:'thaang',e:'way / direction',s:'object'},
-{t:'ความสุข',p:'khwaam-sùk',e:'happiness',s:'object'},
-
-// ── ADJECTIVES (30) ──
-{t:'ดี',p:'dee',e:'good',s:'adj'},
-{t:'เก่ง',p:'gèng',e:'skilled',s:'adj'},
-{t:'สวย',p:'sǔai',e:'beautiful',s:'adj'},
-{t:'หล่อ',p:'lɔ̀ɔ',e:'handsome',s:'adj'},
-{t:'อร่อย',p:'à-ròi',e:'delicious',s:'adj'},
-{t:'เร็ว',p:'reo',e:'fast',s:'adj'},
-{t:'ช้า',p:'cháa',e:'slow',s:'adj'},
-{t:'ใหญ่',p:'yài',e:'big',s:'adj'},
-{t:'เล็ก',p:'lék',e:'small',s:'adj'},
-{t:'ร้อน',p:'rón',e:'hot',s:'adj'},
-{t:'เย็น',p:'yen',e:'cool / cold',s:'adj'},
-{t:'หนาว',p:'nǎao',e:'cold (weather)',s:'adj'},
-{t:'ใหม่',p:'mài',e:'new',s:'adj'},
-{t:'เก่า',p:'gào',e:'old (thing)',s:'adj'},
-{t:'แพง',p:'phaaeng',e:'expensive',s:'adj'},
-{t:'ถูก',p:'thùuk',e:'cheap',s:'adj'},
-{t:'ง่าย',p:'ngâai',e:'easy',s:'adj'},
-{t:'ยาก',p:'yâak',e:'difficult',s:'adj'},
-{t:'สำคัญ',p:'sǎm-khan',e:'important',s:'adj'},
-{t:'สนุก',p:'sà-nùk',e:'fun',s:'adj'},
-{t:'น่าสนใจ',p:'nâa-sǒn-jai',e:'interesting',s:'adj'},
-{t:'เงียบ',p:'ngîap',e:'quiet',s:'adj'},
-{t:'สะอาด',p:'sà-àat',e:'clean',s:'adj'},
-{t:'สูง',p:'sǔung',e:'tall / high',s:'adj'},
-{t:'ยาว',p:'yaao',e:'long',s:'adj'},
-{t:'สั้น',p:'sân',e:'short',s:'adj'},
-{t:'เหนื่อย',p:'nèuai',e:'tired',s:'adj'},
-{t:'ไกล',p:'glai',e:'far',s:'adj'},
-{t:'ใกล้',p:'glâi',e:'near',s:'adj'},
-{t:'ใจดี',p:'jai-dee',e:'kind',s:'adj'},
-
-// ── DEGREE MODIFIERS (5) ──
-{t:'มาก',p:'mâak',e:'very / much',s:'degree'},
-{t:'นิดหน่อย',p:'nít-nɔ̀i',e:'a little',s:'degree'},
-{t:'จริงๆ',p:'jing-jing',e:'really',s:'degree'},
-{t:'ที่สุด',p:'thîi-sùt',e:'the most',s:'degree'},
+// CONDITIONS (8)
+{t:'ถ้า',p:'thâa',e:'if',s:'condition'},{t:'เมื่อ',p:'mêua',e:'when',s:'condition'},
+{t:'แม้ว่า',p:'máe-wâa',e:'even though',s:'condition'},{t:'เพราะว่า',p:'phrɔ́-wâa',e:'because',s:'condition'},
+{t:'ก่อนที่',p:'gɔ̀ɔn-thîi',e:'before',s:'condition'},{t:'หลังจาก',p:'lǎng-jàak',e:'after',s:'condition'},
+{t:'ตั้งแต่',p:'dtâng-dtàe',e:'since',s:'condition'},{t:'ทั้งๆที่',p:'tháng-tháng-thîi',e:'despite',s:'condition'},
+// QUESTION STARTERS (1)
+{t:'ทำไม',p:'tam-mai',e:'why',s:'qstart'},
+// PRE-VERB (10)
+{t:'จะ',p:'jà',e:'will',s:'preverb'},{t:'กำลัง',p:'gam-lang',e:'(doing now)',s:'preverb'},
+{t:'ไม่',p:'mâi',e:'not',s:'preverb'},{t:'ไม่ได้',p:'mâi-dâai',e:'did not',s:'preverb'},
+{t:'เพิ่ง',p:'phêung',e:'just (now)',s:'preverb'},{t:'เคย',p:'khoei',e:'used to',s:'preverb'},
+{t:'ต้อง',p:'dtɔ̂ng',e:'must',s:'preverb'},{t:'ควร',p:'khuan',e:'should',s:'preverb'},
+{t:'อยาก',p:'yàak',e:'want to',s:'preverb'},{t:'ยัง',p:'yang',e:'still',s:'preverb'},
+// VERBS (70)
+{t:'กิน',p:'gin',e:'eat',s:'verb'},{t:'ดื่ม',p:'dèum',e:'drink',s:'verb'},
+{t:'ไป',p:'bpai',e:'go',s:'verb'},{t:'มา',p:'maa',e:'come',s:'verb'},
+{t:'ชอบ',p:'chôp',e:'like',s:'verb'},{t:'ให้',p:'hâi',e:'give',s:'verb'},
+{t:'ซื้อ',p:'séu',e:'buy',s:'verb'},{t:'ขาย',p:'khǎai',e:'sell',s:'verb'},
+{t:'ดู',p:'duu',e:'watch',s:'verb'},{t:'พูด',p:'phûut',e:'speak',s:'verb'},
+{t:'ทำ',p:'tam',e:'do / make',s:'verb'},{t:'รู้',p:'rúu',e:'know',s:'verb'},
+{t:'นอน',p:'non',e:'sleep',s:'verb'},{t:'เรียน',p:'riian',e:'study',s:'verb'},
+{t:'รัก',p:'rák',e:'love',s:'verb'},{t:'เกลียด',p:'glìat',e:'hate',s:'verb'},
+{t:'อ่าน',p:'àan',e:'read',s:'verb'},{t:'เขียน',p:'khǐan',e:'write',s:'verb'},
+{t:'ฟัง',p:'fang',e:'listen',s:'verb'},{t:'ร้องเพลง',p:'rɔ́ɔng-phleng',e:'sing',s:'verb'},
+{t:'วิ่ง',p:'wîng',e:'run',s:'verb'},{t:'เดิน',p:'doeen',e:'walk',s:'verb'},
+{t:'ขับรถ',p:'khàp-rót',e:'drive',s:'verb'},{t:'บิน',p:'bin',e:'fly',s:'verb'},
+{t:'ว่ายน้ำ',p:'wâai-náam',e:'swim',s:'verb'},{t:'ทำงาน',p:'tam-ngaan',e:'work',s:'verb'},
+{t:'เล่น',p:'lên',e:'play',s:'verb'},{t:'หา',p:'hǎa',e:'look for',s:'verb'},
+{t:'ลอง',p:'lɔɔng',e:'try',s:'verb'},{t:'ช่วย',p:'chûai',e:'help',s:'verb'},
+{t:'เปิด',p:'bpèrt',e:'open',s:'verb'},{t:'ปิด',p:'bpìt',e:'close',s:'verb'},
+{t:'ถาม',p:'thǎam',e:'ask',s:'verb'},{t:'ตอบ',p:'dtɔ̀ɔp',e:'answer',s:'verb'},
+{t:'คิด',p:'khít',e:'think',s:'verb'},{t:'เข้าใจ',p:'khâo-jai',e:'understand',s:'verb'},
+{t:'จำ',p:'jam',e:'remember',s:'verb'},{t:'ลืม',p:'leum',e:'forget',s:'verb'},
+{t:'โทร',p:'thoo',e:'call',s:'verb'},{t:'ส่ง',p:'sòng',e:'send',s:'verb'},
+{t:'รอ',p:'rɔɔ',e:'wait',s:'verb'},{t:'นั่ง',p:'nâng',e:'sit',s:'verb'},
+{t:'ยืน',p:'yeun',e:'stand',s:'verb'},{t:'ใส่',p:'sài',e:'wear',s:'verb'},
+{t:'ล้าง',p:'láang',e:'wash',s:'verb'},{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb'},
+{t:'สอน',p:'sɔ̌ɔn',e:'teach',s:'verb'},{t:'เปลี่ยน',p:'bplìan',e:'change',s:'verb'},
+{t:'เดินทาง',p:'doeen-thaang',e:'travel',s:'verb'},{t:'พักผ่อน',p:'phák-phɔ̀ɔn',e:'relax',s:'verb'},
+{t:'เป็น',p:'bpen',e:'be',s:'verb'},{t:'อยู่',p:'yùu',e:'live / be at',s:'verb'},
+{t:'มี',p:'mii',e:'have',s:'verb'},{t:'ได้ยิน',p:'dâai-yin',e:'hear',s:'verb'},
+{t:'เห็น',p:'hěn',e:'see',s:'verb'},{t:'ตื่น',p:'dtèun',e:'wake up',s:'verb'},
+{t:'แต่งตัว',p:'dtàeng-dtua',e:'get dressed',s:'verb'},{t:'ออกกำลังกาย',p:'ɔ̀ɔk-gam-lang-gaai',e:'exercise',s:'verb'},
+{t:'จ่าย',p:'jàai',e:'pay',s:'verb'},{t:'เลือก',p:'lêuak',e:'choose',s:'verb'},
+{t:'ตัดสินใจ',p:'dtàt-sǐn-jai',e:'decide',s:'verb'},{t:'สั่ง',p:'sàng',e:'order',s:'verb'},
+{t:'แนะนำ',p:'náe-nam',e:'recommend',s:'verb'},{t:'เจอ',p:'jer',e:'meet',s:'verb'},
+{t:'กลับ',p:'glàp',e:'return',s:'verb'},{t:'ออก',p:'ɔ̀ɔk',e:'leave',s:'verb'},
+{t:'หิว',p:'hǐw',e:'be hungry',s:'verb'},{t:'เบื่อ',p:'bèua',e:'be bored',s:'verb'},
+{t:'โกรธ',p:'gròht',e:'be angry',s:'verb'},{t:'กลัว',p:'glua',e:'be afraid',s:'verb'},
+// OBJECTS / NOUNS (65)
+{t:'ข้าว',p:'khâao',e:'rice',s:'object'},{t:'น้ำ',p:'nám',e:'water',s:'object'},
+{t:'อาหาร',p:'aa-hǎan',e:'food',s:'object'},{t:'กาแฟ',p:'gaa-fae',e:'coffee',s:'object'},
+{t:'ชา',p:'chaa',e:'tea',s:'object'},{t:'เบียร์',p:'biia',e:'beer',s:'object'},
+{t:'ผลไม้',p:'phǒn-lá-máai',e:'fruit',s:'object'},{t:'ผัก',p:'phàk',e:'vegetables',s:'object'},
+{t:'เนื้อ',p:'néua',e:'meat',s:'object'},{t:'ปลา',p:'bplaa',e:'fish',s:'object'},
+{t:'บ้าน',p:'bâan',e:'home',s:'object'},{t:'โรงเรียน',p:'roong-riian',e:'school',s:'object'},
+{t:'โรงพยาบาล',p:'roong-phá-yaa-baan',e:'hospital',s:'object'},{t:'ตลาด',p:'dtà-làat',e:'market',s:'object'},
+{t:'ร้านอาหาร',p:'ráan-aa-hǎan',e:'restaurant',s:'object'},{t:'สำนักงาน',p:'sǎm-nák-ngaan',e:'office',s:'object'},
+{t:'สนามบิน',p:'sà-nǎam-bin',e:'airport',s:'object'},{t:'โรงแรม',p:'roong-raem',e:'hotel',s:'object'},
+{t:'รถ',p:'rót',e:'car',s:'object'},{t:'รถไฟ',p:'rót-fai',e:'train',s:'object'},
+{t:'รถเมล์',p:'rót-may',e:'bus',s:'object'},{t:'เครื่องบิน',p:'khrêuang-bin',e:'airplane',s:'object'},
+{t:'หนังสือ',p:'nǎng-sěu',e:'book',s:'object'},{t:'หนัง',p:'nǎng',e:'movie',s:'object'},
+{t:'เพลง',p:'phleng',e:'song',s:'object'},{t:'โทรศัพท์',p:'thoo-rá-sàp',e:'phone',s:'object'},
+{t:'คอมพิวเตอร์',p:'khɔɔm-phiu-dtêr',e:'computer',s:'object'},{t:'เงิน',p:'ngern',e:'money',s:'object'},
+{t:'งาน',p:'ngaan',e:'work',s:'object'},{t:'ภาษาไทย',p:'phaa-sǎa-tai',e:'Thai',s:'object'},
+{t:'ภาษาอังกฤษ',p:'phaa-sǎa-ang-grìt',e:'English',s:'object'},{t:'เพื่อน',p:'phêuan',e:'friend',s:'object'},
+{t:'ครอบครัว',p:'khrɔ̂ɔp-khrua',e:'family',s:'object'},{t:'พ่อ',p:'phɔ̂ɔ',e:'father',s:'object'},
+{t:'แม่',p:'mâe',e:'mother',s:'object'},{t:'ลูก',p:'lûuk',e:'child',s:'object'},
+{t:'สามี',p:'sǎa-mii',e:'husband',s:'object'},{t:'ภรรยา',p:'phan-rá-yaa',e:'wife',s:'object'},
+{t:'หมอ',p:'mǒɔ',e:'doctor',s:'object'},{t:'ครู',p:'khruu',e:'teacher',s:'object'},
+{t:'นักเรียน',p:'nák-riian',e:'student',s:'object'},{t:'คน',p:'khon',e:'person',s:'object'},
+{t:'อาหารไทย',p:'aa-hǎan-tai',e:'Thai food',s:'object'},{t:'ของ',p:'khɔ̌ɔng',e:'thing',s:'object'},
+{t:'เรื่อง',p:'rêuang',e:'story',s:'object'},{t:'ปัญหา',p:'pan-hǎa',e:'problem',s:'object'},
+{t:'ถนน',p:'thà-nǒn',e:'road',s:'object'},{t:'ทะเล',p:'thá-lee',e:'beach',s:'object'},
+{t:'ภูเขา',p:'phuu-khǎo',e:'mountain',s:'object'},{t:'สวน',p:'sǔan',e:'park',s:'object'},
+{t:'ห้อง',p:'hɔ̂ɔng',e:'room',s:'object'},{t:'ข่าว',p:'khàao',e:'news',s:'object'},
+{t:'กีฬา',p:'gii-laa',e:'sport',s:'object'},{t:'ดนตรี',p:'don-dtrii',e:'music',s:'object'},
+{t:'อากาศ',p:'aa-gàat',e:'weather',s:'object'},{t:'ฝน',p:'fǒn',e:'rain',s:'object'},
+{t:'เสื้อผ้า',p:'sêua-phâa',e:'clothes',s:'object'},{t:'กระเป๋า',p:'grà-bpǎo',e:'bag',s:'object'},
+{t:'ดอกไม้',p:'dɔ̀ɔk-máai',e:'flower',s:'object'},{t:'แมว',p:'maaeo',e:'cat',s:'object'},
+{t:'หมา',p:'mǎa',e:'dog',s:'object'},{t:'ต้นไม้',p:'dtôn-máai',e:'tree',s:'object'},
+{t:'ท้องฟ้า',p:'thɔ́ɔng-fáa',e:'sky',s:'object'},{t:'ทาง',p:'thaang',e:'way',s:'object'},
+{t:'ความสุข',p:'khwaam-sùk',e:'happiness',s:'object'},{t:'ที่นี่',p:'thîi-nîi',e:'here',s:'object'},
+{t:'ที่นั่น',p:'thîi-nân',e:'there',s:'object'},
+// QUESTION OBJECTS (3)
+{t:'อะไร',p:'à-rai',e:'what',s:'qobject'},{t:'ใคร',p:'khrai',e:'who',s:'qobject'},
+{t:'เท่าไร',p:'thâo-rai',e:'how much',s:'qobject'},
+// QUESTION END (4)
+{t:'ที่ไหน',p:'thîi-nǎi',e:'where',s:'qend'},{t:'เมื่อไร',p:'mêua-rai',e:'when?',s:'qend'},
+{t:'ยังไง',p:'yang-ngai',e:'how',s:'qend'},{t:'กี่โมง',p:'gìi-moong',e:'what time',s:'qend'},
+// ADJECTIVES (30)
+{t:'ดี',p:'dee',e:'good',s:'adj'},{t:'เก่ง',p:'gèng',e:'skilled',s:'adj'},
+{t:'สวย',p:'sǔai',e:'beautiful',s:'adj'},{t:'หล่อ',p:'lɔ̀ɔ',e:'handsome',s:'adj'},
+{t:'อร่อย',p:'à-ròi',e:'delicious',s:'adj'},{t:'เร็ว',p:'reo',e:'fast',s:'adj'},
+{t:'ช้า',p:'cháa',e:'slow',s:'adj'},{t:'ใหญ่',p:'yài',e:'big',s:'adj'},
+{t:'เล็ก',p:'lék',e:'small',s:'adj'},{t:'ร้อน',p:'rón',e:'hot',s:'adj'},
+{t:'เย็น',p:'yen',e:'cool',s:'adj'},{t:'หนาว',p:'nǎao',e:'cold',s:'adj'},
+{t:'ใหม่',p:'mài',e:'new',s:'adj'},{t:'เก่า',p:'gào',e:'old (thing)',s:'adj'},
+{t:'แพง',p:'phaaeng',e:'expensive',s:'adj'},{t:'ถูก',p:'thùuk',e:'cheap',s:'adj'},
+{t:'ง่าย',p:'ngâai',e:'easy',s:'adj'},{t:'ยาก',p:'yâak',e:'difficult',s:'adj'},
+{t:'สำคัญ',p:'sǎm-khan',e:'important',s:'adj'},{t:'สนุก',p:'sà-nùk',e:'fun',s:'adj'},
+{t:'น่าสนใจ',p:'nâa-sǒn-jai',e:'interesting',s:'adj'},{t:'เงียบ',p:'ngîap',e:'quiet',s:'adj'},
+{t:'สะอาด',p:'sà-àat',e:'clean',s:'adj'},{t:'สูง',p:'sǔung',e:'tall',s:'adj'},
+{t:'ยาว',p:'yaao',e:'long',s:'adj'},{t:'สั้น',p:'sân',e:'short',s:'adj'},
+{t:'เหนื่อย',p:'nèuai',e:'tired',s:'adj'},{t:'ไกล',p:'glai',e:'far',s:'adj'},
+{t:'ใกล้',p:'glâi',e:'near',s:'adj'},{t:'ใจดี',p:'jai-dee',e:'kind',s:'adj'},
+// DEGREE (5)
+{t:'มาก',p:'mâak',e:'very',s:'degree'},{t:'นิดหน่อย',p:'nít-nɔ̀i',e:'a little',s:'degree'},
+{t:'จริงๆ',p:'jing-jing',e:'really',s:'degree'},{t:'ที่สุด',p:'thîi-sùt',e:'the most',s:'degree'},
 {t:'เกินไป',p:'gern-bpai',e:'too much',s:'degree'},
-
-// ── POST-VERB (5) ──
-{t:'แล้ว',p:'láaeo',e:'already',s:'postverb'},
-{t:'เสร็จ',p:'sèt',e:'finished',s:'postverb'},
-{t:'ได้',p:'dâai',e:'can / able',s:'postverb'},
-{t:'ไม่ได้',p:'mâi-dâai',e:'cannot',s:'postverb'},
-{t:'เป็น',p:'bpen',e:'can (skill)',s:'postverb'},
-
-// ── PREPOSITIONS (10) ──
-{t:'กับ',p:'gàp',e:'with',s:'preposition'},
-{t:'ที่',p:'thîi',e:'at / in',s:'preposition'},
-{t:'จาก',p:'jàak',e:'from',s:'preposition'},
-{t:'ถึง',p:'thěung',e:'to / until',s:'preposition'},
-{t:'ใน',p:'nai',e:'in / inside',s:'preposition'},
-{t:'บน',p:'bon',e:'on / above',s:'preposition'},
-{t:'ใต้',p:'dtâi',e:'under',s:'preposition'},
-{t:'ข้างๆ',p:'khâang-khâang',e:'next to',s:'preposition'},
-{t:'ก่อน',p:'gɔ̀ɔn',e:'before',s:'preposition'},
-{t:'หลัง',p:'lǎng',e:'after',s:'preposition'},
-
-// ── CONJUNCTIONS (10) ──
-{t:'และ',p:'láe',e:'and',s:'conjunction'},
-{t:'แต่',p:'dtàe',e:'but',s:'conjunction'},
+// POSTVERB (5)
+{t:'แล้ว',p:'láaeo',e:'already',s:'postverb'},{t:'เสร็จ',p:'sèt',e:'finished',s:'postverb'},
+{t:'ได้',p:'dâai',e:'can',s:'postverb'},{t:'ไม่ได้',p:'mâi-dâai-pv',e:'cannot',s:'postverb'},
+{t:'เป็น',p:'bpen-pv',e:'can (skill)',s:'postverb'},
+// PREPOSITIONS (10)
+{t:'กับ',p:'gàp',e:'with',s:'preposition'},{t:'ที่',p:'thîi',e:'at',s:'preposition'},
+{t:'จาก',p:'jàak',e:'from',s:'preposition'},{t:'ถึง',p:'thěung',e:'to',s:'preposition'},
+{t:'ใน',p:'nai',e:'in',s:'preposition'},{t:'บน',p:'bon',e:'on',s:'preposition'},
+{t:'ใต้',p:'dtâi',e:'under',s:'preposition'},{t:'ข้างๆ',p:'khâang-khâang',e:'next to',s:'preposition'},
+{t:'ก่อน',p:'gɔ̀ɔn',e:'before',s:'preposition'},{t:'หลัง',p:'lǎng',e:'after',s:'preposition'},
+// CONJUNCTIONS (3)
+{t:'และ',p:'láe',e:'and',s:'conjunction'},{t:'แต่',p:'dtàe',e:'but',s:'conjunction'},
 {t:'หรือ',p:'rěu',e:'or',s:'conjunction'},
-{t:'เพราะว่า',p:'phrɔ́-wâa',e:'because',s:'conjunction'},
-{t:'แม้ว่า',p:'máe-wâa',e:'even though',s:'conjunction'},
-{t:'ถ้า',p:'thâa',e:'if',s:'conjunction'},
-{t:'เมื่อ',p:'mêua',e:'when',s:'conjunction'},
-{t:'ก่อนที่',p:'gɔ̀ɔn-thîi',e:'before (conj)',s:'conjunction'},
-{t:'หลังจาก',p:'lǎng-jàak',e:'after (conj)',s:'conjunction'},
-{t:'ทั้งๆที่',p:'tháng-tháng-thîi',e:'despite',s:'conjunction'},
-
-// ── FINAL PARTICLES (10) ──
-{t:'ไหม',p:'mǎi',e:'(yes/no?)',s:'final'},
-{t:'ครับ',p:'khráp',e:'(polite, male)',s:'final'},
-{t:'ค่ะ',p:'khâ',e:'(polite, female)',s:'final'},
-{t:'นะ',p:'ná',e:'(softener)',s:'final'},
-{t:'สิ',p:'sì',e:'(urging)',s:'final'},
-{t:'เลย',p:'loei',e:'(go ahead / at all)',s:'final'},
-{t:'ด้วย',p:'dûai',e:'also / too',s:'final'},
-{t:'เหรอ',p:'rǒe',e:'really?',s:'final'},
-{t:'หรือเปล่า',p:'rěu-bplào',e:'(or not?)',s:'final'},
-{t:'นะคะ',p:'ná-khá',e:'(polite softener, f)',s:'final'},
+// FINAL PARTICLES (10)
+{t:'ไหม',p:'mǎi',e:'(yes/no?)',s:'final'},{t:'ครับ',p:'khráp',e:'(polite, m)',s:'final'},
+{t:'ค่ะ',p:'khâ',e:'(polite, f)',s:'final'},{t:'นะ',p:'ná',e:'(softener)',s:'final'},
+{t:'สิ',p:'sì',e:'(urging)',s:'final'},{t:'เลย',p:'loei',e:'(emphasis)',s:'final'},
+{t:'ด้วย',p:'dûai',e:'also',s:'final'},{t:'เหรอ',p:'rǒe',e:'really?',s:'final'},
+{t:'หรือเปล่า',p:'rěu-bplào',e:'(or not?)',s:'final'},{t:'นะคะ',p:'ná-khá',e:'(polite, f)',s:'final'},
 ];
 
-/* ═══════════════════════════════════════════
-   GRAMMAR STATE MACHINE
-   ═══════════════════════════════════════════ */
-function freshClause(){
-  return {hasSubject:false, hasTime:false, needsVerb:false, hasVerb:false, hasObject:false, hasAdj:false, hasPostverb:false, needsPrepObj:false, hasPrepPhrase:false, hasFinal:false};
-}
+/* ═══════════════════════════════════
+   TRANSITION TABLE — what can follow what
+   Guarantees every path = valid Thai
+═══════════════════════════════════ */
+var T={
+  START:      ['condition','time','subject','qstart'],
+  condition:  ['subject','time'],
+  qstart:     ['subject'],
+  time:       ['subject'],
+  subject:    ['preverb','verb','adj'],
+  preverb:    ['verb'],
+  verb:       ['object','qobject','adj','qend','postverb','preposition','final','condition','conjunction'],
+  object:     ['adj','degree','postverb','preposition','qend','final','condition','conjunction'],
+  qobject:    ['postverb','final','condition','conjunction'],
+  adj:        ['degree','postverb','preposition','final','condition','conjunction'],
+  degree:     ['postverb','preposition','final','condition','conjunction'],
+  postverb:   ['preposition','final','condition','conjunction'],
+  preposition:['object'],
+  qend:       ['final','condition','conjunction'],
+  final:      ['condition','conjunction'],
+  conjunction:['subject','time','condition'],
+};
 
-function getValidSlots(cl){
-  // DEBTS first — must be resolved
-  if(cl.needsVerb) return ['verb'];
-  if(cl.needsPrepObj) return ['object'];
+/* ═══════════════════════════════════
+   STATE
+═══════════════════════════════════ */
+var chosen=[];
+var rows=[];
+var shownWords={};
+var lastSlot='START';
+var stateStack=[];
 
-  // After final particle, only allow conjunction to extend
-  if(cl.hasFinal) return ['conjunction'];
-
-  var slots = [];
-
-  // Beginning of clause: subject and time
-  if(!cl.hasSubject && !cl.hasVerb) slots.push('subject');
-  if(!cl.hasTime && !cl.hasVerb) slots.push('time');
-
-  // If we have time but no subject, need subject
-  if(cl.hasTime && !cl.hasSubject && !cl.hasVerb) slots.push('subject');
-
-  // Subject present, no verb yet: offer preverb and verb
-  if(cl.hasSubject && !cl.hasVerb){
-    slots.push('preverb','verb');
-  }
-
-  // Verb present: many options
-  if(cl.hasVerb){
-    if(!cl.hasObject) slots.push('object');
-    if(!cl.hasAdj) slots.push('adj');
-    if(!cl.hasPostverb) slots.push('postverb');
-    if(!cl.hasPrepPhrase) slots.push('preposition');
-    slots.push('final');
-    slots.push('conjunction');
-  }
-
-  // After object, can add adj modifying it
-  if(cl.hasObject && !cl.hasAdj) slots.push('adj');
-
-  // Deduplicate
-  var seen = {};
-  return slots.filter(function(s){if(seen[s])return false;seen[s]=true;return true;});
-}
-
-/* Branch count per depth (Fibonacci-inspired, depth 0 = 3 per user spec) */
-var BRANCH = [3, 2, 3, 3, 5, 5, 5, 5, 5, 5, 5, 5];
-
-/* ═══════════════════════════════════════════
-   APP STATE
-   ═══════════════════════════════════════════ */
-var chosen = [];     // [{word, depth}]
-var rows = [];       // [{depth, nodes:[{word,el,state}]}]
-var usedWords = {};
-var clause = freshClause();
-var clauseStack = []; // for conjunctions: save previous clause state
+var BRANCH=[3,2,3,3,5,5,5,5,5,5,5,5,5,5];
 
 function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
 
-/* ═══════════════════════════════════════════
-   RENDER
-   ═══════════════════════════════════════════ */
-var growArea = document.getElementById('grow-area');
-var sentDisplay = document.getElementById('sentence-display');
-var sentBar = document.getElementById('sentence-bar');
-
+/* ═══════════════════════════════════
+   COMPLETENESS
+═══════════════════════════════════ */
 function isComplete(){
-  // Need at least subject + verb across all clauses
-  var words = chosen.map(function(c){return c.word;});
-  var hasSub=false, hasVerb=false;
-  for(var i=0;i<words.length;i++){
-    if(words[i].s==='subject') hasSub=true;
-    if(words[i].s==='verb') hasVerb=true;
+  var hasSub=false,hasVerb=false,hasAdj=false;
+  for(var i=0;i<chosen.length;i++){
+    var s=chosen[i].word.s;
+    if(s==='subject')hasSub=true;
+    if(s==='verb')hasVerb=true;
+    if(s==='adj')hasAdj=true;
   }
-  return hasSub && hasVerb;
+  return hasSub&&(hasVerb||hasAdj);
 }
+
+/* ═══════════════════════════════════
+   CANDIDATES
+═══════════════════════════════════ */
+function getCandidates(depth){
+  var possible=T[lastSlot]||T.START;
+  if(!possible||possible.length===0)return[];
+  var pool=W.filter(function(w){
+    return possible.indexOf(w.s)!==-1&&!shownWords[w.t];
+  });
+  if(pool.length===0){
+    pool=W.filter(function(w){return possible.indexOf(w.s)!==-1;});
+  }
+  var count=BRANCH[Math.min(depth,BRANCH.length-1)];
+  return shuffle(pool).slice(0,count);
+}
+
+/* ═══════════════════════════════════
+   RENDER
+═══════════════════════════════════ */
+var grow=document.getElementById('grow');
+var sentDisplay=document.getElementById('sent-display');
+var sentBar=document.getElementById('sent-bar');
 
 function renderSentence(){
-  var complete = isComplete();
-  if(complete) sentBar.classList.add('complete'); else sentBar.classList.remove('complete');
-  var html='';
+  var c=isComplete();
+  if(c)sentBar.classList.add('complete');else sentBar.classList.remove('complete');
+  var h='';
   for(var i=0;i<chosen.length;i++){
     var w=chosen[i].word;
-    html+='<div class="sent-word"><span class="sw-thai">'+w.t+'</span><span class="sw-phon">'+w.p+'</span><span class="sw-eng">'+w.e+'</span></div>';
+    h+='<div class="sent-word"><span class="sw-t">'+w.t+'</span><span class="sw-p">'+w.p+'</span><span class="sw-e">'+w.e+'</span></div>';
   }
-  sentDisplay.innerHTML=html;
-  document.getElementById('complete-badge').textContent=complete?'valid sentence':'';
+  sentDisplay.innerHTML=h;
+  document.getElementById('badge').textContent=c?'valid sentence':'';
 }
 
-function getCandidates(depth){
-  var validSlots = getValidSlots(clause);
-  if(validSlots.length===0) return [];
-
-  var pool = W.filter(function(w){
-    return validSlots.indexOf(w.s)!==-1 && !usedWords[w.t];
-  });
-  // Fallback: allow reuse if pool is empty
-  if(pool.length===0){
-    pool = W.filter(function(w){return validSlots.indexOf(w.s)!==-1;});
-  }
-
-  var count = BRANCH[Math.min(depth, BRANCH.length-1)];
-  return shuffle(pool).slice(0, count);
-}
-
-function createNodeEl(word, depth, index){
+function createNode(word,depth,idx){
   var el=document.createElement('div');
   el.className='node s-'+word.s;
-  el.style.animationDelay=(index*0.07)+'s';
-  el.innerHTML='<div class="n-thai">'+word.t+'</div><div class="n-phon">'+word.p+'</div><div class="n-eng">'+word.e+'</div><div class="n-slot">'+word.s+'</div>';
-  el.onclick=function(){selectNode(depth,word,el);};
+  el.style.animationDelay=(idx*0.07)+'s';
+  el.innerHTML='<div class="nt">'+word.t+'</div><div class="np">'+word.p+'</div><div class="ne">'+word.e+'</div><div class="ns">'+word.s+'</div>';
+  el.onclick=function(){tapNode(depth,word,el);};
   return el;
 }
 
 function showBranches(depth){
-  var candidates=getCandidates(depth);
-  if(candidates.length===0) return;
-
-  var conn=document.createElement('div');
-  conn.className='connector';
-  growArea.appendChild(conn);
-
-  var row=document.createElement('div');
-  row.className='depth-row';
-  row.setAttribute('data-depth',depth);
-
-  var rowData={depth:depth, nodes:[], clauseSnapshot:JSON.parse(JSON.stringify(clause)), clauseStackSnapshot:JSON.parse(JSON.stringify(clauseStack))};
-
-  for(var i=0;i<candidates.length;i++){
-    var el=createNodeEl(candidates[i],depth,i);
+  var cands=getCandidates(depth);
+  if(cands.length===0)return;
+  var conn=document.createElement('div');conn.className='conn';grow.appendChild(conn);
+  var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',depth);
+  var rd={depth:depth,nodes:[],savedSlot:lastSlot};
+  for(var i=0;i<cands.length;i++){
+    var el=createNode(cands[i],depth,i);
     row.appendChild(el);
-    rowData.nodes.push({word:candidates[i],el:el,state:'active'});
+    rd.nodes.push({word:cands[i],el:el,state:'active'});
+    shownWords[cands[i].t]=true;
   }
-
-  growArea.appendChild(row);
-  rows.push(rowData);
-  setTimeout(function(){growArea.scrollTop=growArea.scrollHeight;},50);
+  grow.appendChild(row);
+  rows.push(rd);
+  setTimeout(function(){grow.scrollTop=grow.scrollHeight;},50);
 }
 
-function applyWord(word){
-  // Update clause state based on word slot
-  switch(word.s){
-    case 'subject': clause.hasSubject=true; break;
-    case 'time': clause.hasTime=true; break;
-    case 'preverb': clause.needsVerb=true; break;
-    case 'verb': clause.hasVerb=true; clause.needsVerb=false; break;
-    case 'object': clause.hasObject=true; clause.needsPrepObj=false; break;
-    case 'adj': clause.hasAdj=true; break;
-    case 'degree': break;
-    case 'postverb': clause.hasPostverb=true; break;
-    case 'preposition': clause.needsPrepObj=true; break;
-    case 'final': clause.hasFinal=true; break;
-    case 'conjunction':
-      clauseStack.push(JSON.parse(JSON.stringify(clause)));
-      clause=freshClause();
-      break;
-  }
-}
+function tapNode(depth,word,el){
+  var ri=-1;
+  for(var i=0;i<rows.length;i++){if(rows[i].depth===depth){ri=i;break;}}
+  if(ri===-1)return;
+  var row=rows[ri];
 
-function selectNode(depth,word,el){
-  var rowIdx=-1;
-  for(var i=0;i<rows.length;i++){if(rows[i].depth===depth){rowIdx=i;break;}}
-  if(rowIdx===-1)return;
-  var row=rows[rowIdx];
-
-  // Fade siblings, highlight chosen
+  // Reveal english on all nodes in this row, highlight chosen
   for(var i=0;i<row.nodes.length;i++){
     var n=row.nodes[i];
+    n.el.classList.add('revealed');
     if(n.word.t===word.t){n.state='chosen';n.el.classList.add('chosen');n.el.classList.remove('faded');}
     else{n.state='faded';n.el.classList.add('faded');n.el.classList.remove('chosen');}
   }
 
   // Remove deeper rows
-  while(rows.length>rowIdx+1){
-    var removed=rows.pop();
-    var rowEl=growArea.querySelector('.depth-row[data-depth="'+removed.depth+'"]');
-    if(rowEl){
-      if(rowEl.previousElementSibling&&rowEl.previousElementSibling.classList.contains('connector'))rowEl.previousElementSibling.remove();
-      rowEl.remove();
-    }
-    for(var j=0;j<removed.nodes.length;j++)delete usedWords[removed.nodes[j].word.t];
+  while(rows.length>ri+1){
+    var rem=rows.pop();
+    var re=grow.querySelector('.depth-row[data-depth="'+rem.depth+'"]');
+    if(re){if(re.previousElementSibling&&re.previousElementSibling.classList.contains('conn'))re.previousElementSibling.remove();re.remove();}
+    for(var j=0;j<rem.nodes.length;j++)delete shownWords[rem.nodes[j].word.t];
   }
 
-  // Restore clause state to this row's snapshot, then apply this word
-  clause=JSON.parse(JSON.stringify(row.clauseSnapshot));
-  clauseStack=JSON.parse(JSON.stringify(row.clauseStackSnapshot));
-
-  // Rebuild chosen list up to this depth
+  // Update chosen list
   chosen=chosen.filter(function(c){return c.depth<depth;});
   chosen.push({word:word,depth:depth});
   chosen.sort(function(a,b){return a.depth-b.depth;});
-  usedWords[word.t]=true;
 
-  applyWord(word);
+  // Restore lastSlot from this row's saved state, then set to this word's slot
+  lastSlot=word.s;
   renderSentence();
 
-  // Show next branches
+  // Next branches
   showBranches(depth+1);
 }
 
-function undoLast(){
+function undo(){
   if(rows.length===0)return;
-  var removed=rows.pop();
-  var rowEl=growArea.querySelector('.depth-row[data-depth="'+removed.depth+'"]');
-  if(rowEl){
-    if(rowEl.previousElementSibling&&rowEl.previousElementSibling.classList.contains('connector'))rowEl.previousElementSibling.remove();
-    rowEl.remove();
-  }
-  for(var j=0;j<removed.nodes.length;j++)delete usedWords[removed.nodes[j].word.t];
-  chosen=chosen.filter(function(c){return c.depth<removed.depth;});
+  var rem=rows.pop();
+  var re=grow.querySelector('.depth-row[data-depth="'+rem.depth+'"]');
+  if(re){if(re.previousElementSibling&&re.previousElementSibling.classList.contains('conn'))re.previousElementSibling.remove();re.remove();}
+  for(var j=0;j<rem.nodes.length;j++)delete shownWords[rem.nodes[j].word.t];
+  chosen=chosen.filter(function(c){return c.depth<rem.depth;});
 
-  // Restore clause state
-  if(rows.length>0){
-    var lastRow=rows[rows.length-1];
-    // Find the chosen node in last row and restore state after it
-    var chosenNode=null;
-    for(var i=0;i<lastRow.nodes.length;i++){
-      if(lastRow.nodes[i].state==='chosen'){chosenNode=lastRow.nodes[i];break;}
-    }
-    if(chosenNode){
-      clause=JSON.parse(JSON.stringify(lastRow.clauseSnapshot));
-      clauseStack=JSON.parse(JSON.stringify(lastRow.clauseStackSnapshot));
-      applyWord(chosenNode.word);
-    }
-  } else {
-    clause=freshClause();
-    clauseStack=[];
-  }
-
-  // Re-activate last row's nodes if no chosen node
+  // Restore lastSlot
   if(rows.length>0){
     var lr=rows[rows.length-1];
-    var hasChosen=false;
-    for(var i=0;i<lr.nodes.length;i++){if(lr.nodes[i].state==='chosen')hasChosen=true;}
-    if(!hasChosen){
+    var ch=null;
+    for(var i=0;i<lr.nodes.length;i++){if(lr.nodes[i].state==='chosen'){ch=lr.nodes[i];break;}}
+    if(ch){
+      lastSlot=ch.word.s;
+    } else {
+      lastSlot=lr.savedSlot;
       for(var i=0;i<lr.nodes.length;i++){
         lr.nodes[i].state='active';
-        lr.nodes[i].el.classList.remove('chosen','faded');
-        (function(n,d){n.el.onclick=function(){selectNode(d,n.word,n.el);};})(lr.nodes[i],lr.depth);
+        lr.nodes[i].el.classList.remove('chosen','faded','revealed');
+        (function(n,d){n.el.onclick=function(){tapNode(d,n.word,n.el);};})(lr.nodes[i],lr.depth);
       }
-      clause=JSON.parse(JSON.stringify(lr.clauseSnapshot));
-      clauseStack=JSON.parse(JSON.stringify(lr.clauseStackSnapshot));
     }
+  } else {
+    lastSlot='START';
   }
-
   renderSentence();
 }
 
-function resetGrow(){
-  chosen=[];rows=[];usedWords={};clause=freshClause();clauseStack=[];
-  growArea.innerHTML='';sentDisplay.innerHTML='';sentBar.classList.remove('complete');
-  startTree();
+function reset(){
+  chosen=[];rows=[];shownWords={};lastSlot='START';
+  grow.innerHTML='';sentDisplay.innerHTML='';sentBar.classList.remove('complete');
+  start();
 }
 
-function startTree(){
-  // Depth 0: 3 random options from subjects + time words
-  var starters=W.filter(function(w){return w.s==='subject'||w.s==='time';});
+function start(){
+  var starters=W.filter(function(w){return w.s==='subject'||w.s==='time'||w.s==='condition'||w.s==='qstart';});
   var picks=shuffle(starters).slice(0,3);
-
-  var row=document.createElement('div');
-  row.className='depth-row';
-  row.setAttribute('data-depth',0);
-  var rowData={depth:0,nodes:[],clauseSnapshot:JSON.parse(JSON.stringify(clause)),clauseStackSnapshot:[]};
-
+  var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',0);
+  var rd={depth:0,nodes:[],savedSlot:'START'};
   for(var i=0;i<picks.length;i++){
-    var el=createNodeEl(picks[i],0,i);
+    var el=createNode(picks[i],0,i);
     row.appendChild(el);
-    rowData.nodes.push({word:picks[i],el:el,state:'active'});
+    rd.nodes.push({word:picks[i],el:el,state:'active'});
+    shownWords[picks[i].t]=true;
   }
-  growArea.appendChild(row);
-  rows.push(rowData);
+  grow.appendChild(row);
+  rows.push(rd);
 }
-
-startTree();
+start();
 </script>
 </body>
 </html>
