@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>GrowThai</title>
+<style>
+:root{
+  --bg:#0a0814;
+  --root:#E8B020;
+  --branch:#c8dce8;
+  --branch-dim:#c8dce830;
+  --leaf:#6ee87a;
+  --complete:#4ade80;
+  --text:#f0e8d0;
+  --text2:#9a8a6a;
+  --phon:#E8B020;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+body{display:flex;flex-direction:column}
+
+.top-bar{padding:14px 16px 10px;text-align:center;flex-shrink:0;border-bottom:1px solid #C8951A33}
+.top-bar h1{font-size:18px;font-weight:700;color:var(--root);letter-spacing:.5px}
+.top-bar .sub{font-size:11px;color:var(--text2);margin-top:2px}
+
+.sentence-bar{padding:12px 16px;min-height:54px;border-bottom:1px solid #ffffff10;display:flex;align-items:center;flex-wrap:wrap;gap:6px;flex-shrink:0;transition:background .5s}
+.sentence-bar.complete{background:#1a3a1a}
+.sent-word{display:inline-flex;flex-direction:column;align-items:center;padding:4px 10px;border-radius:8px;transition:all .3s}
+.sent-word .sw-thai{font-size:20px;color:var(--text)}
+.sent-word .sw-phon{font-size:10px;color:var(--phon)}
+.sent-word .sw-eng{font-size:9px;color:var(--text2)}
+.complete-badge{font-size:11px;color:var(--complete);font-weight:600;margin-left:auto;opacity:0;transition:opacity .4s}
+.sentence-bar.complete .complete-badge{opacity:1}
+
+.grow-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 16px 100px;display:flex;flex-direction:column;align-items:center;gap:0}
+
+.depth-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:8px;position:relative;width:100%}
+.depth-row::before{content:'';position:absolute;top:-8px;left:50%;width:2px;height:8px;background:var(--branch-dim)}
+
+.node{position:relative;display:flex;flex-direction:column;align-items:center;padding:14px 18px 12px;border-radius:20px;cursor:pointer;transition:all .35s;border:2px solid transparent;min-width:80px;text-align:center;touch-action:manipulation}
+.node:active{transform:scale(.95)}
+.node .n-thai{font-size:22px;font-weight:600;transition:all .3s}
+.node .n-phon{font-size:11px;color:var(--phon);margin-top:2px;opacity:.8}
+.node .n-eng{font-size:10px;color:var(--text2);margin-top:1px}
+.node .n-pos{font-size:8px;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;opacity:.6}
+
+/* Depth-based coloring */
+.node.d0{background:#2a1800;border-color:#C8951A88;color:var(--root)}
+.node.d0 .n-thai{color:var(--root)}
+.node.d1{background:#101820;border-color:#c8dce844}
+.node.d1 .n-thai{color:var(--branch)}
+.node.d2{background:#0a1a10;border-color:#4ade8044}
+.node.d2 .n-thai{color:var(--leaf)}
+.node.d3{background:#1a0a20;border-color:#c084fc44}
+.node.d3 .n-thai{color:#c084fc}
+.node.d4{background:#1a1a08;border-color:#fbbf2444}
+.node.d4 .n-thai{color:#fbbf24}
+
+/* States */
+.node.chosen{transform:scale(1.08);border-color:var(--complete);box-shadow:0 0 20px #4ade8033;z-index:2}
+.node.faded{opacity:.3;transform:scale(.85);pointer-events:none}
+
+.sentence-bar.complete ~ .grow-area .node.chosen{box-shadow:0 0 24px #4ade8044}
+
+.controls{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;display:flex;gap:10px;background:linear-gradient(transparent,var(--bg) 30%);padding-top:40px}
+.ctrl-btn{flex:1;padding:13px;border-radius:12px;border:1.5px solid #C8951A55;background:#14101f;color:var(--text2);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+.ctrl-btn:active{transform:scale(.96)}
+.ctrl-btn.primary{border-color:var(--root);color:var(--root);background:#1a1000}
+
+.connector{width:2px;height:12px;background:var(--branch-dim);flex-shrink:0}
+
+@keyframes nodeIn{
+  from{opacity:0;transform:translateY(10px) scale(.8)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.node{animation:nodeIn .35s ease-out both}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>GrowThai</h1>
+  <div class="sub">Tap to grow sentences</div>
+</div>
+
+<div class="sentence-bar" id="sentence-bar">
+  <div id="sentence-display"></div>
+  <div class="complete-badge" id="complete-badge"></div>
+</div>
+
+<div class="grow-area" id="grow-area"></div>
+
+<div class="controls">
+  <button class="ctrl-btn" onclick="undoLast()">Undo</button>
+  <button class="ctrl-btn primary" onclick="resetGrow()">New sentence</button>
+</div>
+
+<script>
+/* ═══════════════════════════════
+   VOCAB — 50 words
+═══════════════════════════════ */
+var VOCAB = [
+  // Pronouns (roots)
+  {t:'ฉัน',p:'chǎn',e:'I',pos:'pronoun'},
+  {t:'คุณ',p:'kun',e:'you',pos:'pronoun'},
+  {t:'เขา',p:'kǎo',e:'he/she',pos:'pronoun'},
+  {t:'เรา',p:'rao',e:'we',pos:'pronoun'},
+  {t:'พวกเขา',p:'p\xFBak kǎo',e:'they',pos:'pronoun'},
+
+  // Verbs (branches)
+  {t:'กิน',p:'gin',e:'eat',pos:'verb'},
+  {t:'ดื่ม',p:'d\xE8um',e:'drink',pos:'verb'},
+  {t:'ไป',p:'bpai',e:'go',pos:'verb'},
+  {t:'มา',p:'maa',e:'come',pos:'verb'},
+  {t:'ชอบ',p:'ch\xF4p',e:'like',pos:'verb'},
+  {t:'อยาก',p:'y\xE0ak',e:'want',pos:'verb'},
+  {t:'ให้',p:'h\xE2i',e:'give',pos:'verb'},
+  {t:'ซื้อ',p:'s\xE9u',e:'buy',pos:'verb'},
+  {t:'ดู',p:'duu',e:'watch',pos:'verb'},
+  {t:'พูด',p:'p\xFBut',e:'speak',pos:'verb'},
+  {t:'ทำ',p:'tam',e:'do/make',pos:'verb'},
+  {t:'รู้',p:'r\xFAu',e:'know',pos:'verb'},
+  {t:'นอน',p:'non',e:'sleep',pos:'verb'},
+  {t:'เรียน',p:'riian',e:'study',pos:'verb'},
+  {t:'รัก',p:'r\xE1k',e:'love',pos:'verb'},
+
+  // Adjectives (leaves)
+  {t:'ดี',p:'dee',e:'good',pos:'adj'},
+  {t:'อร่อย',p:'\xE0-r\xF2i',e:'delicious',pos:'adj'},
+  {t:'เร็ว',p:'reo',e:'fast',pos:'adj'},
+  {t:'ช้า',p:'ch\xE1a',e:'slow',pos:'adj'},
+  {t:'ใหญ่',p:'y\xE0i',e:'big',pos:'adj'},
+  {t:'เล็ก',p:'l\xE9k',e:'small',pos:'adj'},
+  {t:'ร้อน',p:'r\xF3n',e:'hot',pos:'adj'},
+  {t:'เย็น',p:'yen',e:'cold/cool',pos:'adj'},
+  {t:'ใหม่',p:'m\xE0i',e:'new',pos:'adj'},
+  {t:'มาก',p:'m\xE2ak',e:'very/much',pos:'adj'},
+
+  // Nouns (objects)
+  {t:'ข้าว',p:'k\xE2ao',e:'rice',pos:'noun'},
+  {t:'น้ำ',p:'n\xE1m',e:'water',pos:'noun'},
+  {t:'อาหาร',p:'aa-hǎan',e:'food',pos:'noun'},
+  {t:'บ้าน',p:'b\xE2an',e:'home',pos:'noun'},
+  {t:'ตลาด',p:'dt\xE0-l\xE0at',e:'market',pos:'noun'},
+  {t:'หนังสือ',p:'nǎng-sěu',e:'book',pos:'noun'},
+  {t:'ภาษาไทย',p:'paa-sǎa tai',e:'Thai language',pos:'noun'},
+  {t:'กาแฟ',p:'gaa-fae',e:'coffee',pos:'noun'},
+  {t:'รถ',p:'r\xF3t',e:'car',pos:'noun'},
+  {t:'หนัง',p:'nǎng',e:'movie',pos:'noun'},
+
+  // Particles & modifiers
+  {t:'ไม่',p:'m\xE2i',e:'not',pos:'particle'},
+  {t:'ไหม',p:'mǎi',e:'(yes/no?)',pos:'particle'},
+  {t:'แล้ว',p:'l\xE1aeo',e:'already',pos:'particle'},
+  {t:'กำลัง',p:'gam-lang',e:'(doing now)',pos:'particle'},
+  {t:'จะ',p:'j\xE0',e:'will',pos:'particle'},
+  {t:'ครับ',p:'kr\xE1p',e:'(polite, m)',pos:'particle'},
+  {t:'ค่ะ',p:'k\xE2',e:'(polite, f)',pos:'particle'},
+  {t:'ที่',p:'t\xEEi',e:'at/that',pos:'preposition'},
+  {t:'กับ',p:'g\xE0p',e:'with',pos:'preposition'},
+  {t:'ด้วย',p:'d\xFBay',e:'also/too',pos:'particle'},
+];
+
+var PRONOUNS = VOCAB.filter(function(w){return w.pos==='pronoun';});
+
+/* Fibonacci branch counts per depth */
+var FIB = [1, 1, 2, 3, 5];
+
+/* What can follow what */
+var NEXT_POS = {
+  pronoun:     ['particle','verb'],
+  verb:        ['noun','adj','particle'],
+  noun:        ['adj','particle','verb'],
+  adj:         ['particle','noun'],
+  particle:    ['verb','noun','adj','particle'],
+  preposition: ['noun']
+};
+
+function isComplete(words){
+  var hasPronoun=false, hasVerb=false;
+  for(var i=0;i<words.length;i++){
+    if(words[i].pos==='pronoun') hasPronoun=true;
+    if(words[i].pos==='verb') hasVerb=true;
+  }
+  return hasPronoun && hasVerb;
+}
+
+/* ═══════════════════════════════
+   STATE
+═══════════════════════════════ */
+var chosen = [];
+var rows = [];
+var usedWords = {};
+
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=b[i];b[i]=b[j];b[j]=tmp;}return b;}
+
+/* ═══════════════════════════════
+   RENDER
+═══════════════════════════════ */
+var growArea = document.getElementById('grow-area');
+var sentDisplay = document.getElementById('sentence-display');
+var sentBar = document.getElementById('sentence-bar');
+
+function renderSentence(){
+  var words = chosen.map(function(c){return c.word;});
+  var complete = isComplete(words);
+  if(complete) sentBar.classList.add('complete'); else sentBar.classList.remove('complete');
+  var html = '';
+  for(var i=0;i<chosen.length;i++){
+    var w = chosen[i].word;
+    html += '<div class="sent-word"><span class="sw-thai">'+w.t+'</span><span class="sw-phon">'+w.p+'</span><span class="sw-eng">'+w.e+'</span></div>';
+  }
+  sentDisplay.innerHTML = html;
+  document.getElementById('complete-badge').textContent = complete ? 'complete sentence' : '';
+}
+
+function getCandidates(lastWord, depth){
+  var posOptions = NEXT_POS[lastWord.pos] || ['verb','noun'];
+  var pool = VOCAB.filter(function(w){return posOptions.indexOf(w.pos)!==-1 && !usedWords[w.t];});
+  if(pool.length===0) pool = VOCAB.filter(function(w){return posOptions.indexOf(w.pos)!==-1;});
+  var count = FIB[Math.min(depth, FIB.length-1)];
+  return shuffle(pool).slice(0, count);
+}
+
+function createNodeEl(word, depth, index){
+  var el = document.createElement('div');
+  var dc = Math.min(depth, 4);
+  el.className = 'node d'+dc;
+  el.style.animationDelay = (index * 0.08) + 's';
+  el.innerHTML = '<div class="n-thai">'+word.t+'</div><div class="n-phon">'+word.p+'</div><div class="n-eng">'+word.e+'</div><div class="n-pos">'+word.pos+'</div>';
+  el.onclick = function(){ selectNode(depth, word, el); };
+  return el;
+}
+
+function showBranches(lastWord, depth){
+  var candidates = getCandidates(lastWord, depth);
+  if(candidates.length===0) return;
+
+  var connector = document.createElement('div');
+  connector.className = 'connector';
+  growArea.appendChild(connector);
+
+  var row = document.createElement('div');
+  row.className = 'depth-row';
+  row.setAttribute('data-depth', depth);
+
+  var rowData = {depth:depth, nodes:[]};
+
+  for(var i=0;i<candidates.length;i++){
+    var el = createNodeEl(candidates[i], depth, i);
+    row.appendChild(el);
+    rowData.nodes.push({word:candidates[i], el:el, state:'active'});
+  }
+
+  growArea.appendChild(row);
+  rows.push(rowData);
+  setTimeout(function(){growArea.scrollTop=growArea.scrollHeight;},50);
+}
+
+function selectNode(depth, word, el){
+  var rowIdx = -1;
+  for(var i=0;i<rows.length;i++){if(rows[i].depth===depth){rowIdx=i;break;}}
+  if(rowIdx===-1) return;
+  var row = rows[rowIdx];
+
+  // Mark chosen, fade siblings
+  for(var i=0;i<row.nodes.length;i++){
+    var n = row.nodes[i];
+    if(n.word.t===word.t){
+      n.state='chosen';
+      n.el.classList.add('chosen');
+      n.el.classList.remove('faded');
+    } else {
+      n.state='faded';
+      n.el.classList.add('faded');
+      n.el.classList.remove('chosen');
+    }
+  }
+
+  // Remove deeper rows
+  while(rows.length > rowIdx+1){
+    var removed = rows.pop();
+    var rowEl = growArea.querySelector('.depth-row[data-depth="'+removed.depth+'"]');
+    if(rowEl){
+      if(rowEl.previousElementSibling && rowEl.previousElementSibling.classList.contains('connector')){
+        rowEl.previousElementSibling.remove();
+      }
+      rowEl.remove();
+    }
+    chosen = chosen.filter(function(c){return c.depth < removed.depth;});
+    for(var j=0;j<removed.nodes.length;j++) delete usedWords[removed.nodes[j].word.t];
+  }
+
+  // Add to chosen
+  chosen = chosen.filter(function(c){return c.depth!==depth;});
+  chosen.push({word:word, depth:depth});
+  chosen.sort(function(a,b){return a.depth-b.depth;});
+  usedWords[word.t] = true;
+
+  renderSentence();
+
+  // Show next branches
+  if(depth+1 <= 4){
+    showBranches(word, depth+1);
+  }
+}
+
+function undoLast(){
+  if(rows.length===0) return;
+  var removed = rows.pop();
+  var rowEl = growArea.querySelector('.depth-row[data-depth="'+removed.depth+'"]');
+  if(rowEl){
+    if(rowEl.previousElementSibling && rowEl.previousElementSibling.classList.contains('connector')){
+      rowEl.previousElementSibling.remove();
+    }
+    rowEl.remove();
+  }
+  for(var j=0;j<removed.nodes.length;j++) delete usedWords[removed.nodes[j].word.t];
+  chosen = chosen.filter(function(c){return c.depth < removed.depth;});
+
+  if(rows.length>0){
+    var lastRow = rows[rows.length-1];
+    for(var i=0;i<lastRow.nodes.length;i++){
+      var n = lastRow.nodes[i];
+      n.state='active';
+      n.el.classList.remove('chosen','faded');
+      (function(node){
+        node.el.onclick = function(){
+          selectNode(lastRow.depth, node.word, node.el);
+        };
+      })(n);
+    }
+  }
+  renderSentence();
+}
+
+function resetGrow(){
+  chosen = [];
+  rows = [];
+  usedWords = {};
+  growArea.innerHTML = '';
+  sentDisplay.innerHTML = '';
+  sentBar.classList.remove('complete');
+  startTree();
+}
+
+function startTree(){
+  var row = document.createElement('div');
+  row.className = 'depth-row';
+  row.setAttribute('data-depth', 0);
+  var rowData = {depth:0, nodes:[]};
+  for(var i=0;i<PRONOUNS.length;i++){
+    var el = createNodeEl(PRONOUNS[i], 0, i);
+    row.appendChild(el);
+    rowData.nodes.push({word:PRONOUNS[i], el:el, state:'active'});
+  }
+  growArea.appendChild(row);
+  rows.push(rowData);
+}
+
+startTree();
+</script>
+</body>
+</html>
