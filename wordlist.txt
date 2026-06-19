@@ -1,0 +1,645 @@
+GROWTHAI VOCABULARY — 500 WORDS
+==========================================
+
+══════════════════════════════════════════
+LEVEL 1 (50 new, 50 total available)
+══════════════════════════════════════════
+
+--- SUBJECTS (5) ---
+ฉัน | chǎn | I
+คุณ | khun | you
+เขา | khǎo | he/she
+เรา | rao | we
+ผม | phǒm | I (male)
+
+--- PRE-VERB MARKERS (2) ---
+ไม่ | mâi | not
+จะ | jà | will
+
+--- VERBS (15) ---
+กิน | gin | eat
+ดื่ม | dèum | drink
+ไป | bpai | go
+มา | maa | come
+ชอบ | chôp | like
+มี | mii | have
+ดู | duu | watch
+นอน | non | sleep
+พูด | phûut | speak
+ทำ | tam | do/make
+รู้ | rúu | know
+เป็น | bpen | be
+อยู่ | yùu | live/be at
+ซื้อ | séu | buy
+หิว | hǐw | be hungry
+
+--- NOUNS/OBJECTS (15) ---
+ข้าว | khâao | rice
+น้ำ | nám | water
+อาหาร | aa-hǎan | food
+บ้าน | bâan | home
+กาแฟ | gaa-fae | coffee
+หมา | mǎa | dog
+แมว | maaeo | cat
+รถ | rót | car
+เงิน | ngern | money
+หนังสือ | nǎng-sěu | book
+เพื่อน | phêuan | friend
+พ่อ | phɔ̂ɔ | father
+แม่ | mâe | mother
+ปลา | bplaa | fish
+ผลไม้ | phǒn-lá-máai | fruit
+
+--- ADJECTIVES (8) ---
+ดี | dee | good
+อร่อย | à-ròi | delicious
+ร้อน | rón | hot
+เย็น | yen | cool
+ใหญ่ | yài | big
+เล็ก | lék | small
+ใหม่ | mài | new
+เก่า | gào | old (thing)
+
+--- DEGREE MODIFIERS (1) ---
+มาก | mâak | very
+
+--- POST-VERB (1) ---
+แล้ว | láaeo | already
+
+--- FINAL PARTICLES (3) ---
+ครับ | khráp | (polite, m)
+ค่ะ | khâ | (polite, f)
+ไหม | mǎi | (yes/no?)
+
+══════════════════════════════════════════
+LEVEL 2 (50 new, 100 total available)
+══════════════════════════════════════════
+
+--- SUBJECTS (2) ---
+เธอ | thoe | she/you
+พวกเขา | phûak-khǎo | they
+
+--- TIME (5) ---
+วันนี้ | wan-níi | today
+พรุ่งนี้ | prûng-níi | tomorrow
+เมื่อวาน | mêua-waan | yesterday
+ตอนนี้ | dtɔɔn-níi | right now
+ทุกวัน | thúk-wan | every day
+
+--- QUESTION STARTERS (1) ---
+ทำไม | tam-mai | why
+
+--- PRE-VERB MARKERS (2) ---
+กำลัง | gam-lang | (doing now)
+อยาก | yàak | want to
+
+--- VERBS (10) ---
+เรียน | riian | study
+รัก | rák | love
+อ่าน | àan | read
+วิ่ง | wîng | run
+เดิน | doeen | walk
+ทำงาน | tam-ngaan | work
+เล่น | lên | play
+เห็น | hěn | see
+กลับ | glàp | return
+รอ | rɔɔ | wait
+
+--- NOUNS/OBJECTS (15) ---
+ผัก | phàk | vegetables
+ตลาด | dtà-làat | market
+โรงเรียน | roong-riian | school
+ร้านอาหาร | ráan-aa-hǎan | restaurant
+หนัง | nǎng | movie
+เพลง | phleng | song
+ภาษาไทย | phaa-sǎa-tai | Thai
+ครอบครัว | khrɔ̂ɔp-khrua | family
+ลูก | lûuk | child
+ครู | khruu | teacher
+นักเรียน | nák-riian | student
+คน | khon | person
+ข่าว | khàao | news
+อาหารไทย | aa-hǎan-tai | Thai food
+ของ | khɔ̌ɔng | thing
+
+--- QUESTION OBJECTS (2) ---
+อะไร | à-rai | what
+ใคร | khrai | who
+
+--- QUESTION END (2) ---
+ที่ไหน | thîi-nǎi | where
+เมื่อไร | mêua-rai | when?
+
+--- ADJECTIVES (7) ---
+เร็ว | reo | fast
+ช้า | cháa | slow
+แพง | phaaeng | expensive
+ถูก | thùuk | cheap
+สนุก | sà-nùk | fun
+เก่ง | gèng | skilled
+สวย | sǔai | beautiful
+
+--- PREPOSITIONS (2) ---
+กับ | gàp | with
+ที่ | thîi | at
+
+--- FINAL PARTICLES (2) ---
+นะ | ná | (softener)
+สิ | sì | (urging)
+
+══════════════════════════════════════════
+LEVEL 3 (100 new, 200 total available)
+══════════════════════════════════════════
+
+--- SUBJECTS (8) ---
+พวกเรา | phûak-rao | we (group)
+มัน | man | it
+พวกคุณ | phûak-khun | you all
+พี่ | phîi | older person
+น้อง | nɔ́ɔng | younger one
+นาย | naai | you (casual m)
+แฟน | faen | partner
+ตา | dtaa | grandfather
+
+--- TIME (9) ---
+ตอนเช้า | dtɔɔn-cháo | morning
+ตอนเย็น | dtɔɔn-yen | evening
+บ่อยๆ | bɔ̀i-bɔ̀i | often
+เสมอ | sà-mǒe | always
+บางครั้ง | baang-khráng | sometimes
+ตอนกลางคืน | dtɔɔn-glaang-kheun | at night
+เร็วๆนี้ | reo-reo-níi | soon
+เมื่อเช้า | mêua-cháo | this morning
+ตอนกลางวัน | dtɔɔn-glaang-wan | at noon
+
+--- CONDITIONS (2) ---
+ถ้า | thâa | if
+เพราะว่า | phrɔ́-wâa | because
+
+--- PRE-VERB MARKERS (4) ---
+ต้อง | dtɔ̂ng | must
+ควร | khuan | should
+เคย | khoei | used to
+ยัง | yang | still
+
+--- VERBS (22) ---
+ให้ | hâi | give
+ขาย | khǎai | sell
+เขียน | khǐan | write
+ฟัง | fang | listen
+เจอ | jer | meet
+ช่วย | chûai | help
+คิด | khít | think
+เข้าใจ | khâo-jai | understand
+ลืม | leum | forget
+จำ | jam | remember
+ถาม | thǎam | ask
+ตอบ | dtɔ̀ɔp | answer
+ส่ง | sòng | send
+โทร | thoo | call
+หา | hǎa | look for
+เปิด | bpèrt | open
+ปิด | bpìt | close
+นั่ง | nâng | sit
+ยืน | yeun | stand
+ล้าง | láang | wash
+แก้ | gâe | fix
+เตรียม | dtriiam | prepare
+
+--- NOUNS/OBJECTS (26) ---
+ชา | chaa | tea
+เบียร์ | biia | beer
+เนื้อ | néua | meat
+โทรศัพท์ | thoo-rá-sàp | phone
+งาน | ngaan | work/job
+สำนักงาน | sǎm-nák-ngaan | office
+โรงแรม | roong-raem | hotel
+ภาษาอังกฤษ | phaa-sǎa-ang-grìt | English
+หมอ | mǒɔ | doctor
+สามี | sǎa-mii | husband
+ภรรยา | phan-rá-yaa | wife
+คอมพิวเตอร์ | khɔɔm-phiu-dtêr | computer
+ทะเล | thá-lee | beach
+สวน | sǔan | park
+ห้อง | hɔ̂ɔng | room
+กีฬา | gii-laa | sport
+ดนตรี | don-dtrii | music
+เสื้อผ้า | sêua-phâa | clothes
+กระเป๋า | grà-bpǎo | bag
+ถนน | thà-nǒn | road
+ไก่ | gài | chicken
+ขนม | khà-nǒm | snack
+หน้าต่าง | nâa-dtàang | window
+ประตู | bprà-dtuu | door
+ไข่ | khài | egg
+นม | nom | milk
+
+--- QUESTION OBJECTS (2) ---
+เท่าไร | thâo-rai | how much
+กี่ | gìi | how many
+
+--- QUESTION END (2) ---
+ยังไง | yang-ngai | how
+กี่โมง | gìi-moong | what time
+
+--- ADJECTIVES (11) ---
+ง่าย | ngâai | easy
+ยาก | yâak | difficult
+สำคัญ | sǎm-khan | important
+น่าสนใจ | nâa-sǒn-jai | interesting
+สะอาด | sà-àat | clean
+เงียบ | ngîap | quiet
+ใจดี | jai-dee | kind
+หล่อ | lɔ̀ɔ | handsome
+เผ็ด | phèt | spicy
+หวาน | wǎan | sweet
+เค็ม | khem | salty
+
+--- DEGREE MODIFIERS (4) ---
+นิดหน่อย | nít-nɔ̀i | a little
+จริงๆ | jing-jing | really
+ค่อนข้าง | khɔ̂n-khâang | rather
+พอสมควร | phɔɔ-sǒm-khuan | fairly
+
+--- POST-VERB (2) ---
+เสร็จ | sèt | finished
+ได้ | dâai | can
+
+--- PREPOSITIONS (3) ---
+ใน | nai | in
+จาก | jàak | from
+ถึง | thěung | to
+
+--- CONJUNCTIONS (3) ---
+และ | láe | and
+แต่ | dtàe | but
+เพราะ | phrɔ́ | because
+
+--- FINAL PARTICLES (2) ---
+เลย | loei | (emphasis)
+ด้วย | dûai | also
+
+══════════════════════════════════════════
+LEVEL 4 (150 new, 350 total available)
+══════════════════════════════════════════
+
+--- SUBJECTS (7) ---
+ดิฉัน | dì-chǎn | I (formal f)
+หล่อน | lɔ̀ɔn | she (formal)
+ท่าน | thân | you (respectful)
+แก | gae | you (informal)
+ยาย | yaai | grandmother
+ลุง | lung | uncle
+ป้า | bpâa | aunt
+
+--- TIME (8) ---
+อาทิตย์หน้า | aa-thít-nâa | next week
+เดือนหน้า | deuan-nâa | next month
+ปีหน้า | bpii-nâa | next year
+ทุกเช้า | thúk-cháo | every morning
+ทุกคืน | thúk-kheun | every night
+เดือนที่แล้ว | deuan-thîi-láaeo | last month
+อาทิตย์ที่แล้ว | aa-thít-thîi-láaeo | last week
+นานๆ | naan-naan | once in a while
+
+--- CONDITIONS (5) ---
+เมื่อ | mêua | when
+แม้ว่า | máe-wâa | even though
+ก่อนที่ | gɔ̀ɔn-thîi | before
+ขณะที่ | khà-nà-thîi | while
+เผื่อว่า | phèua-wâa | in case
+
+--- QUESTION STARTERS (1) ---
+ทำไมถึง | tam-mai-thěung | how come
+
+--- PRE-VERB MARKERS (5) ---
+เพิ่ง | phêung | just (now)
+ไม่ได้ | mâi-dâai | did not
+น่าจะ | nâa-jà | probably
+ไม่ค่อย | mâi-khɔ̂i | not really
+โปรด | bpròht | please
+
+--- VERBS (35) ---
+เกลียด | glìat | hate
+ร้องเพลง | rɔ́ɔng-phleng | sing
+ขับรถ | khàp-rót | drive
+บิน | bin | fly
+ว่ายน้ำ | wâai-náam | swim
+ใส่ | sài | wear
+ทำอาหาร | tam-aa-hǎan | cook
+สอน | sɔ̌ɔn | teach
+เปลี่ยน | bplìan | change
+เดินทาง | doeen-thaang | travel
+ลอง | lɔɔng | try
+เลือก | lêuak | choose
+จ่าย | jàai | pay
+สั่ง | sàng | order
+ได้ยิน | dâai-yin | hear
+ซ่อม | sɔ̂ɔm | repair
+แปล | bplae | translate
+ฝึก | fèuk | practice
+ตัด | dtàt | cut
+จัด | jàt | arrange
+ใช้ | chái | use
+ถือ | thěu | hold
+ขึ้น | khêun | go up
+ลง | long | go down
+ย้าย | yáai | move
+เช็ค | chék | check
+แบ่ง | bàeng | share/divide
+เก็บ | gèp | keep/collect
+วาง | waang | put down
+หยุด | yùt | stop
+เริ่ม | rêrm | start
+ต่อ | dtɔ̀ɔ | continue
+ทิ้ง | thíng | throw away
+พบ | phóp | find/meet
+แจ้ง | jâeng | inform
+
+--- NOUNS/OBJECTS (50) ---
+โรงพยาบาล | roong-phá-yaa-baan | hospital
+สนามบิน | sà-nǎam-bin | airport
+รถไฟ | rót-fai | train
+รถเมล์ | rót-may | bus
+เครื่องบิน | khrêuang-bin | airplane
+ภูเขา | phuu-khǎo | mountain
+อากาศ | aa-gàat | weather
+ฝน | fǒn | rain
+เรื่อง | rêuang | story
+ปัญหา | pan-hǎa | problem
+ดอกไม้ | dɔ̀ɔk-máai | flower
+ต้นไม้ | dtôn-máai | tree
+ท้องฟ้า | thɔ́ɔng-fáa | sky
+ทาง | thaang | way
+ที่นี่ | thîi-nîi | here
+ธนาคาร | thá-naa-khaan | bank
+ไปรษณีย์ | bprai-sà-nii | post office
+วัด | wát | temple
+สถานี | sà-thǎa-nii | station
+ตำรวจ | dtam-rùat | police
+ทนายความ | thá-naai-khwaam | lawyer
+วิศวกร | wít-sà-wá-gɔɔn | engineer
+พยาบาล | phá-yaa-baan | nurse
+ห้องน้ำ | hɔ̂ɔng-náam | bathroom
+ห้องครัว | hɔ̂ɔng-khrua | kitchen
+ห้องนอน | hɔ̂ɔng-nɔɔn | bedroom
+ตู้เย็น | dtûu-yen | fridge
+โต๊ะ | dtó | table
+เก้าอี้ | gâo-îi | chair
+กุญแจ | gun-jae | key
+แก้ว | gâaeo | glass
+จาน | jaan | plate
+ช้อน | chɔ́ɔn | spoon
+ส้อม | sɔ̂ɔm | fork
+มีด | mîit | knife
+แผนที่ | phǎen-thîi | map
+ร่ม | rôm | umbrella
+รองเท้า | rɔɔng-tháo | shoes
+หมวก | mùak | hat
+แหวน | wǎen | ring
+นาฬิกา | naa-lí-gaa | watch/clock
+ยา | yaa | medicine
+สบู่ | sà-bùu | soap
+แปรงสีฟัน | bpraaeng-sǐi-fan | toothbrush
+ผ้าเช็ดตัว | phâa-chét-dtua | towel
+เตียง | dtiang | bed
+พัดลม | phát-lom | fan
+แอร์ | ae | air conditioner
+กระดาษ | grà-dàat | paper
+ปากกา | bpàak-gaa | pen
+
+--- QUESTION OBJECTS (1) ---
+แค่ไหน | khâe-nǎi | how much/to what extent
+
+--- QUESTION END (2) ---
+กี่ชิ้น | gìi-chín | how many pieces
+กี่วัน | gìi-wan | how many days
+
+--- ADJECTIVES (15) ---
+สูง | sǔung | tall
+ยาว | yaao | long
+สั้น | sân | short
+หนาว | nǎao | cold
+ไกล | glai | far
+เปรี้ยว | bprîao | sour
+ขม | khǒm | bitter
+นุ่ม | nûm | soft
+แข็ง | khǎeng | hard
+เปียก | bpìak | wet
+แห้ง | hâeng | dry
+หนัก | nàk | heavy
+เบา | bao | light (weight)
+กว้าง | gwâang | wide
+แคบ | khâep | narrow
+
+--- DEGREE MODIFIERS (4) ---
+ที่สุด | thîi-sùt | the most
+เกินไป | gern-bpai | too much
+แทบ | thâep | hardly
+เต็มที่ | dtem-thîi | fully
+
+--- POST-VERB (4) ---
+ไม่ได้ | mâi-dâai-pv | cannot
+เป็น | bpen-pv | can (skill)
+หมด | mòt | all gone
+อยู่ | yùu-pv | (ongoing)
+
+--- PREPOSITIONS (6) ---
+บน | bon | on
+ใต้ | dtâi | under
+ข้างๆ | khâang-khâang | next to
+ระหว่าง | rá-wàang | between
+รอบๆ | rɔ̂ɔp-rɔ̂ɔp | around
+ข้างใน | khâang-nai | inside
+
+--- CONJUNCTIONS (3) ---
+หรือ | rěu | or
+แล้วก็ | láaeo-gɔ̂ɔ | and then
+ดังนั้น | dang-nán | therefore
+
+--- FINAL PARTICLES (4) ---
+เหรอ | rǒe | really?
+หรือเปล่า | rěu-bplào | (or not?)
+ล่ะ | là | (insistence)
+จ้ะ | jâ | (friendly f)
+
+══════════════════════════════════════════
+LEVEL 5 (150 new, 500 total available)
+══════════════════════════════════════════
+
+--- SUBJECTS (5) ---
+อา | aa | uncle (younger)
+น้า | náa | aunt (younger)
+พวกมัน | phûak-man | they (things)
+ตัวเอง | dtua-eeng | oneself
+ใครบางคน | khrai-baang-khon | someone
+
+--- TIME (8) ---
+ตอนบ่าย | dtɔɔn-bàai | afternoon
+ตอนดึก | dtɔɔn-dèuk | late night
+ปีที่แล้ว | bpii-thîi-láaeo | last year
+ตั้งแต่เช้า | dtâng-dtàe-cháo | since morning
+ไม่นาน | mâi-naan | not long
+ทุกเดือน | thúk-deuan | every month
+ทุกปี | thúk-bpii | every year
+ภายหลัง | phaai-lǎng | later on
+
+--- CONDITIONS (6) ---
+หลังจาก | lǎng-jàak | after
+ตั้งแต่ | dtâng-dtàe | since
+ทั้งๆที่ | tháng-tháng-thîi | despite
+ไม่ว่า | mâi-wâa | regardless
+จนกว่า | jon-gwàa | until
+เพียงแค่ | phiiang-khâe | just/only if
+
+--- PRE-VERB MARKERS (3) ---
+พยายาม | phá-yaa-yaam | try to
+ตั้งใจ | dtâng-jai | intend to
+กล้า | glâa | dare to
+
+--- VERBS (35) ---
+พักผ่อน | phák-phɔ̀ɔn | relax
+ตื่น | dtèun | wake up
+แต่งตัว | dtàeng-dtua | get dressed
+ออกกำลังกาย | ɔ̀ɔk-gam-lang-gaai | exercise
+ตัดสินใจ | dtàt-sǐn-jai | decide
+แนะนำ | náe-nam | recommend
+ออก | ɔ̀ɔk | leave
+เบื่อ | bèua | be bored
+โกรธ | gròht | be angry
+กลัว | glua | be afraid
+ยิ้ม | yím | smile
+ร้องไห้ | rɔ́ɔng-hâi | cry
+วางแผน | waang-phǎen | plan
+แก้ไข | gâe-khǎi | fix/solve
+สมัคร | sà-màk | apply/sign up
+ยกเลิก | yók-lêrk | cancel
+จอง | jɔɔng | book/reserve
+ขอ | khɔ̌ɔ | request
+ปฏิเสธ | bpà-dtì-sèet | refuse
+ยอมรับ | yɔɔm-ráp | accept
+อธิบาย | à-thí-baai | explain
+ประกาศ | bprà-gàat | announce
+เสนอ | sà-nǒe | propose
+ติดต่อ | dtìt-dtɔ̀ɔ | contact
+เตือน | dteuuan | warn
+สนใจ | sǒn-jai | be interested
+ประทับใจ | bprà-tháp-jai | be impressed
+คาดหวัง | khâat-wǎng | expect
+พัฒนา | phát-tá-naa | develop
+เปรียบเทียบ | bprìap-thîap | compare
+แก้ปัญหา | gâe-pan-hǎa | solve problem
+ดูแล | duu-lae | take care of
+สังเกต | sǎng-gèet | observe
+ทดลอง | thót-lɔɔng | experiment
+สร้าง | sâang | build/create
+
+--- NOUNS/OBJECTS (59) ---
+ที่นั่น | thîi-nân | there
+ความสุข | khwaam-sùk | happiness
+ความรัก | khwaam-rák | love (n)
+ความคิด | khwaam-khít | idea
+โอกาส | oo-gàat | opportunity
+ประสบการณ์ | bprà-sòp-gaan | experience
+วัฒนธรรม | wát-tá-ná-tam | culture
+สิ่งแวดล้อม | sìng-wâet-lɔ́ɔm | environment
+เศรษฐกิจ | sèet-tà-gìt | economy
+การศึกษา | gaan-sèuk-sǎa | education
+สุขภาพ | sùk-kà-phâap | health
+อนาคต | à-naa-khót | future
+อดีต | à-dìit | past
+ความฝัน | khwaam-fǎn | dream
+ความจริง | khwaam-jing | truth
+คำตอบ | kam-dtɔ̀ɔp | answer (n)
+คำถาม | kam-thǎam | question (n)
+ข้อมูล | khɔ̂ɔ-muun | information
+ความหมาย | khwaam-mǎai | meaning
+เหตุผล | hèet-phǒn | reason
+ความเชื่อ | khwaam-chêua | belief
+ทัศนคติ | thát-sà-ná-ká-dtì | attitude
+บทเรียน | bòt-riian | lesson
+ผลลัพธ์ | phǒn-láp | result
+ความสำเร็จ | khwaam-sǎm-rèt | success
+สังคม | sǎng-khom | society
+การเมือง | gaan-meuang | politics
+กฎหมาย | gòt-mǎai | law
+ศาสนา | sàat-sà-nǎa | religion
+ศิลปะ | sǐn-lá-bpà | art
+เทคโนโลยี | thék-noo-loo-yii | technology
+ธรรมชาติ | tham-má-châat | nature
+ทรัพยากร | sáp-phá-yaa-gɔɔn | resource
+ประชากร | bprà-chaa-gɔɔn | population
+ความยุติธรรม | khwaam-yút-dtì-tam | justice
+เสรีภาพ | sǎy-rii-phâap | freedom
+ความรับผิดชอบ | khwaam-ráp-phìt-chɔ̂ɔp | responsibility
+ความพยายาม | khwaam-phá-yaa-yaam | effort
+ความสัมพันธ์ | khwaam-sǎm-phan | relationship
+ข้อตกลง | khɔ̂ɔ-dtòk-long | agreement
+นโยบาย | ná-yoo-baai | policy
+โครงการ | khroo-ngaan | project
+งบประมาณ | ngóp-bprà-maan | budget
+ความเห็น | khwaam-hěn | opinion
+ทักษะ | thák-sà | skill
+สิทธิ์ | sìt | right (n)
+หน้าที่ | nâa-thîi | duty
+ความก้าวหน้า | khwaam-gâao-nâa | progress
+ความเสี่ยง | khwaam-sìang | risk
+ผลกระทบ | phǒn-grà-thóp | impact
+ความแตกต่าง | khwaam-dtàek-dtàang | difference
+เป้าหมาย | bpâo-mǎai | goal
+แผน | phǎen | plan (n)
+วิธี | wí-thii | method
+สาเหตุ | sǎa-hèet | cause
+ผลที่ตามมา | phǒn-thîi-dtaam-maa | consequence
+ข้อเสนอ | khɔ̂ɔ-sà-nǒe | proposal
+ความรู้ | khwaam-rúu | knowledge
+ประโยชน์ | bprà-yòot | benefit
+
+--- QUESTION END (1) ---
+กี่ครั้ง | gìi-khráng | how many times
+
+--- ADJECTIVES (17) ---
+ใกล้ | glâi | near
+เหนื่อย | nèuai | tired
+ซับซ้อน | sáp-sɔ́ɔn | complicated
+เรียบง่าย | rîap-ngâai | simple
+น่าเบื่อ | nâa-bèua | boring
+น่ากลัว | nâa-glua | scary
+น่ารัก | nâa-rák | cute
+เหมาะสม | mɔ̀-sǒm | suitable
+จำเป็น | jam-bpen | necessary
+เป็นไปได้ | bpen-bpai-dâai | possible
+มั่นใจ | mân-jai | confident
+ภูมิใจ | phuum-jai | proud
+อันตราย | an-dtà-raai | dangerous
+ปลอดภัย | bplɔ̀ɔt-phai | safe
+เป็นทางการ | bpen-thaang-gaan | formal
+ยุ่ง | yûng | busy
+ว่าง | wâang | free/available
+
+--- DEGREE MODIFIERS (2) ---
+อย่างยิ่ง | yàang-yîng | extremely
+พอๆกัน | phɔɔ-phɔɔ-gan | equally
+
+--- POST-VERB (2) ---
+ไว้ | wái | (for later)
+ทัน | than | in time
+
+--- PREPOSITIONS (5) ---
+ก่อน | gɔ̀ɔn | before
+หลัง | lǎng | after
+ข้างนอก | khâang-nɔ̂ɔk | outside
+ตรงข้าม | dtrong-khâam | opposite
+เพื่อ | phêua | for/in order to
+
+--- CONJUNCTIONS (3) ---
+อย่างไรก็ตาม | yàang-rai-gɔ̂ɔ-dtaam | however
+นอกจากนี้ | nɔ̂ɔk-jàak-níi | moreover
+เนื่องจาก | nêuang-jàak | due to
+
+--- FINAL PARTICLES (4) ---
+นะคะ | ná-khá | (polite soft, f)
+นะครับ | ná-khráp | (polite soft, m)
+หน่อย | nɔ̀i | (softener)
+ซิ | sí | (urging)
+
