@@ -86,7 +86,7 @@ var W=[
 // ── TIME (5) ──
 {t:'วันนี้',p:'wan-níi',e:'today',s:'time',lv:2},
 {t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time',lv:2,future:1},
-{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time',lv:2},
+{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time',lv:2,past:1},
 {t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time',lv:2},
 {t:'ทุกวัน',p:'thúk-wan',e:'every day',s:'time',lv:2},
 
@@ -149,9 +149,9 @@ var W=[
 // ── ADJECTIVES (6) ── aa = which noun categories
 {t:'ดี',p:'dee',e:'good',s:'adj',lv:1},
 {t:'อร่อย',p:'à-ròi',e:'delicious',s:'adj',lv:1,aa:'fd'},
-{t:'ใหม่',p:'mài',e:'new',s:'adj',lv:1},
-{t:'ใหญ่',p:'yài',e:'big',s:'adj',lv:2},
-{t:'เล็ก',p:'lék',e:'small',s:'adj',lv:2},
+{t:'ใหม่',p:'mài',e:'new',s:'adj',lv:1,aa:'fd,th,lc,pn'},
+{t:'ใหญ่',p:'yài',e:'big',s:'adj',lv:2,aa:'fd,th,lc'},
+{t:'เล็ก',p:'lék',e:'small',s:'adj',lv:2,aa:'fd,th,lc'},
 {t:'แพง',p:'phaaeng',e:'expensive',s:'adj',lv:2,aa:'fd,th'},
 
 // ── DEGREE (1) ──
@@ -227,6 +227,7 @@ var lastSlot='START';
 var lastWord=null;
 var pattern=PATTERNS[0];
 var hasFutureTime=false;
+var hasPastTime=false;
 
 function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
 function pickPattern(){pattern=PATTERNS[Math.floor(Math.random()*PATTERNS.length)];}
@@ -256,7 +257,7 @@ function usedSlots(){
 
 function expandCats(catStr){
   var c=catStr.split(',');
-  if(c.indexOf('th')!==-1){['md','dc','an','lg'].forEach(function(x){if(c.indexOf(x)===-1)c.push(x);});}
+  if(c.indexOf('th')!==-1){['md','dc','an'].forEach(function(x){if(c.indexOf(x)===-1)c.push(x);});}
   return c;
 }
 
@@ -279,11 +280,18 @@ function getCandidates(depth){
     pool=W.filter(function(w){return w.lv<=level&&filtered.indexOf(w.s)!==-1;});
   }
 
-  // ── TEMPORAL RULE: future time → must include จะ ──
+  // ── TEMPORAL RULES ──
+  // Future time (พรุ่งนี้) → force จะ as only preverb
   if(hasFutureTime&&lastSlot==='subject'){
-    // Force จะ into preverb options
     pool=pool.filter(function(w){
       if(w.s==='preverb')return w.t==='จะ';
+      return true;
+    });
+  }
+  // Past time (เมื่อวาน) → remove จะ from preverbs
+  if(hasPastTime&&lastSlot==='subject'){
+    pool=pool.filter(function(w){
+      if(w.s==='preverb'&&w.t==='จะ')return false;
       return true;
     });
   }
@@ -326,8 +334,8 @@ function getCandidates(depth){
     if(sem.length>0)pool=sem;
   }
 
-  // ── ALWAYS OFFER FINAL IF SENTENCE COMPLETE ──
-  if(isComplete()&&pool.length>0){
+  // ── ALWAYS OFFER FINAL IF SENTENCE COMPLETE (not after preposition) ──
+  if(isComplete()&&pool.length>0&&lastSlot!=='preposition'){
     var hasFin=false;
     for(var i=0;i<pool.length;i++){if(pool[i].s==='final'){hasFin=true;break;}}
     if(!hasFin){
@@ -373,7 +381,7 @@ function showBranches(depth){
   if(cands.length===0)return;
   var conn=document.createElement('div');conn.className='conn';grow.appendChild(conn);
   var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',depth);
-  var rd={depth:depth,nodes:[],savedSlot:lastSlot,savedWord:lastWord,savedFuture:hasFutureTime};
+  var rd={depth:depth,nodes:[],savedSlot:lastSlot,savedWord:lastWord,savedFuture:hasFutureTime,savedPast:hasPastTime};
   for(var i=0;i<cands.length;i++){
     var el=createNode(cands[i],depth,i);
     row.appendChild(el);
@@ -408,6 +416,7 @@ function tapNode(depth,word,el){
   lastSlot=word.s;
   lastWord=word;
   if(word.future)hasFutureTime=true;
+  if(word.past)hasPastTime=true;
   renderSentence();
   showBranches(depth+1);
 }
@@ -423,21 +432,21 @@ function undo(){
     var lr=rows[rows.length-1];
     var ch=null;
     for(var i=0;i<lr.nodes.length;i++){if(lr.nodes[i].state==='chosen'){ch=lr.nodes[i];break;}}
-    if(ch){lastSlot=ch.word.s;lastWord=ch.word;hasFutureTime=lr.savedFuture||(ch.word.future?true:false);}
+    if(ch){lastSlot=ch.word.s;lastWord=ch.word;hasFutureTime=lr.savedFuture||(ch.word.future?true:false);hasPastTime=lr.savedPast||(ch.word.past?true:false);}
     else{
-      lastSlot=lr.savedSlot;lastWord=lr.savedWord;hasFutureTime=lr.savedFuture;
+      lastSlot=lr.savedSlot;lastWord=lr.savedWord;hasFutureTime=lr.savedFuture;hasPastTime=lr.savedPast;
       for(var i=0;i<lr.nodes.length;i++){
         lr.nodes[i].state='active';
         lr.nodes[i].el.classList.remove('chosen','faded','revealed');
         (function(n,d){n.el.onclick=function(){tapNode(d,n.word,n.el);};})(lr.nodes[i],lr.depth);
       }
     }
-  }else{lastSlot='START';lastWord=null;hasFutureTime=false;}
+  }else{lastSlot='START';lastWord=null;hasFutureTime=false;hasPastTime=false;}
   renderSentence();
 }
 
 function reset(){
-  chosen=[];rows=[];shownWords={};lastSlot='START';lastWord=null;hasFutureTime=false;
+  chosen=[];rows=[];shownWords={};lastSlot='START';lastWord=null;hasFutureTime=false;hasPastTime=false;
   grow.innerHTML='';sentDisplay.innerHTML='';sentBar.classList.remove('complete');
   pickPattern();start();
 }
@@ -449,7 +458,7 @@ function start(){
   var count=pattern[0]||3;
   var picks=shuffle(starters).slice(0,count);
   var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',0);
-  var rd={depth:0,nodes:[],savedSlot:'START',savedWord:null,savedFuture:false};
+  var rd={depth:0,nodes:[],savedSlot:'START',savedWord:null,savedFuture:false,savedPast:false};
   for(var i=0;i<picks.length;i++){
     var el=createNode(picks[i],0,i);
     row.appendChild(el);
