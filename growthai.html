@@ -232,6 +232,13 @@ function getCandidates(depth){
     pool=pool.filter(function(w){if(w.s==='preverb'&&w.t==='จะ')return false;return true;});
   }
 
+  // Block ได้ postverb when preverb already in sentence (no double modal)
+  var hasPreverb=false;
+  for(var ci=0;ci<chosen.length;ci++){if(chosen[ci].word.s==='preverb')hasPreverb=true;}
+  if(hasPreverb){
+    pool=pool.filter(function(w){if(w.s==='postverb'&&w.t==='ได้')return false;return true;});
+  }
+
   // Verb semantic filter
   if(lastWord&&lastWord.s==='verb'&&lastWord.va){
     if(lastWord.va==='_'){
