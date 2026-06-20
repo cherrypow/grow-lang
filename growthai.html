@@ -73,446 +73,234 @@ body{display:flex;flex-direction:column}
 <div class="controls"><button class="ctrl-btn" onclick="undo()">Undo</button><button class="ctrl-btn primary" onclick="reset()">New</button></div>
 <script>
 /* ═══════════════════════════════════
-   500 WORDS — tagged lv:1-5
-   s = slot, lv = minimum level
+   ~340 WORDS with semantic categories
+   s=slot, lv=level, c=noun category, va=verb accepts, pa=prep accepts
+   Noun categories: fd=food, lc=location, pn=person, th=thing, ab=abstract
 ═══════════════════════════════════ */
 var W=[
-// ── SUBJECTS ──
-// lv1 (5)
+// ── SUBJECTS (20) ──
 {t:'ฉัน',p:'chǎn',e:'I',s:'subject',lv:1},{t:'คุณ',p:'khun',e:'you',s:'subject',lv:1},
 {t:'เขา',p:'khǎo',e:'he/she',s:'subject',lv:1},{t:'เรา',p:'rao',e:'we',s:'subject',lv:1},
 {t:'ผม',p:'phǒm',e:'I (male)',s:'subject',lv:1},
-// lv2 (5)
 {t:'เธอ',p:'thoe',e:'she/you',s:'subject',lv:2},{t:'พวกเขา',p:'phûak-khǎo',e:'they',s:'subject',lv:2},
-{t:'พวกเรา',p:'phûak-rao',e:'we (group)',s:'subject',lv:3},{t:'มัน',p:'man',e:'it',s:'subject',lv:3},
-{t:'พวกคุณ',p:'phûak-khun',e:'you all',s:'subject',lv:3},
-// lv3 (3)
-{t:'พี่',p:'phîi',e:'older person',s:'subject',lv:3},{t:'น้อง',p:'nɔ́ɔng',e:'younger one',s:'subject',lv:3},
-{t:'นาย',p:'naai',e:'you (casual m)',s:'subject',lv:3},
-// lv3 new
-{t:'แฟน',p:'faen',e:'partner',s:'subject',lv:3},{t:'ตา',p:'dtaa',e:'grandfather',s:'subject',lv:3},
-// lv4 (2+5)
-{t:'ดิฉัน',p:'dì-chǎn',e:'I (formal f)',s:'subject',lv:4},{t:'หล่อน',p:'lɔ̀ɔn',e:'she (formal)',s:'subject',lv:4},
-{t:'ท่าน',p:'thân',e:'you (respectful)',s:'subject',lv:4},{t:'แก',p:'gae',e:'you (informal)',s:'subject',lv:4},
-{t:'ยาย',p:'yaai',e:'grandmother',s:'subject',lv:4},{t:'ลุง',p:'lung',e:'uncle',s:'subject',lv:4},
-{t:'ป้า',p:'bpâa',e:'aunt',s:'subject',lv:4},
-// lv5 (5)
-{t:'อา',p:'aa',e:'uncle (younger)',s:'subject',lv:5},{t:'น้า',p:'náa',e:'aunt (younger)',s:'subject',lv:5},
-{t:'พวกมัน',p:'phûak-man',e:'they (things)',s:'subject',lv:5},{t:'ตัวเอง',p:'dtua-eeng',e:'oneself',s:'subject',lv:5},
-{t:'ใครบางคน',p:'khrai-baang-khon',e:'someone',s:'subject',lv:5},
+{t:'พวกเรา',p:'phûak-rao',e:'we (group)',s:'subject',lv:3},{t:'พี่',p:'phîi',e:'older person',s:'subject',lv:3},
+{t:'น้อง',p:'nɔ́ɔng',e:'younger one',s:'subject',lv:3},{t:'แฟน',p:'faen',e:'partner',s:'subject',lv:3},
+{t:'มัน',p:'man',e:'it',s:'subject',lv:3},{t:'พวกคุณ',p:'phûak-khun',e:'you all',s:'subject',lv:3},
+{t:'ดิฉัน',p:'dì-chǎn',e:'I (formal f)',s:'subject',lv:4},{t:'ท่าน',p:'thân',e:'you (respect)',s:'subject',lv:4},
+{t:'ลุง',p:'lung',e:'uncle',s:'subject',lv:4},{t:'ป้า',p:'bpâa',e:'aunt',s:'subject',lv:4},
+{t:'ยาย',p:'yaai',e:'grandmother',s:'subject',lv:4},{t:'ตา',p:'dtaa',e:'grandfather',s:'subject',lv:4},
+{t:'ตัวเอง',p:'dtua-eeng',e:'oneself',s:'subject',lv:5},
 
-// ── TIME ──
-// lv2 (4)
+// ── TIME (18) ──
 {t:'วันนี้',p:'wan-níi',e:'today',s:'time',lv:2},{t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time',lv:2},
 {t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time',lv:2},{t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time',lv:2},
-// lv2 (4)
+{t:'ทุกวัน',p:'thúk-wan',e:'every day',s:'time',lv:2},
 {t:'ตอนเช้า',p:'dtɔɔn-cháo',e:'morning',s:'time',lv:3},{t:'ตอนเย็น',p:'dtɔɔn-yen',e:'evening',s:'time',lv:3},
-{t:'ทุกวัน',p:'thúk-wan',e:'every day',s:'time',lv:2},{t:'บ่อยๆ',p:'bɔ̀i-bɔ̀i',e:'often',s:'time',lv:3},
-// lv3 (4)
+{t:'ตอนกลางคืน',p:'dtɔɔn-glaang-kheun',e:'at night',s:'time',lv:3},{t:'บ่อยๆ',p:'bɔ̀i-bɔ̀i',e:'often',s:'time',lv:3},
 {t:'เสมอ',p:'sà-mǒe',e:'always',s:'time',lv:3},{t:'บางครั้ง',p:'baang-khráng',e:'sometimes',s:'time',lv:3},
-{t:'ตอนกลางคืน',p:'dtɔɔn-glaang-kheun',e:'at night',s:'time',lv:3},{t:'เร็วๆนี้',p:'reo-reo-níi',e:'soon',s:'time',lv:3},
-// lv4 (3)
+{t:'เร็วๆนี้',p:'reo-reo-níi',e:'soon',s:'time',lv:3},
 {t:'อาทิตย์หน้า',p:'aa-thít-nâa',e:'next week',s:'time',lv:4},{t:'เดือนหน้า',p:'deuan-nâa',e:'next month',s:'time',lv:4},
-{t:'ปีหน้า',p:'bpii-nâa',e:'next year',s:'time',lv:4},
-// lv3 new
-{t:'เมื่อเช้า',p:'mêua-cháo',e:'this morning',s:'time',lv:3},{t:'ตอนกลางวัน',p:'dtɔɔn-glaang-wan',e:'at noon',s:'time',lv:3},
-// lv4 new (5)
 {t:'ทุกเช้า',p:'thúk-cháo',e:'every morning',s:'time',lv:4},{t:'ทุกคืน',p:'thúk-kheun',e:'every night',s:'time',lv:4},
-{t:'เดือนที่แล้ว',p:'deuan-thîi-láaeo',e:'last month',s:'time',lv:4},{t:'อาทิตย์ที่แล้ว',p:'aa-thít-thîi-láaeo',e:'last week',s:'time',lv:4},
-{t:'นานๆ',p:'naan-naan',e:'once in a while',s:'time',lv:4},
-// lv5 (3+5)
-{t:'ตอนบ่าย',p:'dtɔɔn-bàai',e:'afternoon',s:'time',lv:5},{t:'ตอนดึก',p:'dtɔɔn-dèuk',e:'late night',s:'time',lv:5},
-{t:'ปีที่แล้ว',p:'bpii-thîi-láaeo',e:'last year',s:'time',lv:5},
-{t:'ตั้งแต่เช้า',p:'dtâng-dtàe-cháo',e:'since morning',s:'time',lv:5},{t:'ไม่นาน',p:'mâi-naan',e:'not long',s:'time',lv:5},
-{t:'ทุกเดือน',p:'thúk-deuan',e:'every month',s:'time',lv:5},{t:'ทุกปี',p:'thúk-bpii',e:'every year',s:'time',lv:5},
-{t:'ภายหลัง',p:'phaai-lǎng',e:'later on',s:'time',lv:5},
+{t:'ตอนบ่าย',p:'dtɔɔn-bàai',e:'afternoon',s:'time',lv:5},{t:'ปีที่แล้ว',p:'bpii-thîi-láaeo',e:'last year',s:'time',lv:5},
 
-// ── CONDITIONS ──
-// lv3 (2)
+// ── CONDITIONS (8) ──
 {t:'ถ้า',p:'thâa',e:'if',s:'condition',lv:3},{t:'เพราะว่า',p:'phrɔ́-wâa',e:'because',s:'condition',lv:3},
-// lv4 (3)
 {t:'เมื่อ',p:'mêua',e:'when',s:'condition',lv:4},{t:'แม้ว่า',p:'máe-wâa',e:'even though',s:'condition',lv:4},
 {t:'ก่อนที่',p:'gɔ̀ɔn-thîi',e:'before',s:'condition',lv:4},
-// lv4 new (2)
-{t:'ขณะที่',p:'khà-nà-thîi',e:'while',s:'condition',lv:4},{t:'เผื่อว่า',p:'phèua-wâa',e:'in case',s:'condition',lv:4},
-// lv5 (3+3)
 {t:'หลังจาก',p:'lǎng-jàak',e:'after',s:'condition',lv:5},{t:'ตั้งแต่',p:'dtâng-dtàe',e:'since',s:'condition',lv:5},
 {t:'ทั้งๆที่',p:'tháng-tháng-thîi',e:'despite',s:'condition',lv:5},
-{t:'ไม่ว่า',p:'mâi-wâa',e:'regardless',s:'condition',lv:5},{t:'จนกว่า',p:'jon-gwàa',e:'until',s:'condition',lv:5},
-{t:'เพียงแค่',p:'phiiang-khâe',e:'just/only if',s:'condition',lv:5},
 
-// ── QUESTION STARTERS ──
-// lv2
+// ── QUESTION STARTERS (1) ──
 {t:'ทำไม',p:'tam-mai',e:'why',s:'qstart',lv:2},
-// lv4
-{t:'ทำไมถึง',p:'tam-mai-thěung',e:'how come',s:'qstart',lv:4},
 
-// ── PRE-VERB ──
-// lv1 (2)
+// ── PRE-VERB (10) ──
 {t:'ไม่',p:'mâi',e:'not',s:'preverb',lv:1},{t:'จะ',p:'jà',e:'will',s:'preverb',lv:1},
-// lv2 (3)
 {t:'กำลัง',p:'gam-lang',e:'(doing now)',s:'preverb',lv:2},{t:'อยาก',p:'yàak',e:'want to',s:'preverb',lv:2},
-{t:'ต้อง',p:'dtɔ̂ng',e:'must',s:'preverb',lv:3},
-// lv3 (3)
-{t:'ควร',p:'khuan',e:'should',s:'preverb',lv:3},{t:'เคย',p:'khoei',e:'used to',s:'preverb',lv:3},
-{t:'ยัง',p:'yang',e:'still',s:'preverb',lv:3},
-// lv4 (2+3)
-{t:'เพิ่ง',p:'phêung',e:'just (now)',s:'preverb',lv:4},{t:'ไม่ได้',p:'mâi-dâai',e:'did not',s:'preverb',lv:4},
-{t:'น่าจะ',p:'nâa-jà',e:'probably',s:'preverb',lv:4},{t:'ไม่ค่อย',p:'mâi-khɔ̂i',e:'not really',s:'preverb',lv:4},
-{t:'โปรด',p:'bpròht',e:'please',s:'preverb',lv:4},
-// lv5 (3)
-{t:'พยายาม',p:'phá-yaa-yaam',e:'try to',s:'preverb',lv:5},{t:'ตั้งใจ',p:'dtâng-jai',e:'intend to',s:'preverb',lv:5},
-{t:'กล้า',p:'glâa',e:'dare to',s:'preverb',lv:5},
+{t:'ต้อง',p:'dtɔ̂ng',e:'must',s:'preverb',lv:3},{t:'ควร',p:'khuan',e:'should',s:'preverb',lv:3},
+{t:'เคย',p:'khoei',e:'used to',s:'preverb',lv:3},{t:'ยัง',p:'yang',e:'still',s:'preverb',lv:3},
+{t:'เพิ่ง',p:'phêung',e:'just (now)',s:'preverb',lv:4},{t:'ไม่ค่อย',p:'mâi-khɔ̂i',e:'not really',s:'preverb',lv:4},
 
-// ── VERBS ── tr:1 = transitive (needs object), tr:0 = intransitive (object optional)
-// lv1 (15)
-{t:'กิน',p:'gin',e:'eat',s:'verb',lv:1},{t:'ดื่ม',p:'dèum',e:'drink',s:'verb',lv:1},
-{t:'ไป',p:'bpai',e:'go',s:'verb',lv:1},{t:'มา',p:'maa',e:'come',s:'verb',lv:1},
+// ── VERBS (70) ── va = which noun categories this verb accepts as object
+// No va = accepts any noun
+{t:'กิน',p:'gin',e:'eat',s:'verb',lv:1,va:'fd'},{t:'ดื่ม',p:'dèum',e:'drink',s:'verb',lv:1,va:'fd'},
+{t:'ไป',p:'bpai',e:'go',s:'verb',lv:1,va:'lc'},{t:'มา',p:'maa',e:'come',s:'verb',lv:1,va:'lc'},
 {t:'ชอบ',p:'chôp',e:'like',s:'verb',lv:1},{t:'มี',p:'mii',e:'have',s:'verb',lv:1},
-{t:'ดู',p:'duu',e:'watch',s:'verb',lv:1},{t:'นอน',p:'non',e:'sleep',s:'verb',lv:1},
-{t:'พูด',p:'phûut',e:'speak',s:'verb',lv:1},{t:'ทำ',p:'tam',e:'do/make',s:'verb',lv:1},
-{t:'รู้',p:'rúu',e:'know',s:'verb',lv:1},{t:'เป็น',p:'bpen',e:'be',s:'verb',lv:1},
-{t:'อยู่',p:'yùu',e:'live/be at',s:'verb',lv:1},{t:'ซื้อ',p:'séu',e:'buy',s:'verb',lv:1},
-{t:'หิว',p:'hǐw',e:'be hungry',s:'verb',lv:1},
-// lv2 (15)
-{t:'ให้',p:'hâi',e:'give',s:'verb',lv:3},{t:'ขาย',p:'khǎai',e:'sell',s:'verb',lv:3},
-{t:'เรียน',p:'riian',e:'study',s:'verb',lv:2},{t:'รัก',p:'rák',e:'love',s:'verb',lv:2},
-{t:'อ่าน',p:'àan',e:'read',s:'verb',lv:2},{t:'เขียน',p:'khǐan',e:'write',s:'verb',lv:3},
-{t:'ฟัง',p:'fang',e:'listen',s:'verb',lv:3},{t:'วิ่ง',p:'wîng',e:'run',s:'verb',lv:2},
+{t:'ดู',p:'duu',e:'watch',s:'verb',lv:1,va:'th,pn'},{t:'นอน',p:'non',e:'sleep',s:'verb',lv:1},
+{t:'พูด',p:'phûut',e:'speak',s:'verb',lv:1,va:'th,ab'},{t:'ทำ',p:'tam',e:'do/make',s:'verb',lv:1,va:'fd,th,ab'},
+{t:'รู้',p:'rúu',e:'know',s:'verb',lv:1,va:'th,ab'},{t:'รู้จัก',p:'rúu-jàk',e:'know (person)',s:'verb',lv:1,va:'pn'},
+{t:'เป็น',p:'bpen',e:'be',s:'verb',lv:1,va:'pn,ab'},{t:'อยู่',p:'yùu',e:'live/be at',s:'verb',lv:1,va:'lc'},
+{t:'ซื้อ',p:'séu',e:'buy',s:'verb',lv:1,va:'fd,th'},{t:'หิว',p:'hǐw',e:'be hungry',s:'verb',lv:1},
+{t:'เรียน',p:'riian',e:'study',s:'verb',lv:2,va:'th,ab'},{t:'รัก',p:'rák',e:'love',s:'verb',lv:2,va:'pn,th,ab'},
+{t:'อ่าน',p:'àan',e:'read',s:'verb',lv:2,va:'th'},{t:'เขียน',p:'khǐan',e:'write',s:'verb',lv:2,va:'th,ab'},
+{t:'ฟัง',p:'fang',e:'listen',s:'verb',lv:2,va:'th,pn'},{t:'วิ่ง',p:'wîng',e:'run',s:'verb',lv:2},
 {t:'เดิน',p:'doeen',e:'walk',s:'verb',lv:2},{t:'ทำงาน',p:'tam-ngaan',e:'work',s:'verb',lv:2},
-{t:'เล่น',p:'lên',e:'play',s:'verb',lv:2},{t:'เห็น',p:'hěn',e:'see',s:'verb',lv:2},
-{t:'เจอ',p:'jer',e:'meet',s:'verb',lv:3},{t:'กลับ',p:'glàp',e:'return',s:'verb',lv:2},
-{t:'รอ',p:'rɔɔ',e:'wait',s:'verb',lv:2},
-// lv3 (15)
-{t:'ช่วย',p:'chûai',e:'help',s:'verb',lv:3},{t:'คิด',p:'khít',e:'think',s:'verb',lv:3},
-{t:'เข้าใจ',p:'khâo-jai',e:'understand',s:'verb',lv:3},{t:'ลืม',p:'leum',e:'forget',s:'verb',lv:3},
-{t:'จำ',p:'jam',e:'remember',s:'verb',lv:3},{t:'ถาม',p:'thǎam',e:'ask',s:'verb',lv:3},
-{t:'ตอบ',p:'dtɔ̀ɔp',e:'answer',s:'verb',lv:3},{t:'ส่ง',p:'sòng',e:'send',s:'verb',lv:3},
+{t:'เล่น',p:'lên',e:'play',s:'verb',lv:2,va:'th'},{t:'เห็น',p:'hěn',e:'see',s:'verb',lv:2},
+{t:'เจอ',p:'jer',e:'meet',s:'verb',lv:2,va:'pn'},{t:'กลับ',p:'glàp',e:'return',s:'verb',lv:2,va:'lc'},
+{t:'รอ',p:'rɔɔ',e:'wait',s:'verb',lv:2,va:'pn,th'},{t:'อาบน้ำ',p:'àap-náam',e:'shower',s:'verb',lv:2},
+{t:'แปรงฟัน',p:'bpraeng-fan',e:'brush teeth',s:'verb',lv:2},{t:'ซื้อของ',p:'séu-khɔ̌ɔng',e:'go shopping',s:'verb',lv:2},
+{t:'คุย',p:'khui',e:'chat',s:'verb',lv:2},
+{t:'ให้',p:'hâi',e:'give',s:'verb',lv:3,va:'fd,th,pn'},{t:'ขาย',p:'khǎai',e:'sell',s:'verb',lv:3,va:'fd,th'},
+{t:'ช่วย',p:'chûai',e:'help',s:'verb',lv:3,va:'pn'},{t:'คิด',p:'khít',e:'think',s:'verb',lv:3},
+{t:'เข้าใจ',p:'khâo-jai',e:'understand',s:'verb',lv:3,va:'pn,th,ab'},{t:'ลืม',p:'leum',e:'forget',s:'verb',lv:3},
+{t:'จำ',p:'jam',e:'remember',s:'verb',lv:3},{t:'ถาม',p:'thǎam',e:'ask',s:'verb',lv:3,va:'pn,ab'},
+{t:'ตอบ',p:'dtɔ̀ɔp',e:'answer',s:'verb',lv:3,va:'pn,ab'},{t:'ส่ง',p:'sòng',e:'send',s:'verb',lv:3,va:'th,pn'},
 {t:'โทร',p:'thoo',e:'call',s:'verb',lv:3},{t:'หา',p:'hǎa',e:'look for',s:'verb',lv:3},
-{t:'เปิด',p:'bpèrt',e:'open',s:'verb',lv:3},{t:'ปิด',p:'bpìt',e:'close',s:'verb',lv:3},
-{t:'นั่ง',p:'nâng',e:'sit',s:'verb',lv:3},{t:'ยืน',p:'yeun',e:'stand',s:'verb',lv:3},
-{t:'ล้าง',p:'láang',e:'wash',s:'verb',lv:3},
-// lv3 new (2)
-{t:'แก้',p:'gâe',e:'fix',s:'verb',lv:3},{t:'เตรียม',p:'dtriiam',e:'prepare',s:'verb',lv:3},
-// lv4 (15+20)
-{t:'เกลียด',p:'glìat',e:'hate',s:'verb',lv:4},{t:'ร้องเพลง',p:'rɔ́ɔng-phleng',e:'sing',s:'verb',lv:4},
-{t:'ขับรถ',p:'khàp-rót',e:'drive',s:'verb',lv:4},{t:'บิน',p:'bin',e:'fly',s:'verb',lv:4},
-{t:'ว่ายน้ำ',p:'wâai-náam',e:'swim',s:'verb',lv:4},{t:'ใส่',p:'sài',e:'wear',s:'verb',lv:4},
-{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb',lv:4},{t:'สอน',p:'sɔ̌ɔn',e:'teach',s:'verb',lv:4},
-{t:'เปลี่ยน',p:'bplìan',e:'change',s:'verb',lv:4},{t:'เดินทาง',p:'doeen-thaang',e:'travel',s:'verb',lv:4},
-{t:'ลอง',p:'lɔɔng',e:'try',s:'verb',lv:4},{t:'เลือก',p:'lêuak',e:'choose',s:'verb',lv:4},
-{t:'จ่าย',p:'jàai',e:'pay',s:'verb',lv:4},{t:'สั่ง',p:'sàng',e:'order',s:'verb',lv:4},
-{t:'ได้ยิน',p:'dâai-yin',e:'hear',s:'verb',lv:4},
-// lv4 new (20)
-{t:'ซ่อม',p:'sɔ̂ɔm',e:'repair',s:'verb',lv:4},{t:'แปล',p:'bplae',e:'translate',s:'verb',lv:4},
-{t:'ฝึก',p:'fèuk',e:'practice',s:'verb',lv:4},{t:'ตัด',p:'dtàt',e:'cut',s:'verb',lv:4},
-{t:'จัด',p:'jàt',e:'arrange',s:'verb',lv:4},{t:'ใช้',p:'chái',e:'use',s:'verb',lv:4},
-{t:'ถือ',p:'thěu',e:'hold',s:'verb',lv:4},{t:'ขึ้น',p:'khêun',e:'go up',s:'verb',lv:4},
-{t:'ลง',p:'long',e:'go down',s:'verb',lv:4},{t:'ย้าย',p:'yáai',e:'move',s:'verb',lv:4},
-{t:'เช็ค',p:'chék',e:'check',s:'verb',lv:4},{t:'แบ่ง',p:'bàeng',e:'share/divide',s:'verb',lv:4},
-{t:'เก็บ',p:'gèp',e:'keep/collect',s:'verb',lv:4},{t:'วาง',p:'waang',e:'put down',s:'verb',lv:4},
-{t:'หยุด',p:'yùt',e:'stop',s:'verb',lv:4},{t:'เริ่ม',p:'rêrm',e:'start',s:'verb',lv:4},
-{t:'ต่อ',p:'dtɔ̀ɔ',e:'continue',s:'verb',lv:4},{t:'ทิ้ง',p:'thíng',e:'throw away',s:'verb',lv:4},
-{t:'พบ',p:'phóp',e:'find/meet',s:'verb',lv:4},{t:'แจ้ง',p:'jâeng',e:'inform',s:'verb',lv:4},
-// lv5 (20+15)
-{t:'พักผ่อน',p:'phák-phɔ̀ɔn',e:'relax',s:'verb',lv:5},{t:'ตื่น',p:'dtèun',e:'wake up',s:'verb',lv:5},
-{t:'แต่งตัว',p:'dtàeng-dtua',e:'get dressed',s:'verb',lv:5},{t:'ออกกำลังกาย',p:'ɔ̀ɔk-gam-lang-gaai',e:'exercise',s:'verb',lv:5},
-{t:'ตัดสินใจ',p:'dtàt-sǐn-jai',e:'decide',s:'verb',lv:5},{t:'แนะนำ',p:'náe-nam',e:'recommend',s:'verb',lv:5},
-{t:'ออก',p:'ɔ̀ɔk',e:'leave',s:'verb',lv:5},{t:'เบื่อ',p:'bèua',e:'be bored',s:'verb',lv:5},
-{t:'โกรธ',p:'gròht',e:'be angry',s:'verb',lv:5},{t:'กลัว',p:'glua',e:'be afraid',s:'verb',lv:5},
-{t:'ยิ้ม',p:'yím',e:'smile',s:'verb',lv:5},{t:'ร้องไห้',p:'rɔ́ɔng-hâi',e:'cry',s:'verb',lv:5},
-{t:'วางแผน',p:'waang-phǎen',e:'plan',s:'verb',lv:5},{t:'แก้ไข',p:'gâe-khǎi',e:'fix/solve',s:'verb',lv:5},
-{t:'สมัคร',p:'sà-màk',e:'apply/sign up',s:'verb',lv:5},{t:'ยกเลิก',p:'yók-lêrk',e:'cancel',s:'verb',lv:5},
-{t:'จอง',p:'jɔɔng',e:'book/reserve',s:'verb',lv:5},{t:'ขอ',p:'khɔ̌ɔ',e:'request',s:'verb',lv:5},
-{t:'ปฏิเสธ',p:'bpà-dtì-sèet',e:'refuse',s:'verb',lv:5},{t:'ยอมรับ',p:'yɔɔm-ráp',e:'accept',s:'verb',lv:5},
-// lv5 new (15)
-{t:'อธิบาย',p:'à-thí-baai',e:'explain',s:'verb',lv:5},{t:'ประกาศ',p:'bprà-gàat',e:'announce',s:'verb',lv:5},
-{t:'เสนอ',p:'sà-nǒe',e:'propose',s:'verb',lv:5},{t:'ติดต่อ',p:'dtìt-dtɔ̀ɔ',e:'contact',s:'verb',lv:5},
-{t:'เตือน',p:'dteuuan',e:'warn',s:'verb',lv:5},{t:'สนใจ',p:'sǒn-jai',e:'be interested',s:'verb',lv:5},
-{t:'ประทับใจ',p:'bprà-tháp-jai',e:'be impressed',s:'verb',lv:5},{t:'คาดหวัง',p:'khâat-wǎng',e:'expect',s:'verb',lv:5},
-{t:'พัฒนา',p:'phát-tá-naa',e:'develop',s:'verb',lv:5},{t:'เปรียบเทียบ',p:'bprìap-thîap',e:'compare',s:'verb',lv:5},
-{t:'แก้ปัญหา',p:'gâe-pan-hǎa',e:'solve problem',s:'verb',lv:5},{t:'ดูแล',p:'duu-lae',e:'take care of',s:'verb',lv:5},
-{t:'สังเกต',p:'sǎng-gèet',e:'observe',s:'verb',lv:5},{t:'ทดลอง',p:'thót-lɔɔng',e:'experiment',s:'verb',lv:5},
-{t:'สร้าง',p:'sâang',e:'build/create',s:'verb',lv:5},
-// daily activities
-{t:'อาบน้ำ',p:'àap-náam',e:'take a shower',s:'verb',lv:2},{t:'แปรงฟัน',p:'bpraeng-fan',e:'brush teeth',s:'verb',lv:2},
-{t:'ซื้อของ',p:'séu-khɔ̌ɔng',e:'go shopping',s:'verb',lv:2},{t:'คุย',p:'khui',e:'chat',s:'verb',lv:2},
-{t:'ถ่ายรูป',p:'thàai-rûup',e:'take a photo',s:'verb',lv:3},{t:'ส่งข้อความ',p:'sòng-khɔ̂ɔ-khwaam',e:'send a message',s:'verb',lv:3},
-// gap-fill verbs from sentence review
-{t:'รู้จัก',p:'rúu-jàk',e:'know (person)',s:'verb',lv:1},{t:'ข้าม',p:'khâam',e:'cross',s:'verb',lv:3},
-{t:'ออกแบบ',p:'ɔ̀ɔk-bàep',e:'design',s:'verb',lv:4},{t:'ประเมิน',p:'bprà-mern',e:'evaluate',s:'verb',lv:5},
-{t:'ปรับปรุง',p:'bpràp-bprung',e:'improve',s:'verb',lv:5},{t:'วิเคราะห์',p:'wí-khráw',e:'analyze',s:'verb',lv:5},
-{t:'สื่อสาร',p:'sèu-sǎan',e:'communicate',s:'verb',lv:5},{t:'ตรวจสอบ',p:'dtrùat-sɔ̀ɔp',e:'inspect/verify',s:'verb',lv:5},
-{t:'ปรับตัว',p:'bpràp-dtua',e:'adapt',s:'verb',lv:5},{t:'จัดการ',p:'jàt-gaan',e:'manage',s:'verb',lv:4},
+{t:'เปิด',p:'bpèrt',e:'open',s:'verb',lv:3,va:'th'},{t:'ปิด',p:'bpìt',e:'close',s:'verb',lv:3,va:'th'},
+{t:'นั่ง',p:'nâng',e:'sit',s:'verb',lv:3},{t:'ล้าง',p:'láang',e:'wash',s:'verb',lv:3,va:'th,fd'},
+{t:'ถ่ายรูป',p:'thàai-rûup',e:'take photo',s:'verb',lv:3},
+{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb',lv:4},{t:'สอน',p:'sɔ̌ɔn',e:'teach',s:'verb',lv:4,va:'pn,th,ab'},
+{t:'เปลี่ยน',p:'bplìan',e:'change',s:'verb',lv:4,va:'th,ab'},{t:'เดินทาง',p:'doeen-thaang',e:'travel',s:'verb',lv:4},
+{t:'ลอง',p:'lɔɔng',e:'try',s:'verb',lv:4,va:'fd,th,ab'},{t:'เลือก',p:'lêuak',e:'choose',s:'verb',lv:4},
+{t:'จ่าย',p:'jàai',e:'pay',s:'verb',lv:4,va:'th,ab'},{t:'สั่ง',p:'sàng',e:'order',s:'verb',lv:4,va:'fd,th'},
+{t:'ใช้',p:'cháai',e:'use',s:'verb',lv:4,va:'th'},{t:'ขับรถ',p:'khàp-rót',e:'drive',s:'verb',lv:4},
+{t:'ใส่',p:'sài',e:'wear',s:'verb',lv:4,va:'th'},{t:'ซ่อม',p:'sɔ̂ɔm',e:'repair',s:'verb',lv:4,va:'th'},
+{t:'จัดการ',p:'jàt-gaan',e:'manage',s:'verb',lv:4,va:'th,ab,pn'},
+{t:'ตัดสินใจ',p:'dtàt-sǐn-jai',e:'decide',s:'verb',lv:5},{t:'แนะนำ',p:'náe-nam',e:'recommend',s:'verb',lv:5,va:'fd,th,pn,lc'},
+{t:'วางแผน',p:'waang-phǎen',e:'plan',s:'verb',lv:5,va:'th,ab'},{t:'แก้ไข',p:'gâe-khǎi',e:'fix/solve',s:'verb',lv:5,va:'th,ab'},
+{t:'พัฒนา',p:'phát-tá-naa',e:'develop',s:'verb',lv:5,va:'th,ab'},{t:'สร้าง',p:'sâang',e:'build',s:'verb',lv:5,va:'th,ab'},
+{t:'ออกแบบ',p:'ɔ̀ɔk-bàep',e:'design',s:'verb',lv:5,va:'th,ab'},{t:'ดูแล',p:'duu-lae',e:'take care of',s:'verb',lv:5,va:'pn,th'},
 
-// ── OBJECTS / NOUNS ──
-// lv1 (15)
-{t:'ข้าว',p:'khâao',e:'rice',s:'object',lv:1},{t:'น้ำ',p:'nám',e:'water',s:'object',lv:1},
-{t:'อาหาร',p:'aa-hǎan',e:'food',s:'object',lv:1},{t:'บ้าน',p:'bâan',e:'home',s:'object',lv:1},
-{t:'กาแฟ',p:'gaa-fae',e:'coffee',s:'object',lv:1},{t:'หมา',p:'mǎa',e:'dog',s:'object',lv:1},
-{t:'แมว',p:'maaeo',e:'cat',s:'object',lv:1},{t:'รถ',p:'rót',e:'car',s:'object',lv:1},
-{t:'เงิน',p:'ngern',e:'money',s:'object',lv:1},{t:'หนังสือ',p:'nǎng-sěu',e:'book',s:'object',lv:1},
-{t:'เพื่อน',p:'phêuan',e:'friend',s:'object',lv:1},{t:'พ่อ',p:'phɔ̂ɔ',e:'father',s:'object',lv:1},
-{t:'แม่',p:'mâe',e:'mother',s:'object',lv:1},{t:'ปลา',p:'bplaa',e:'fish',s:'object',lv:1},
-{t:'ผลไม้',p:'phǒn-lá-máai',e:'fruit',s:'object',lv:1},
-// lv2 (20)
-{t:'ชา',p:'chaa',e:'tea',s:'object',lv:3},{t:'เบียร์',p:'biia',e:'beer',s:'object',lv:3},
-{t:'ผัก',p:'phàk',e:'vegetables',s:'object',lv:2},{t:'เนื้อ',p:'néua',e:'meat',s:'object',lv:3},
-{t:'ตลาด',p:'dtà-làat',e:'market',s:'object',lv:2},{t:'โรงเรียน',p:'roong-riian',e:'school',s:'object',lv:2},
-{t:'ร้านอาหาร',p:'ráan-aa-hǎan',e:'restaurant',s:'object',lv:2},{t:'หนัง',p:'nǎng',e:'movie',s:'object',lv:2},
-{t:'เพลง',p:'phleng',e:'song',s:'object',lv:2},{t:'โทรศัพท์',p:'thoo-rá-sàp',e:'phone',s:'object',lv:3},
-{t:'งาน',p:'ngaan',e:'work/job',s:'object',lv:3},{t:'ภาษาไทย',p:'phaa-sǎa-tai',e:'Thai',s:'object',lv:2},
-{t:'ครอบครัว',p:'khrɔ̂ɔp-khrua',e:'family',s:'object',lv:2},{t:'ลูก',p:'lûuk',e:'child',s:'object',lv:2},
-{t:'ครู',p:'khruu',e:'teacher',s:'object',lv:2},{t:'นักเรียน',p:'nák-riian',e:'student',s:'object',lv:2},
-{t:'คน',p:'khon',e:'person',s:'object',lv:2},{t:'ข่าว',p:'khàao',e:'news',s:'object',lv:2},
-{t:'อาหารไทย',p:'aa-hǎan-tai',e:'Thai food',s:'object',lv:2},{t:'ของ',p:'khɔ̌ɔng',e:'thing',s:'object',lv:2},
-// lv3 (15)
-{t:'สำนักงาน',p:'sǎm-nák-ngaan',e:'office',s:'object',lv:3},{t:'โรงแรม',p:'roong-raem',e:'hotel',s:'object',lv:3},
-{t:'ภาษาอังกฤษ',p:'phaa-sǎa-ang-grìt',e:'English',s:'object',lv:3},{t:'หมอ',p:'mǒɔ',e:'doctor',s:'object',lv:3},
-{t:'สามี',p:'sǎa-mii',e:'husband',s:'object',lv:3},{t:'ภรรยา',p:'phan-rá-yaa',e:'wife',s:'object',lv:3},
-{t:'คอมพิวเตอร์',p:'khɔɔm-phiu-dtêr',e:'computer',s:'object',lv:3},{t:'ทะเล',p:'thá-lee',e:'beach',s:'object',lv:3},
-{t:'สวน',p:'sǔan',e:'park',s:'object',lv:3},{t:'ห้อง',p:'hɔ̂ɔng',e:'room',s:'object',lv:3},
-{t:'กีฬา',p:'gii-laa',e:'sport',s:'object',lv:3},{t:'ดนตรี',p:'don-dtrii',e:'music',s:'object',lv:3},
-{t:'เสื้อผ้า',p:'sêua-phâa',e:'clothes',s:'object',lv:3},{t:'กระเป๋า',p:'grà-bpǎo',e:'bag',s:'object',lv:3},
-{t:'ถนน',p:'thà-nǒn',e:'road',s:'object',lv:3},
-// lv3 new (6)
-{t:'ไก่',p:'gài',e:'chicken',s:'object',lv:3},{t:'ขนม',p:'khà-nǒm',e:'snack',s:'object',lv:3},
-{t:'หน้าต่าง',p:'nâa-dtàang',e:'window',s:'object',lv:3},{t:'ประตู',p:'bprà-dtuu',e:'door',s:'object',lv:3},
-{t:'ไข่',p:'khài',e:'egg',s:'object',lv:3},{t:'นม',p:'nom',e:'milk',s:'object',lv:3},
-// lv4 (15+30)
-{t:'โรงพยาบาล',p:'roong-phá-yaa-baan',e:'hospital',s:'object',lv:4},{t:'สนามบิน',p:'sà-nǎam-bin',e:'airport',s:'object',lv:4},
-{t:'รถไฟ',p:'rót-fai',e:'train',s:'object',lv:4},{t:'รถเมล์',p:'rót-may',e:'bus',s:'object',lv:4},
-{t:'เครื่องบิน',p:'khrêuang-bin',e:'airplane',s:'object',lv:4},{t:'ภูเขา',p:'phuu-khǎo',e:'mountain',s:'object',lv:4},
-{t:'อากาศ',p:'aa-gàat',e:'weather',s:'object',lv:4},{t:'ฝน',p:'fǒn',e:'rain',s:'object',lv:4},
-{t:'เรื่อง',p:'rêuang',e:'story',s:'object',lv:4},{t:'ปัญหา',p:'pan-hǎa',e:'problem',s:'object',lv:4},
-{t:'ดอกไม้',p:'dɔ̀ɔk-máai',e:'flower',s:'object',lv:4},{t:'ต้นไม้',p:'dtôn-máai',e:'tree',s:'object',lv:4},
-{t:'ท้องฟ้า',p:'thɔ́ɔng-fáa',e:'sky',s:'object',lv:4},{t:'ทาง',p:'thaang',e:'way',s:'object',lv:4},
-{t:'ที่นี่',p:'thîi-nîi',e:'here',s:'object',lv:4},
-// lv4 new (30)
-{t:'ธนาคาร',p:'thá-naa-khaan',e:'bank',s:'object',lv:4},{t:'ไปรษณีย์',p:'bprai-sà-nii',e:'post office',s:'object',lv:4},
-{t:'วัด',p:'wát',e:'temple',s:'object',lv:4},{t:'สถานี',p:'sà-thǎa-nii',e:'station',s:'object',lv:4},
-{t:'ตำรวจ',p:'dtam-rùat',e:'police',s:'object',lv:4},{t:'ทนายความ',p:'thá-naai-khwaam',e:'lawyer',s:'object',lv:4},
-{t:'วิศวกร',p:'wít-sà-wá-gɔɔn',e:'engineer',s:'object',lv:4},{t:'พยาบาล',p:'phá-yaa-baan',e:'nurse',s:'object',lv:4},
-{t:'ห้องน้ำ',p:'hɔ̂ɔng-náam',e:'bathroom',s:'object',lv:4},{t:'ห้องครัว',p:'hɔ̂ɔng-khrua',e:'kitchen',s:'object',lv:4},
-{t:'ห้องนอน',p:'hɔ̂ɔng-nɔɔn',e:'bedroom',s:'object',lv:4},{t:'ตู้เย็น',p:'dtûu-yen',e:'fridge',s:'object',lv:4},
-{t:'โต๊ะ',p:'dtó',e:'table',s:'object',lv:4},{t:'เก้าอี้',p:'gâo-îi',e:'chair',s:'object',lv:4},
-{t:'กุญแจ',p:'gun-jae',e:'key',s:'object',lv:4},{t:'แก้ว',p:'gâaeo',e:'glass',s:'object',lv:4},
-{t:'จาน',p:'jaan',e:'plate',s:'object',lv:4},{t:'ช้อน',p:'chɔ́ɔn',e:'spoon',s:'object',lv:4},
-{t:'ส้อม',p:'sɔ̂ɔm',e:'fork',s:'object',lv:4},{t:'มีด',p:'mîit',e:'knife',s:'object',lv:4},
-{t:'แผนที่',p:'phǎen-thîi',e:'map',s:'object',lv:4},{t:'ร่ม',p:'rôm',e:'umbrella',s:'object',lv:4},
-{t:'รองเท้า',p:'rɔɔng-tháo',e:'shoes',s:'object',lv:4},{t:'หมวก',p:'mùak',e:'hat',s:'object',lv:4},
-{t:'แหวน',p:'wǎen',e:'ring',s:'object',lv:4},{t:'นาฬิกา',p:'naa-lí-gaa',e:'watch/clock',s:'object',lv:4},
-{t:'ยา',p:'yaa',e:'medicine',s:'object',lv:4},{t:'สบู่',p:'sà-bùu',e:'soap',s:'object',lv:4},
-{t:'แปรงสีฟัน',p:'bpraaeng-sǐi-fan',e:'toothbrush',s:'object',lv:4},{t:'ผ้าเช็ดตัว',p:'phâa-chét-dtua',e:'towel',s:'object',lv:4},
-{t:'เตียง',p:'dtiang',e:'bed',s:'object',lv:4},{t:'พัดลม',p:'phát-lom',e:'fan',s:'object',lv:4},
-{t:'แอร์',p:'ae',e:'air conditioner',s:'object',lv:4},{t:'กระดาษ',p:'grà-dàat',e:'paper',s:'object',lv:4},
-{t:'ปากกา',p:'bpàak-gaa',e:'pen',s:'object',lv:4},
-// lv5 (25+20)
-{t:'ที่นั่น',p:'thîi-nân',e:'there',s:'object',lv:5},{t:'ความสุข',p:'khwaam-sùk',e:'happiness',s:'object',lv:5},
-{t:'ความรัก',p:'khwaam-rák',e:'love (n)',s:'object',lv:5},{t:'ความคิด',p:'khwaam-khít',e:'idea',s:'object',lv:5},
-{t:'โอกาส',p:'oo-gàat',e:'opportunity',s:'object',lv:5},{t:'ประสบการณ์',p:'bprà-sòp-gaan',e:'experience',s:'object',lv:5},
-{t:'วัฒนธรรม',p:'wát-tá-ná-tam',e:'culture',s:'object',lv:5},{t:'สิ่งแวดล้อม',p:'sìng-wâet-lɔ́ɔm',e:'environment',s:'object',lv:5},
-{t:'การศึกษา',p:'gaan-sèuk-sǎa',e:'education',s:'object',lv:5},
-{t:'สุขภาพ',p:'sùk-kà-phâap',e:'health',s:'object',lv:5},{t:'อนาคต',p:'à-naa-khót',e:'future',s:'object',lv:5},
-{t:'อดีต',p:'à-dìit',e:'past',s:'object',lv:5},{t:'ความฝัน',p:'khwaam-fǎn',e:'dream',s:'object',lv:5},
-{t:'ความจริง',p:'khwaam-jing',e:'truth',s:'object',lv:5},{t:'คำตอบ',p:'kam-dtɔ̀ɔp',e:'answer (n)',s:'object',lv:5},
-{t:'คำถาม',p:'kam-thǎam',e:'question (n)',s:'object',lv:5},{t:'ข้อมูล',p:'khɔ̂ɔ-muun',e:'information',s:'object',lv:5},
-{t:'ความหมาย',p:'khwaam-mǎai',e:'meaning',s:'object',lv:5},{t:'เหตุผล',p:'hèet-phǒn',e:'reason',s:'object',lv:5},
-{t:'บทเรียน',p:'bòt-riian',e:'lesson',s:'object',lv:5},
-{t:'ความสำเร็จ',p:'khwaam-sǎm-rèt',e:'success',s:'object',lv:5},
-// lv5 new
-{t:'สังคม',p:'sǎng-khom',e:'society',s:'object',lv:5},
-{t:'ศิลปะ',p:'sǐn-lá-bpà',e:'art',s:'object',lv:5},{t:'เทคโนโลยี',p:'thék-noo-loo-yii',e:'technology',s:'object',lv:5},
-{t:'ธรรมชาติ',p:'tham-má-châat',e:'nature',s:'object',lv:5},
-{t:'ความยุติธรรม',p:'khwaam-yút-dtì-tam',e:'justice',s:'object',lv:5},
-{t:'เสรีภาพ',p:'sǎy-rii-phâap',e:'freedom',s:'object',lv:5},{t:'ความรับผิดชอบ',p:'khwaam-ráp-phìt-chɔ̂ɔp',e:'responsibility',s:'object',lv:5},
-{t:'ความพยายาม',p:'khwaam-phá-yaa-yaam',e:'effort',s:'object',lv:5},{t:'ความสัมพันธ์',p:'khwaam-sǎm-phan',e:'relationship',s:'object',lv:5},
-{t:'โครงการ',p:'khroo-ngaan',e:'project',s:'object',lv:5},
-{t:'ความเห็น',p:'khwaam-hěn',e:'opinion',s:'object',lv:5},{t:'ทักษะ',p:'thák-sà',e:'skill',s:'object',lv:5},
-{t:'เป้าหมาย',p:'bpâo-mǎai',e:'goal',s:'object',lv:5},{t:'แผน',p:'phǎen',e:'plan (n)',s:'object',lv:5},
-{t:'วิธี',p:'wí-thii',e:'method',s:'object',lv:5},{t:'สาเหตุ',p:'sǎa-hèet',e:'cause',s:'object',lv:5},
-{t:'ความรู้',p:'khwaam-rúu',e:'knowledge',s:'object',lv:5},{t:'ประโยชน์',p:'bprà-yòot',e:'benefit',s:'object',lv:5},
-// locations
-{t:'ร้านกาแฟ',p:'ráan-gaa-fae',e:'café',s:'object',lv:3},{t:'ซูเปอร์มาร์เก็ต',p:'suu-bpoe-máa-gèt',e:'supermarket',s:'object',lv:3},
-{t:'ห้างสรรพสินค้า',p:'hâang-sàp-pá-sǐn-kháa',e:'mall',s:'object',lv:4},{t:'สวนสาธารณะ',p:'sǔan-sǎa-thaa-rá-ná',e:'public park',s:'object',lv:3},
-{t:'ชายหาด',p:'chaai-hàat',e:'beach',s:'object',lv:3},{t:'เกาะ',p:'gɔ̀',e:'island',s:'object',lv:4},
-{t:'มหาวิทยาลัย',p:'má-hǎa-wít-tá-yaa-lai',e:'university',s:'object',lv:4},{t:'ห้องเรียน',p:'hɔ̂ɔng-riian',e:'classroom',s:'object',lv:3},
-{t:'ห้องประชุม',p:'hɔ̂ɔng-bprà-chum',e:'meeting room',s:'object',lv:4},{t:'โรงหนัง',p:'roong-nǎng',e:'cinema',s:'object',lv:3},
-{t:'ฟิตเนส',p:'fít-nét',e:'gym',s:'object',lv:3},{t:'สนามกีฬา',p:'sà-nǎam-gii-laa',e:'stadium',s:'object',lv:4},
-{t:'สระว่ายน้ำ',p:'sà-wâai-náam',e:'swimming pool',s:'object',lv:4},{t:'โรงงาน',p:'roong-ngaan',e:'factory',s:'object',lv:5},
-{t:'คอนโด',p:'khɔɔn-doo',e:'condo',s:'object',lv:4},{t:'อพาร์ตเมนต์',p:'à-pháat-men',e:'apartment',s:'object',lv:4},
-{t:'ร้านยา',p:'ráan-yaa',e:'pharmacy',s:'object',lv:4},{t:'คลินิก',p:'khlí-ník',e:'clinic',s:'object',lv:4},
-{t:'สถานทูต',p:'sà-thǎan-thûut',e:'embassy',s:'object',lv:5},
-// transport
-{t:'มอเตอร์ไซค์',p:'mɔɔ-dtoe-sai',e:'motorcycle',s:'object',lv:3},{t:'จักรยาน',p:'jàk-grà-yaan',e:'bicycle',s:'object',lv:3},
-{t:'เรือ',p:'reua',e:'boat',s:'object',lv:3},{t:'แท็กซี่',p:'tháek-sîi',e:'taxi',s:'object',lv:2},
-{t:'รถไฟฟ้า',p:'rót-fai-fáa',e:'BTS/skytrain',s:'object',lv:3},{t:'รถตู้',p:'rót-dtûu',e:'minivan',s:'object',lv:4},
-{t:'สามล้อ',p:'sǎam-lɔ́ɔ',e:'tuk-tuk',s:'object',lv:3},
-// professions
-{t:'นักธุรกิจ',p:'nák-thú-rá-gìt',e:'businessman',s:'object',lv:4},{t:'พนักงาน',p:'phá-nák-ngaan',e:'employee',s:'object',lv:3},
-{t:'ผู้จัดการ',p:'phûu-jàt-gaan',e:'manager',s:'object',lv:4},{t:'เชฟ',p:'chéf',e:'chef',s:'object',lv:3},
-{t:'นักบิน',p:'nák-bin',e:'pilot',s:'object',lv:4},{t:'โปรแกรมเมอร์',p:'bproo-graem-moe',e:'programmer',s:'object',lv:4},
-{t:'นักออกแบบ',p:'nák-ɔ̀ɔk-bàep',e:'designer',s:'object',lv:4},{t:'ช่างภาพ',p:'châang-phâap',e:'photographer',s:'object',lv:4},
-{t:'นักบัญชี',p:'nák-ban-chii',e:'accountant',s:'object',lv:5},{t:'เกษตรกร',p:'gà-sèet-dtà-gɔɔn',e:'farmer',s:'object',lv:4},
-{t:'พนักงานขาย',p:'phá-nák-ngaan-khǎai',e:'salesperson',s:'object',lv:4},{t:'เจ้าของบริษัท',p:'jâo-khɔ̌ɔng-bɔɔ-rí-sàt',e:'company owner',s:'object',lv:5},
-// nationalities
-{t:'คนไทย',p:'khon-tai',e:'Thai person',s:'object',lv:2},{t:'คนอเมริกัน',p:'khon-à-mee-rí-gan',e:'American',s:'object',lv:3},
-{t:'คนอังกฤษ',p:'khon-ang-grìt',e:'British',s:'object',lv:3},{t:'คนจีน',p:'khon-jiin',e:'Chinese',s:'object',lv:3},
-{t:'คนญี่ปุ่น',p:'khon-yîi-bpùn',e:'Japanese',s:'object',lv:3},{t:'คนฝรั่งเศส',p:'khon-fà-ràng-sèet',e:'French',s:'object',lv:4},
-// food
-{t:'ก๋วยเตี๋ยว',p:'gǔai-dtǐao',e:'noodle soup',s:'object',lv:2},{t:'ข้าวผัด',p:'khâao-phàt',e:'fried rice',s:'object',lv:2},
-{t:'ผัดไทย',p:'phàt-tai',e:'pad thai',s:'object',lv:2},{t:'แกง',p:'gaeng',e:'curry',s:'object',lv:2},
-{t:'ส้มตำ',p:'sôm-dtam',e:'papaya salad',s:'object',lv:3},{t:'ขนมปัง',p:'khà-nǒm-bpang',e:'bread',s:'object',lv:2},
-{t:'ไอศกรีม',p:'ai-sà-griim',e:'ice cream',s:'object',lv:2},
-// family
-{t:'พี่ชาย',p:'phîi-chaai',e:'older brother',s:'object',lv:2},{t:'พี่สาว',p:'phîi-sǎao',e:'older sister',s:'object',lv:2},
-{t:'น้องชาย',p:'nɔ́ɔng-chaai',e:'younger brother',s:'object',lv:2},{t:'น้องสาว',p:'nɔ́ɔng-sǎao',e:'younger sister',s:'object',lv:2},
-{t:'ปู่',p:'bpùu',e:'paternal grandfather',s:'object',lv:3},{t:'ย่า',p:'yâa',e:'paternal grandmother',s:'object',lv:3},
-// gap-fill nouns from sentence review
-{t:'กรุงเทพ',p:'grung-thêep',e:'Bangkok',s:'object',lv:2},{t:'ต่างประเทศ',p:'dtàang-bprà-thêet',e:'abroad',s:'object',lv:3},
-{t:'เวลา',p:'wee-laa',e:'time',s:'object',lv:2},{t:'ราคา',p:'raa-khaa',e:'price',s:'object',lv:3},
-{t:'ไฟ',p:'fai',e:'light/electricity',s:'object',lv:2},{t:'ขยะ',p:'khà-yà',e:'trash',s:'object',lv:3},
-{t:'บันได',p:'ban-dai',e:'stairs',s:'object',lv:4},{t:'อาคาร',p:'aa-khaan',e:'building',s:'object',lv:4},
-{t:'เส้นทาง',p:'sên-thaang',e:'route',s:'object',lv:4},{t:'ไฟแดง',p:'fai-daeng',e:'traffic light',s:'object',lv:3},
-{t:'คิว',p:'khiu',e:'queue',s:'object',lv:3},{t:'เอกสาร',p:'èek-gà-sǎan',e:'document',s:'object',lv:4},
-{t:'ทีม',p:'thiim',e:'team',s:'object',lv:3},{t:'บริษัท',p:'bɔɔ-rí-sàt',e:'company',s:'object',lv:3},
-{t:'โครงการ',p:'khroo-ngaan',e:'project',s:'object',lv:4},{t:'ระบบ',p:'rá-bòp',e:'system',s:'object',lv:5},
-{t:'ผลิตภัณฑ์',p:'phà-lìt-dtà-phan',e:'product',s:'object',lv:5},{t:'คุณภาพ',p:'khun-ná-phâap',e:'quality',s:'object',lv:5},
-{t:'ทักษะ',p:'thák-sà',e:'skill',s:'object',lv:4},{t:'แผนงาน',p:'phǎen-ngaan',e:'work plan',s:'object',lv:5},
-{t:'รถไฟใต้ดิน',p:'rót-fai-dtâi-din',e:'MRT/subway',s:'object',lv:3},
+// ── OBJECTS/NOUNS (120) ── c = noun category
+// FOOD (20)
+{t:'ข้าว',p:'khâao',e:'rice',s:'object',lv:1,c:'fd'},{t:'น้ำ',p:'nám',e:'water',s:'object',lv:1,c:'fd'},
+{t:'อาหาร',p:'aa-hǎan',e:'food',s:'object',lv:1,c:'fd'},{t:'กาแฟ',p:'gaa-fae',e:'coffee',s:'object',lv:1,c:'fd'},
+{t:'ปลา',p:'bplaa',e:'fish',s:'object',lv:1,c:'fd'},{t:'ผลไม้',p:'phǒn-lá-máai',e:'fruit',s:'object',lv:1,c:'fd'},
+{t:'ผัก',p:'phàk',e:'vegetables',s:'object',lv:2,c:'fd'},{t:'เนื้อ',p:'néua',e:'meat',s:'object',lv:2,c:'fd'},
+{t:'ชา',p:'chaa',e:'tea',s:'object',lv:2,c:'fd'},{t:'ไก่',p:'gài',e:'chicken',s:'object',lv:2,c:'fd'},
+{t:'ก๋วยเตี๋ยว',p:'gǔai-dtǐao',e:'noodle soup',s:'object',lv:2,c:'fd'},{t:'ข้าวผัด',p:'khâao-phàt',e:'fried rice',s:'object',lv:2,c:'fd'},
+{t:'ผัดไทย',p:'phàt-tai',e:'pad thai',s:'object',lv:2,c:'fd'},{t:'แกง',p:'gaeng',e:'curry',s:'object',lv:2,c:'fd'},
+{t:'ขนมปัง',p:'khà-nǒm-bpang',e:'bread',s:'object',lv:2,c:'fd'},{t:'ไอศกรีม',p:'ai-sà-griim',e:'ice cream',s:'object',lv:2,c:'fd'},
+{t:'ส้มตำ',p:'sôm-dtam',e:'papaya salad',s:'object',lv:3,c:'fd'},{t:'ขนม',p:'khà-nǒm',e:'snack',s:'object',lv:3,c:'fd'},
+{t:'อาหารไทย',p:'aa-hǎan-tai',e:'Thai food',s:'object',lv:2,c:'fd'},{t:'เบียร์',p:'biia',e:'beer',s:'object',lv:3,c:'fd'},
+// LOCATIONS (25)
+{t:'บ้าน',p:'bâan',e:'home',s:'object',lv:1,c:'lc'},{t:'โรงเรียน',p:'roong-riian',e:'school',s:'object',lv:2,c:'lc'},
+{t:'ตลาด',p:'dtà-làat',e:'market',s:'object',lv:2,c:'lc'},{t:'ร้านอาหาร',p:'ráan-aa-hǎan',e:'restaurant',s:'object',lv:2,c:'lc'},
+{t:'กรุงเทพ',p:'grung-thêep',e:'Bangkok',s:'object',lv:2,c:'lc'},{t:'ร้านกาแฟ',p:'ráan-gaa-fae',e:'café',s:'object',lv:3,c:'lc'},
+{t:'สวนสาธารณะ',p:'sǔan-sǎa-thaa-rá-ná',e:'park',s:'object',lv:3,c:'lc'},{t:'ชายหาด',p:'chaai-hàat',e:'beach',s:'object',lv:3,c:'lc'},
+{t:'โรงหนัง',p:'roong-nǎng',e:'cinema',s:'object',lv:3,c:'lc'},{t:'ฟิตเนส',p:'fít-nét',e:'gym',s:'object',lv:3,c:'lc'},
+{t:'ห้อง',p:'hɔ̂ɔng',e:'room',s:'object',lv:3,c:'lc'},{t:'สำนักงาน',p:'sǎm-nák-ngaan',e:'office',s:'object',lv:3,c:'lc'},
+{t:'ต่างประเทศ',p:'dtàang-bprà-thêet',e:'abroad',s:'object',lv:3,c:'lc'},
+{t:'โรงพยาบาล',p:'roong-phá-yaa-baan',e:'hospital',s:'object',lv:4,c:'lc'},{t:'สนามบิน',p:'sà-nǎam-bin',e:'airport',s:'object',lv:4,c:'lc'},
+{t:'โรงแรม',p:'roong-raem',e:'hotel',s:'object',lv:4,c:'lc'},{t:'มหาวิทยาลัย',p:'má-hǎa-wít-tá-yaa-lai',e:'university',s:'object',lv:4,c:'lc'},
+{t:'วัด',p:'wát',e:'temple',s:'object',lv:4,c:'lc'},{t:'ธนาคาร',p:'thá-naa-khaan',e:'bank',s:'object',lv:4,c:'lc'},
+{t:'คอนโด',p:'khɔɔn-doo',e:'condo',s:'object',lv:4,c:'lc'},{t:'สถานี',p:'sà-thǎa-nii',e:'station',s:'object',lv:4,c:'lc'},
+{t:'ห้างสรรพสินค้า',p:'hâang-sàp-pá-sǐn-kháa',e:'mall',s:'object',lv:4,c:'lc'},
+{t:'เกาะ',p:'gɔ̀',e:'island',s:'object',lv:5,c:'lc'},{t:'สระว่ายน้ำ',p:'sà-wâai-náam',e:'pool',s:'object',lv:5,c:'lc'},
+{t:'ที่นี่',p:'thîi-nîi',e:'here',s:'object',lv:4,c:'lc'},
+// PEOPLE (25)
+{t:'เพื่อน',p:'phêuan',e:'friend',s:'object',lv:1,c:'pn'},{t:'พ่อ',p:'phɔ̂ɔ',e:'father',s:'object',lv:1,c:'pn'},
+{t:'แม่',p:'mâe',e:'mother',s:'object',lv:1,c:'pn'},{t:'ลูก',p:'lûuk',e:'child',s:'object',lv:2,c:'pn'},
+{t:'ครู',p:'khruu',e:'teacher',s:'object',lv:2,c:'pn'},{t:'นักเรียน',p:'nák-riian',e:'student',s:'object',lv:2,c:'pn'},
+{t:'คน',p:'khon',e:'person',s:'object',lv:2,c:'pn'},{t:'ครอบครัว',p:'khrɔ̂ɔp-khrua',e:'family',s:'object',lv:2,c:'pn'},
+{t:'พี่ชาย',p:'phîi-chaai',e:'older brother',s:'object',lv:2,c:'pn'},{t:'พี่สาว',p:'phîi-sǎao',e:'older sister',s:'object',lv:2,c:'pn'},
+{t:'น้องชาย',p:'nɔ́ɔng-chaai',e:'younger brother',s:'object',lv:2,c:'pn'},{t:'น้องสาว',p:'nɔ́ɔng-sǎao',e:'younger sister',s:'object',lv:2,c:'pn'},
+{t:'คนไทย',p:'khon-tai',e:'Thai person',s:'object',lv:2,c:'pn'},
+{t:'หมอ',p:'mǒɔ',e:'doctor',s:'object',lv:3,c:'pn'},{t:'สามี',p:'sǎa-mii',e:'husband',s:'object',lv:3,c:'pn'},
+{t:'ภรรยา',p:'phan-rá-yaa',e:'wife',s:'object',lv:3,c:'pn'},{t:'พนักงาน',p:'phá-nák-ngaan',e:'employee',s:'object',lv:3,c:'pn'},
+{t:'เชฟ',p:'chéf',e:'chef',s:'object',lv:3,c:'pn'},
+{t:'ตำรวจ',p:'dtam-rùat',e:'police',s:'object',lv:4,c:'pn'},{t:'ผู้จัดการ',p:'phûu-jàt-gaan',e:'manager',s:'object',lv:4,c:'pn'},
+{t:'โปรแกรมเมอร์',p:'bproo-graem-moe',e:'programmer',s:'object',lv:4,c:'pn'},{t:'วิศวกร',p:'wít-sà-wá-gɔɔn',e:'engineer',s:'object',lv:4,c:'pn'},
+{t:'นักบิน',p:'nák-bin',e:'pilot',s:'object',lv:4,c:'pn'},{t:'คนจีน',p:'khon-jiin',e:'Chinese person',s:'object',lv:4,c:'pn'},
+{t:'คนญี่ปุ่น',p:'khon-yîi-bpùn',e:'Japanese person',s:'object',lv:4,c:'pn'},
+// THINGS (35)
+{t:'รถ',p:'rót',e:'car',s:'object',lv:1,c:'th'},{t:'เงิน',p:'ngern',e:'money',s:'object',lv:1,c:'th'},
+{t:'หนังสือ',p:'nǎng-sěu',e:'book',s:'object',lv:1,c:'th'},{t:'หมา',p:'mǎa',e:'dog',s:'object',lv:1,c:'th'},
+{t:'แมว',p:'maaeo',e:'cat',s:'object',lv:1,c:'th'},
+{t:'หนัง',p:'nǎng',e:'movie',s:'object',lv:2,c:'th'},{t:'เพลง',p:'phleng',e:'song',s:'object',lv:2,c:'th'},
+{t:'โทรศัพท์',p:'thoo-rá-sàp',e:'phone',s:'object',lv:2,c:'th'},{t:'ข่าว',p:'khàao',e:'news',s:'object',lv:2,c:'th'},
+{t:'ของ',p:'khɔ̌ɔng',e:'thing',s:'object',lv:2,c:'th'},{t:'แท็กซี่',p:'tháek-sîi',e:'taxi',s:'object',lv:2,c:'th'},
+{t:'ภาษาไทย',p:'phaa-sǎa-tai',e:'Thai',s:'object',lv:2,c:'th'},{t:'งาน',p:'ngaan',e:'work/job',s:'object',lv:2,c:'th'},
+{t:'เสื้อผ้า',p:'sêua-phâa',e:'clothes',s:'object',lv:3,c:'th'},{t:'กระเป๋า',p:'grà-bpǎo',e:'bag',s:'object',lv:3,c:'th'},
+{t:'คอมพิวเตอร์',p:'khɔɔm-phiu-dtêr',e:'computer',s:'object',lv:3,c:'th'},{t:'กีฬา',p:'gii-laa',e:'sport',s:'object',lv:3,c:'th'},
+{t:'ภาษาอังกฤษ',p:'phaa-sǎa-ang-grìt',e:'English',s:'object',lv:3,c:'th'},{t:'ดนตรี',p:'don-dtrii',e:'music',s:'object',lv:3,c:'th'},
+{t:'มอเตอร์ไซค์',p:'mɔɔ-dtoe-sai',e:'motorcycle',s:'object',lv:3,c:'th'},{t:'จักรยาน',p:'jàk-grà-yaan',e:'bicycle',s:'object',lv:3,c:'th'},
+{t:'เรือ',p:'reua',e:'boat',s:'object',lv:3,c:'th'},{t:'รถไฟฟ้า',p:'rót-fai-fáa',e:'BTS/skytrain',s:'object',lv:3,c:'th'},
+{t:'ไฟ',p:'fai',e:'light',s:'object',lv:3,c:'th'},
+{t:'รถไฟ',p:'rót-fai',e:'train',s:'object',lv:4,c:'th'},{t:'เครื่องบิน',p:'khrêuang-bin',e:'airplane',s:'object',lv:4,c:'th'},
+{t:'รองเท้า',p:'rɔɔng-tháo',e:'shoes',s:'object',lv:4,c:'th'},{t:'กุญแจ',p:'gun-jae',e:'key',s:'object',lv:4,c:'th'},
+{t:'ยา',p:'yaa',e:'medicine',s:'object',lv:4,c:'th'},{t:'เอกสาร',p:'èek-gà-sǎan',e:'document',s:'object',lv:4,c:'th'},
+{t:'แผนที่',p:'phǎen-thîi',e:'map',s:'object',lv:4,c:'th'},{t:'ร่ม',p:'rôm',e:'umbrella',s:'object',lv:4,c:'th'},
+{t:'โต๊ะ',p:'dtó',e:'table',s:'object',lv:4,c:'th'},{t:'เก้าอี้',p:'gâo-îi',e:'chair',s:'object',lv:4,c:'th'},
+{t:'บริษัท',p:'bɔɔ-rí-sàt',e:'company',s:'object',lv:4,c:'th'},
+// ABSTRACT (15)
+{t:'ปัญหา',p:'pan-hǎa',e:'problem',s:'object',lv:4,c:'ab'},{t:'เรื่อง',p:'rêuang',e:'story/matter',s:'object',lv:4,c:'ab'},
+{t:'อากาศ',p:'aa-gàat',e:'weather',s:'object',lv:4,c:'ab'},{t:'เวลา',p:'wee-laa',e:'time',s:'object',lv:3,c:'ab'},
+{t:'ราคา',p:'raa-khaa',e:'price',s:'object',lv:3,c:'ab'},
+{t:'ความสุข',p:'khwaam-sùk',e:'happiness',s:'object',lv:5,c:'ab'},{t:'อนาคต',p:'à-naa-khót',e:'future',s:'object',lv:5,c:'ab'},
+{t:'ความฝัน',p:'khwaam-fǎn',e:'dream',s:'object',lv:5,c:'ab'},{t:'ความจริง',p:'khwaam-jing',e:'truth',s:'object',lv:5,c:'ab'},
+{t:'ข้อมูล',p:'khɔ̂ɔ-muun',e:'information',s:'object',lv:5,c:'ab'},{t:'เหตุผล',p:'hèet-phǒn',e:'reason',s:'object',lv:5,c:'ab'},
+{t:'ประสบการณ์',p:'bprà-sòp-gaan',e:'experience',s:'object',lv:5,c:'ab'},{t:'สุขภาพ',p:'sùk-kà-phâap',e:'health',s:'object',lv:5,c:'ab'},
+{t:'ความรู้',p:'khwaam-rúu',e:'knowledge',s:'object',lv:5,c:'ab'},{t:'ทักษะ',p:'thák-sà',e:'skill',s:'object',lv:5,c:'ab'},
 
-// ── QUESTION OBJECTS ──
-// lv2
+// ── QUESTION OBJECTS (5) ──
 {t:'อะไร',p:'à-rai',e:'what',s:'qobject',lv:2},{t:'ใคร',p:'khrai',e:'who',s:'qobject',lv:2},
-// lv3
-{t:'เท่าไร',p:'thâo-rai',e:'how much',s:'qobject',lv:3},
-// lv3 new
-{t:'กี่',p:'gìi',e:'how many',s:'qobject',lv:3},
-// lv4
-{t:'แค่ไหน',p:'khâe-nǎi',e:'how much/to what extent',s:'qobject',lv:4},
+{t:'เท่าไร',p:'thâo-rai',e:'how much',s:'qobject',lv:3},{t:'กี่',p:'gìi',e:'how many',s:'qobject',lv:3},
+{t:'แค่ไหน',p:'khâe-nǎi',e:'to what extent',s:'qobject',lv:4},
 
-// ── QUESTION END ──
-// lv2 (2)
+// ── QUESTION END (5) ──
 {t:'ที่ไหน',p:'thîi-nǎi',e:'where',s:'qend',lv:2},{t:'เมื่อไร',p:'mêua-rai',e:'when?',s:'qend',lv:2},
-// lv3 (2)
 {t:'ยังไง',p:'yang-ngai',e:'how',s:'qend',lv:3},{t:'กี่โมง',p:'gìi-moong',e:'what time',s:'qend',lv:3},
-// lv4
-{t:'กี่ชิ้น',p:'gìi-chín',e:'how many pieces',s:'qend',lv:4},{t:'กี่วัน',p:'gìi-wan',e:'how many days',s:'qend',lv:4},
-// lv5
 {t:'กี่ครั้ง',p:'gìi-khráng',e:'how many times',s:'qend',lv:5},
 
-// ── ADJECTIVES ──
-// lv1 (8)
+// ── ADJECTIVES (35) ──
 {t:'ดี',p:'dee',e:'good',s:'adj',lv:1},{t:'อร่อย',p:'à-ròi',e:'delicious',s:'adj',lv:1},
 {t:'ร้อน',p:'rón',e:'hot',s:'adj',lv:1},{t:'เย็น',p:'yen',e:'cool',s:'adj',lv:1},
 {t:'ใหญ่',p:'yài',e:'big',s:'adj',lv:1},{t:'เล็ก',p:'lék',e:'small',s:'adj',lv:1},
 {t:'ใหม่',p:'mài',e:'new',s:'adj',lv:1},{t:'เก่า',p:'gào',e:'old (thing)',s:'adj',lv:1},
-// lv2 (7)
 {t:'เร็ว',p:'reo',e:'fast',s:'adj',lv:2},{t:'ช้า',p:'cháa',e:'slow',s:'adj',lv:2},
 {t:'แพง',p:'phaaeng',e:'expensive',s:'adj',lv:2},{t:'ถูก',p:'thùuk',e:'cheap',s:'adj',lv:2},
-{t:'สนุก',p:'sà-nùk',e:'fun',s:'adj',lv:2},{t:'เก่ง',p:'gèng',e:'skilled',s:'adj',lv:2},
-{t:'สวย',p:'sǔai',e:'beautiful',s:'adj',lv:2},
-// lv3 (8)
+{t:'สนุก',p:'sà-nùk',e:'fun',s:'adj',lv:2},{t:'สวย',p:'sǔai',e:'beautiful',s:'adj',lv:2},
 {t:'ง่าย',p:'ngâai',e:'easy',s:'adj',lv:3},{t:'ยาก',p:'yâak',e:'difficult',s:'adj',lv:3},
 {t:'สำคัญ',p:'sǎm-khan',e:'important',s:'adj',lv:3},{t:'น่าสนใจ',p:'nâa-sǒn-jai',e:'interesting',s:'adj',lv:3},
 {t:'สะอาด',p:'sà-àat',e:'clean',s:'adj',lv:3},{t:'เงียบ',p:'ngîap',e:'quiet',s:'adj',lv:3},
-{t:'ใจดี',p:'jai-dee',e:'kind',s:'adj',lv:3},{t:'หล่อ',p:'lɔ̀ɔ',e:'handsome',s:'adj',lv:3},
-// lv3 new (3)
-{t:'เผ็ด',p:'phèt',e:'spicy',s:'adj',lv:3},{t:'หวาน',p:'wǎan',e:'sweet',s:'adj',lv:3},
-{t:'เค็ม',p:'khem',e:'salty',s:'adj',lv:3},
-// lv4 (5+10)
-{t:'สูง',p:'sǔung',e:'tall',s:'adj',lv:4},{t:'ยาว',p:'yaao',e:'long',s:'adj',lv:4},
-{t:'สั้น',p:'sân',e:'short',s:'adj',lv:4},{t:'หนาว',p:'nǎao',e:'cold',s:'adj',lv:4},
-{t:'ไกล',p:'glai',e:'far',s:'adj',lv:4},
-// lv4 new (10)
-{t:'เปรี้ยว',p:'bprîao',e:'sour',s:'adj',lv:4},{t:'ขม',p:'khǒm',e:'bitter',s:'adj',lv:4},
-{t:'นุ่ม',p:'nûm',e:'soft',s:'adj',lv:4},{t:'แข็ง',p:'khǎeng',e:'hard',s:'adj',lv:4},
-{t:'เปียก',p:'bpìak',e:'wet',s:'adj',lv:4},{t:'แห้ง',p:'hâeng',e:'dry',s:'adj',lv:4},
-{t:'หนัก',p:'nàk',e:'heavy',s:'adj',lv:4},{t:'เบา',p:'bao',e:'light (weight)',s:'adj',lv:4},
-{t:'กว้าง',p:'gwâang',e:'wide',s:'adj',lv:4},{t:'แคบ',p:'khâep',e:'narrow',s:'adj',lv:4},
-// lv5 (7+10)
-{t:'ใกล้',p:'glâi',e:'near',s:'adj',lv:5},{t:'เหนื่อย',p:'nèuai',e:'tired',s:'adj',lv:5},
-{t:'ซับซ้อน',p:'sáp-sɔ́ɔn',e:'complicated',s:'adj',lv:5},{t:'เรียบง่าย',p:'rîap-ngâai',e:'simple',s:'adj',lv:5},
-{t:'น่าเบื่อ',p:'nâa-bèua',e:'boring',s:'adj',lv:5},{t:'น่ากลัว',p:'nâa-glua',e:'scary',s:'adj',lv:5},
-{t:'น่ารัก',p:'nâa-rák',e:'cute',s:'adj',lv:5},
-// lv5 new (10)
-{t:'เหมาะสม',p:'mɔ̀-sǒm',e:'suitable',s:'adj',lv:5},{t:'จำเป็น',p:'jam-bpen',e:'necessary',s:'adj',lv:5},
-{t:'เป็นไปได้',p:'bpen-bpai-dâai',e:'possible',s:'adj',lv:5},{t:'มั่นใจ',p:'mân-jai',e:'confident',s:'adj',lv:5},
-{t:'ภูมิใจ',p:'phuum-jai',e:'proud',s:'adj',lv:5},{t:'อันตราย',p:'an-dtà-raai',e:'dangerous',s:'adj',lv:5},
-{t:'ปลอดภัย',p:'bplɔ̀ɔt-phai',e:'safe',s:'adj',lv:5},{t:'เป็นทางการ',p:'bpen-thaang-gaan',e:'formal',s:'adj',lv:5},
-{t:'ยุ่ง',p:'yûng',e:'busy',s:'adj',lv:3},{t:'ว่าง',p:'wâang',e:'free/available',s:'adj',lv:3},
+{t:'ใจดี',p:'jai-dee',e:'kind',s:'adj',lv:3},{t:'เผ็ด',p:'phèt',e:'spicy',s:'adj',lv:3},
+{t:'หวาน',p:'wǎan',e:'sweet',s:'adj',lv:3},{t:'ยุ่ง',p:'yûng',e:'busy',s:'adj',lv:3},
+{t:'ว่าง',p:'wâang',e:'free',s:'adj',lv:3},
+{t:'สูง',p:'sǔung',e:'tall',s:'adj',lv:4},{t:'ไกล',p:'glai',e:'far',s:'adj',lv:4},
+{t:'ใกล้',p:'glâi',e:'near',s:'adj',lv:4},{t:'หนาว',p:'nǎao',e:'cold',s:'adj',lv:4},
+{t:'เหนื่อย',p:'nèuai',e:'tired',s:'adj',lv:4},
+{t:'ซับซ้อน',p:'sáp-sɔ́ɔn',e:'complicated',s:'adj',lv:5},{t:'น่าเบื่อ',p:'nâa-bèua',e:'boring',s:'adj',lv:5},
+{t:'น่ากลัว',p:'nâa-glua',e:'scary',s:'adj',lv:5},{t:'น่ารัก',p:'nâa-rák',e:'cute',s:'adj',lv:5},
+{t:'อันตราย',p:'an-dtà-raai',e:'dangerous',s:'adj',lv:5},
 
-// ── DEGREE ──
-// lv1 (1)
+// ── DEGREE (8) ──
 {t:'มาก',p:'mâak',e:'very',s:'degree',lv:1},
-// lv3 (2+2)
 {t:'นิดหน่อย',p:'nít-nɔ̀i',e:'a little',s:'degree',lv:3},{t:'จริงๆ',p:'jing-jing',e:'really',s:'degree',lv:3},
-{t:'ค่อนข้าง',p:'khɔ̂n-khâang',e:'rather',s:'degree',lv:3},{t:'พอสมควร',p:'phɔɔ-sǒm-khuan',e:'fairly',s:'degree',lv:3},
-// lv4 (2+2)
+{t:'ค่อนข้าง',p:'khɔ̂n-khâang',e:'rather',s:'degree',lv:3},
 {t:'ที่สุด',p:'thîi-sùt',e:'the most',s:'degree',lv:4},{t:'เกินไป',p:'gern-bpai',e:'too much',s:'degree',lv:4},
-{t:'แทบ',p:'thâep',e:'hardly',s:'degree',lv:4},{t:'เต็มที่',p:'dtem-thîi',e:'fully',s:'degree',lv:4},
-// lv5 (2)
-{t:'อย่างยิ่ง',p:'yàang-yîng',e:'extremely',s:'degree',lv:5},{t:'พอๆกัน',p:'phɔɔ-phɔɔ-gan',e:'equally',s:'degree',lv:5},
+{t:'อย่างยิ่ง',p:'yàang-yîng',e:'extremely',s:'degree',lv:5},{t:'เต็มที่',p:'dtem-thîi',e:'fully',s:'degree',lv:5},
 
-// ── POSTVERB ──
-// lv1 (1)
+// ── POSTVERB (7) ──
 {t:'แล้ว',p:'láaeo',e:'already',s:'postverb',lv:1},
-// lv3 (2)
 {t:'เสร็จ',p:'sèt',e:'finished',s:'postverb',lv:3},{t:'ได้',p:'dâai',e:'can',s:'postverb',lv:3},
-// lv4 (2+2)
-{t:'ไม่ได้',p:'mâi-dâai-pv',e:'cannot',s:'postverb',lv:4},{t:'เป็น',p:'bpen-pv',e:'can (skill)',s:'postverb',lv:4},
-{t:'หมด',p:'mòt',e:'all gone',s:'postverb',lv:4},{t:'อยู่',p:'yùu-pv',e:'(ongoing)',s:'postverb',lv:4},
-// lv5 (2)
-{t:'ไว้',p:'wái',e:'(for later)',s:'postverb',lv:5},{t:'ทัน',p:'than',e:'in time',s:'postverb',lv:5},
+{t:'ไม่ได้',p:'mâi-dâai-pv',e:'cannot',s:'postverb',lv:4},{t:'หมด',p:'mòt',e:'all gone',s:'postverb',lv:4},
+{t:'อยู่',p:'yùu-pv',e:'(ongoing)',s:'postverb',lv:4},{t:'ไว้',p:'wái',e:'(for later)',s:'postverb',lv:5},
 
-// ── PREPOSITIONS ──
-// lv2 (2)
-{t:'กับ',p:'gàp',e:'with',s:'preposition',lv:2},{t:'ที่',p:'thîi',e:'at',s:'preposition',lv:2},
-// lv3 (3)
-{t:'ใน',p:'nai',e:'in',s:'preposition',lv:3},{t:'จาก',p:'jàak',e:'from',s:'preposition',lv:3},
-{t:'ถึง',p:'thěung',e:'to',s:'preposition',lv:3},
-// lv4 (3+3)
-{t:'บน',p:'bon',e:'on',s:'preposition',lv:4},{t:'ใต้',p:'dtâi',e:'under',s:'preposition',lv:4},
-{t:'ข้างๆ',p:'khâang-khâang',e:'next to',s:'preposition',lv:4},
-{t:'ระหว่าง',p:'rá-wàang',e:'between',s:'preposition',lv:4},{t:'รอบๆ',p:'rɔ̂ɔp-rɔ̂ɔp',e:'around',s:'preposition',lv:4},
-{t:'ข้างใน',p:'khâang-nai',e:'inside',s:'preposition',lv:4},
-// lv5 (2+3)
-{t:'ก่อน',p:'gɔ̀ɔn',e:'before',s:'preposition',lv:5},{t:'หลัง',p:'lǎng',e:'after',s:'preposition',lv:5},
-{t:'ข้างนอก',p:'khâang-nɔ̂ɔk',e:'outside',s:'preposition',lv:5},{t:'ตรงข้าม',p:'dtrong-khâam',e:'opposite',s:'preposition',lv:5},
-{t:'เพื่อ',p:'phêua',e:'for/in order to',s:'preposition',lv:5},
+// ── PREPOSITIONS (10) ── pa = which noun categories this prep accepts
+{t:'กับ',p:'gàp',e:'with',s:'preposition',lv:2,pa:'pn'},{t:'ที่',p:'thîi',e:'at',s:'preposition',lv:2,pa:'lc'},
+{t:'ใน',p:'nai',e:'in',s:'preposition',lv:3,pa:'lc'},{t:'จาก',p:'jàak',e:'from',s:'preposition',lv:3,pa:'lc,pn'},
+{t:'ถึง',p:'thěung',e:'to',s:'preposition',lv:3,pa:'lc,pn'},
+{t:'บน',p:'bon',e:'on',s:'preposition',lv:4,pa:'th'},{t:'ใต้',p:'dtâi',e:'under',s:'preposition',lv:4,pa:'th'},
+{t:'ข้างๆ',p:'khâang-khâang',e:'next to',s:'preposition',lv:4,pa:'pn,lc'},
+{t:'เพื่อ',p:'phêua',e:'for',s:'preposition',lv:5,pa:'pn,ab'},{t:'ข้างใน',p:'khâang-nai',e:'inside',s:'preposition',lv:5,pa:'lc'},
 
-// ── CONJUNCTIONS ──
-// lv3 (2+1)
+// ── CONJUNCTIONS (6) ──
 {t:'และ',p:'láe',e:'and',s:'conjunction',lv:3},{t:'แต่',p:'dtàe',e:'but',s:'conjunction',lv:3},
 {t:'เพราะ',p:'phrɔ́',e:'because',s:'conjunction',lv:3},
-// lv4 (1+2)
-{t:'หรือ',p:'rěu',e:'or',s:'conjunction',lv:4},
-{t:'แล้วก็',p:'láaeo-gɔ̂ɔ',e:'and then',s:'conjunction',lv:4},{t:'ดังนั้น',p:'dang-nán',e:'therefore',s:'conjunction',lv:4},
-// lv5 (3)
-{t:'อย่างไรก็ตาม',p:'yàang-rai-gɔ̂ɔ-dtaam',e:'however',s:'conjunction',lv:5},
-{t:'นอกจากนี้',p:'nɔ̂ɔk-jàak-níi',e:'moreover',s:'conjunction',lv:5},
-{t:'เนื่องจาก',p:'nêuang-jàak',e:'due to',s:'conjunction',lv:5},
+{t:'หรือ',p:'rěu',e:'or',s:'conjunction',lv:4},{t:'แล้วก็',p:'láaeo-gɔ̂ɔ',e:'and then',s:'conjunction',lv:4},
+{t:'ดังนั้น',p:'dang-nán',e:'therefore',s:'conjunction',lv:5},
 
-// ── FINAL PARTICLES ──
-// lv1 (3)
+// ── FINAL PARTICLES (10) ──
 {t:'ครับ',p:'khráp',e:'(polite, m)',s:'final',lv:1},{t:'ค่ะ',p:'khâ',e:'(polite, f)',s:'final',lv:1},
 {t:'ไหม',p:'mǎi',e:'(yes/no?)',s:'final',lv:1},
-// lv2 (2)
 {t:'นะ',p:'ná',e:'(softener)',s:'final',lv:2},{t:'สิ',p:'sì',e:'(urging)',s:'final',lv:2},
-// lv3 (2)
 {t:'เลย',p:'loei',e:'(emphasis)',s:'final',lv:3},{t:'ด้วย',p:'dûai',e:'also',s:'final',lv:3},
-// lv4 (2)
 {t:'เหรอ',p:'rǒe',e:'really?',s:'final',lv:4},{t:'หรือเปล่า',p:'rěu-bplào',e:'(or not?)',s:'final',lv:4},
-// lv4 new (2)
-{t:'ล่ะ',p:'là',e:'(insistence)',s:'final',lv:4},{t:'จ้ะ',p:'jâ',e:'(friendly f)',s:'final',lv:4},
-// lv5 (1+3)
 {t:'นะคะ',p:'ná-khá',e:'(polite soft, f)',s:'final',lv:5},
-{t:'นะครับ',p:'ná-khráp',e:'(polite soft, m)',s:'final',lv:5},{t:'หน่อย',p:'nɔ̀i',e:'(softener)',s:'final',lv:5},
-{t:'ซิ',p:'sí',e:'(urging)',s:'final',lv:5},
 ];
 
 /* ═══════════════════════════════════
-   TRANSITION TABLE
+   TRANSITION TABLE — verb is center of meaning
 ═══════════════════════════════════ */
 var T={
   START:      ['condition','time','subject','qstart'],
@@ -537,19 +325,15 @@ var T={
    BRANCH PATTERNS — 7 random sets
 ═══════════════════════════════════ */
 var PATTERNS=[
-  [3,2,3,4,5,5,5,5,5,5],
-  [2,3,5,3,4,5,5,5,5,5],
-  [3,4,2,5,3,5,5,5,5,5],
-  [4,3,3,2,5,5,5,5,5,5],
-  [2,4,3,5,4,5,5,5,5,5],
-  [3,3,4,3,5,5,5,5,5,5],
-  [4,2,5,4,3,5,5,5,5,5],
+  [3,2,3,4,5,5,5,5],[2,3,5,3,4,5,5,5],[3,4,2,5,3,5,5,5],
+  [4,3,3,2,5,5,5,5],[2,4,3,5,4,5,5,5],[3,3,4,3,5,5,5,5],
+  [4,2,5,4,3,5,5,5],
 ];
 
 /* ═══════════════════════════════════
-   LEVEL CONFIG
+   LEVEL CONFIG — max sentence depth
 ═══════════════════════════════════ */
-var MAX_DEPTH={1:4,2:5,3:7,4:8,5:10};
+var MAX_DEPTH={1:4,2:5,3:7,4:8,5:7};
 
 /* ═══════════════════════════════════
    STATE
@@ -559,10 +343,10 @@ var chosen=[];
 var rows=[];
 var shownWords={};
 var lastSlot='START';
+var lastWord=null;
 var pattern=PATTERNS[0];
 
 function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
-
 function pickPattern(){pattern=PATTERNS[Math.floor(Math.random()*PATTERNS.length)];}
 
 /* ═══════════════════════════════════
@@ -571,9 +355,7 @@ function pickPattern(){pattern=PATTERNS[Math.floor(Math.random()*PATTERNS.length
 function setLevel(lv){
   level=lv;
   var btns=document.querySelectorAll('.lv-btn');
-  for(var i=0;i<btns.length;i++){
-    if(i+1===lv)btns[i].classList.add('on');else btns[i].classList.remove('on');
-  }
+  for(var i=0;i<btns.length;i++){if(i+1===lv)btns[i].classList.add('on');else btns[i].classList.remove('on');}
   reset();
 }
 
@@ -583,15 +365,14 @@ function setLevel(lv){
 function isComplete(){
   var hasSub=false,hasVerb=false;
   for(var i=0;i<chosen.length;i++){
-    var s=chosen[i].word.s;
-    if(s==='subject')hasSub=true;
-    if(s==='verb')hasVerb=true;
+    if(chosen[i].word.s==='subject')hasSub=true;
+    if(chosen[i].word.s==='verb')hasVerb=true;
   }
   return hasSub&&hasVerb;
 }
 
 /* ═══════════════════════════════════
-   CANDIDATES
+   CANDIDATES — verb-centered semantic filtering
 ═══════════════════════════════════ */
 function usedSlots(){
   var slots={};
@@ -615,6 +396,25 @@ function getCandidates(depth){
   });
   if(pool.length===0){
     pool=W.filter(function(w){return w.lv<=level&&filtered.indexOf(w.s)!==-1;});
+  }
+  // ── SEMANTIC FILTERING ──
+  // Verb restricts which nouns can follow (verb = center of meaning)
+  if(lastWord&&lastWord.s==='verb'&&lastWord.va){
+    var va=lastWord.va.split(',');
+    var sem=pool.filter(function(w){
+      if(w.s!=='object')return true;
+      return w.c&&va.indexOf(w.c)!==-1;
+    });
+    if(sem.length>0)pool=sem;
+  }
+  // Preposition restricts which nouns can follow
+  if(lastWord&&lastWord.s==='preposition'&&lastWord.pa){
+    var pa=lastWord.pa.split(',');
+    var sem=pool.filter(function(w){
+      if(w.s!=='object')return true;
+      return w.c&&pa.indexOf(w.c)!==-1;
+    });
+    if(sem.length>0)pool=sem;
   }
   var count=pattern[Math.min(depth,pattern.length-1)];
   return shuffle(pool).slice(0,count);
@@ -653,7 +453,7 @@ function showBranches(depth){
   if(cands.length===0)return;
   var conn=document.createElement('div');conn.className='conn';grow.appendChild(conn);
   var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',depth);
-  var rd={depth:depth,nodes:[],savedSlot:lastSlot};
+  var rd={depth:depth,nodes:[],savedSlot:lastSlot,savedWord:lastWord};
   for(var i=0;i<cands.length;i++){
     var el=createNode(cands[i],depth,i);
     row.appendChild(el);
@@ -686,6 +486,7 @@ function tapNode(depth,word,el){
   chosen.push({word:word,depth:depth});
   chosen.sort(function(a,b){return a.depth-b.depth;});
   lastSlot=word.s;
+  lastWord=word;
   renderSentence();
   showBranches(depth+1);
 }
@@ -701,21 +502,21 @@ function undo(){
     var lr=rows[rows.length-1];
     var ch=null;
     for(var i=0;i<lr.nodes.length;i++){if(lr.nodes[i].state==='chosen'){ch=lr.nodes[i];break;}}
-    if(ch){lastSlot=ch.word.s;}
+    if(ch){lastSlot=ch.word.s;lastWord=ch.word;}
     else{
-      lastSlot=lr.savedSlot;
+      lastSlot=lr.savedSlot;lastWord=lr.savedWord;
       for(var i=0;i<lr.nodes.length;i++){
         lr.nodes[i].state='active';
         lr.nodes[i].el.classList.remove('chosen','faded','revealed');
         (function(n,d){n.el.onclick=function(){tapNode(d,n.word,n.el);};})(lr.nodes[i],lr.depth);
       }
     }
-  }else{lastSlot='START';}
+  }else{lastSlot='START';lastWord=null;}
   renderSentence();
 }
 
 function reset(){
-  chosen=[];rows=[];shownWords={};lastSlot='START';
+  chosen=[];rows=[];shownWords={};lastSlot='START';lastWord=null;
   grow.innerHTML='';sentDisplay.innerHTML='';sentBar.classList.remove('complete');
   pickPattern();
   start();
@@ -728,7 +529,7 @@ function start(){
   var count=pattern[0]||3;
   var picks=shuffle(starters).slice(0,count);
   var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',0);
-  var rd={depth:0,nodes:[],savedSlot:'START'};
+  var rd={depth:0,nodes:[],savedSlot:'START',savedWord:null};
   for(var i=0;i<picks.length;i++){
     var el=createNode(picks[i],0,i);
     row.appendChild(el);
