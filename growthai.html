@@ -8,11 +8,17 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0814;color:#f0e8d0}
 body{display:flex;flex-direction:column}
-.top-bar{padding:12px 16px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid #C8951A33}
+.top-bar{padding:10px 16px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid #C8951A33}
 .top-bar h1{font-size:17px;font-weight:700;color:#E8B020;letter-spacing:.5px}
+.top-right{display:flex;align-items:center;gap:8px}
 .lv-select{display:flex;gap:4px}
 .lv-btn{padding:5px 10px;border-radius:14px;border:1.5px solid #C8951A44;background:transparent;color:#9a8a6a;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
 .lv-btn.on{border-color:#E8B020;color:#E8B020;background:#1a1000}
+.mode-toggle{display:flex;border-radius:14px;overflow:hidden;border:1.5px solid #C8951A44}
+.mode-btn{padding:5px 10px;background:transparent;color:#9a8a6a;font-size:10px;font-weight:700;font-family:inherit;cursor:pointer;border:none;transition:all .15s}
+.mode-btn.on{background:#1a1000;color:#E8B020}
+.score{font-size:12px;font-weight:700;color:#4ade80;display:none}
+.score.show{display:block}
 .sentence-bar{padding:10px 16px;min-height:52px;border-bottom:1px solid #ffffff10;display:flex;align-items:center;flex-wrap:wrap;gap:4px;flex-shrink:0;transition:background .5s}
 .sentence-bar.complete{background:#0d1f0d;border-bottom-color:#4ade8033}
 .sent-word{display:inline-flex;flex-direction:column;align-items:center;padding:3px 8px;border-radius:8px}
@@ -49,6 +55,9 @@ body{display:flex;flex-direction:column}
 .node .ne{color:#9a8a6a}
 .node.chosen{transform:scale(1.05);box-shadow:0 0 16px #4ade8030;z-index:2;border-color:#4ade80!important}
 .node.faded{opacity:.22;transform:scale(.82);pointer-events:none}
+.node.wrong{border-color:#e87878!important;background:#3a1a1a!important;animation:shake .4s ease}
+.node.wrong .nt{color:#e87878}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .controls{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;display:flex;gap:10px;background:linear-gradient(transparent,#0a0814 30%);padding-top:40px}
 .ctrl-btn{flex:1;padding:13px;border-radius:12px;border:1.5px solid #C8951A55;background:#14101f;color:#9a8a6a;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
 .ctrl-btn:active{transform:scale(.96)}
@@ -60,10 +69,17 @@ body{display:flex;flex-direction:column}
 <body>
 <div class="top-bar">
   <h1>GrowThai</h1>
-  <div class="lv-select" id="lv-select">
-    <button class="lv-btn on" onclick="setLevel(1)">1</button>
-    <button class="lv-btn" onclick="setLevel(2)">2</button>
-    <button class="lv-btn" onclick="setLevel(3)">3</button>
+  <div class="top-right">
+    <div class="score" id="score">0/0</div>
+    <div class="mode-toggle">
+      <button class="mode-btn on" id="mode-free" onclick="setMode('free')">Free</button>
+      <button class="mode-btn" id="mode-game" onclick="setMode('game')">Game</button>
+    </div>
+    <div class="lv-select" id="lv-select">
+      <button class="lv-btn on" onclick="setLevel(1)">1</button>
+      <button class="lv-btn" onclick="setLevel(2)">2</button>
+      <button class="lv-btn" onclick="setLevel(3)">3</button>
+    </div>
   </div>
 </div>
 <div class="sentence-bar" id="sent-bar"><div id="sent-display"></div><div class="badge" id="badge"></div></div>
@@ -71,163 +87,84 @@ body{display:flex;flex-direction:column}
 <div class="controls"><button class="ctrl-btn" onclick="undo()">Undo</button><button class="ctrl-btn primary" onclick="reset()">New</button></div>
 <script>
 /* ═══════════════════════════════════
-   SIMPLIFIED — ~80 words, 3 levels
-   Verb = center of meaning
-   Every path = valid Thai
+   ~80 words, 3 levels, Free + Game modes
 ═══════════════════════════════════ */
 var W=[
 // ── SUBJECTS (5) ──
-{t:'ฉัน',p:'chǎn',e:'I',s:'subject',lv:1},
-{t:'คุณ',p:'khun',e:'you',s:'subject',lv:1},
-{t:'เขา',p:'khǎo',e:'he/she',s:'subject',lv:1},
-{t:'เรา',p:'rao',e:'we',s:'subject',lv:1},
+{t:'ฉัน',p:'chǎn',e:'I',s:'subject',lv:1},{t:'คุณ',p:'khun',e:'you',s:'subject',lv:1},
+{t:'เขา',p:'khǎo',e:'he/she',s:'subject',lv:1},{t:'เรา',p:'rao',e:'we',s:'subject',lv:1},
 {t:'ผม',p:'phǒm',e:'I (male)',s:'subject',lv:1},
-
 // ── TIME (5) ──
-{t:'วันนี้',p:'wan-níi',e:'today',s:'time',lv:2},
-{t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time',lv:2,future:1},
-{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time',lv:2,past:1},
-{t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time',lv:2},
+{t:'วันนี้',p:'wan-níi',e:'today',s:'time',lv:2},{t:'พรุ่งนี้',p:'prûng-níi',e:'tomorrow',s:'time',lv:2,future:1},
+{t:'เมื่อวาน',p:'mêua-waan',e:'yesterday',s:'time',lv:2,past:1},{t:'ตอนนี้',p:'dtɔɔn-níi',e:'right now',s:'time',lv:2},
 {t:'ทุกวัน',p:'thúk-wan',e:'every day',s:'time',lv:2},
-
 // ── PRE-VERB (4) ──
-{t:'ไม่',p:'mâi',e:'not',s:'preverb',lv:1},
-{t:'จะ',p:'jà',e:'will',s:'preverb',lv:1},
-{t:'กำลัง',p:'gam-lang',e:'(doing now)',s:'preverb',lv:2},
-{t:'อยาก',p:'yàak',e:'want to',s:'preverb',lv:2},
-
-// ── VERBS (15) ── va = accepted noun categories, _=intransitive
-{t:'กิน',p:'gin',e:'eat',s:'verb',lv:1,va:'fd'},
-{t:'ดื่ม',p:'dèum',e:'drink',s:'verb',lv:1,va:'fd'},
-{t:'ไป',p:'bpai',e:'go',s:'verb',lv:1,va:'lc'},
-{t:'มา',p:'maa',e:'come',s:'verb',lv:1,va:'lc'},
-{t:'ชอบ',p:'chôp',e:'like',s:'verb',lv:1},
-{t:'มี',p:'mii',e:'have',s:'verb',lv:1,va:'fd,th,pn,ab'},
-{t:'ดู',p:'duu',e:'watch',s:'verb',lv:1,va:'md'},
-{t:'นอน',p:'non',e:'sleep',s:'verb',lv:1,va:'_'},
-{t:'ซื้อ',p:'séu',e:'buy',s:'verb',lv:1,va:'fd,th'},
-{t:'รู้จัก',p:'rúu-jàk',e:'know (person)',s:'verb',lv:2,va:'pn'},
-{t:'เรียน',p:'riian',e:'study',s:'verb',lv:2,va:'lg'},
-{t:'ทำงาน',p:'tam-ngaan',e:'work',s:'verb',lv:2,va:'_'},
-{t:'เจอ',p:'jer',e:'meet',s:'verb',lv:2,va:'pn'},
-{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb',lv:3,va:'_'},
+{t:'ไม่',p:'mâi',e:'not',s:'preverb',lv:1},{t:'จะ',p:'jà',e:'will',s:'preverb',lv:1},
+{t:'กำลัง',p:'gam-lang',e:'(doing now)',s:'preverb',lv:2},{t:'อยาก',p:'yàak',e:'want to',s:'preverb',lv:2},
+// ── VERBS (15) ──
+{t:'กิน',p:'gin',e:'eat',s:'verb',lv:1,va:'fd'},{t:'ดื่ม',p:'dèum',e:'drink',s:'verb',lv:1,va:'fd'},
+{t:'ไป',p:'bpai',e:'go',s:'verb',lv:1,va:'lc'},{t:'มา',p:'maa',e:'come',s:'verb',lv:1,va:'lc'},
+{t:'ชอบ',p:'chôp',e:'like',s:'verb',lv:1},{t:'มี',p:'mii',e:'have',s:'verb',lv:1,va:'fd,th,pn,ab'},
+{t:'ดู',p:'duu',e:'watch',s:'verb',lv:1,va:'md'},{t:'นอน',p:'non',e:'sleep',s:'verb',lv:1,va:'_'},
+{t:'ซื้อ',p:'séu',e:'buy',s:'verb',lv:1,va:'fd,th'},{t:'รู้จัก',p:'rúu-jàk',e:'know (person)',s:'verb',lv:2,va:'pn'},
+{t:'เรียน',p:'riian',e:'study',s:'verb',lv:2,va:'lg'},{t:'ทำงาน',p:'tam-ngaan',e:'work',s:'verb',lv:2,va:'_'},
+{t:'เจอ',p:'jer',e:'meet',s:'verb',lv:2,va:'pn'},{t:'ทำอาหาร',p:'tam-aa-hǎan',e:'cook',s:'verb',lv:3,va:'_'},
 {t:'รอ',p:'rɔɔ',e:'wait',s:'verb',lv:3,va:'_'},
-
-// ── OBJECTS (25) ── c = noun category
-// Food (8)
-{t:'ข้าว',p:'khâao',e:'rice',s:'object',lv:1,c:'fd'},
-{t:'น้ำ',p:'nám',e:'water',s:'object',lv:1,c:'fd'},
-{t:'อาหาร',p:'aa-hǎan',e:'food',s:'object',lv:1,c:'fd'},
-{t:'กาแฟ',p:'gaa-fae',e:'coffee',s:'object',lv:1,c:'fd'},
-{t:'ผัดไทย',p:'phàt-tai',e:'pad thai',s:'object',lv:2,c:'fd'},
-{t:'ข้าวผัด',p:'khâao-phàt',e:'fried rice',s:'object',lv:2,c:'fd'},
-{t:'ปลา',p:'bplaa',e:'fish',s:'object',lv:2,c:'fd'},
-{t:'ผลไม้',p:'phǒn-lá-máai',e:'fruit',s:'object',lv:2,c:'fd'},
-// Locations (6)
-{t:'บ้าน',p:'bâan',e:'home',s:'object',lv:1,c:'lc'},
-{t:'ตลาด',p:'dtà-làat',e:'market',s:'object',lv:2,c:'lc'},
-{t:'โรงเรียน',p:'roong-riian',e:'school',s:'object',lv:2,c:'lc'},
-{t:'ร้านอาหาร',p:'ráan-aa-hǎan',e:'restaurant',s:'object',lv:2,c:'lc'},
-{t:'ร้านกาแฟ',p:'ráan-gaa-fae',e:'café',s:'object',lv:3,c:'lc'},
-{t:'โรงพยาบาล',p:'roong-phá-yaa-baan',e:'hospital',s:'object',lv:3,c:'lc'},
-// People (6)
-{t:'เพื่อน',p:'phêuan',e:'friend',s:'object',lv:1,c:'pn'},
-{t:'พ่อ',p:'phɔ̂ɔ',e:'father',s:'object',lv:1,c:'pn'},
-{t:'แม่',p:'mâe',e:'mother',s:'object',lv:1,c:'pn'},
-{t:'ครู',p:'khruu',e:'teacher',s:'object',lv:2,c:'pn'},
-{t:'หมอ',p:'mǒɔ',e:'doctor',s:'object',lv:3,c:'pn'},
-{t:'ครอบครัว',p:'khrɔ̂ɔp-khrua',e:'family',s:'object',lv:2,c:'pn'},
-// Things (3)
-{t:'หนังสือ',p:'nǎng-sěu',e:'book',s:'object',lv:1,c:'th'},
-{t:'เงิน',p:'ngern',e:'money',s:'object',lv:2,c:'th'},
-{t:'ของ',p:'khɔ̌ɔng',e:'thing',s:'object',lv:2,c:'th'},
-// Media (1)
-{t:'หนัง',p:'nǎng',e:'movie',s:'object',lv:2,c:'md'},
-// Language (1)
+// ── OBJECTS (25) ──
+{t:'ข้าว',p:'khâao',e:'rice',s:'object',lv:1,c:'fd'},{t:'น้ำ',p:'nám',e:'water',s:'object',lv:1,c:'fd'},
+{t:'อาหาร',p:'aa-hǎan',e:'food',s:'object',lv:1,c:'fd'},{t:'กาแฟ',p:'gaa-fae',e:'coffee',s:'object',lv:1,c:'fd'},
+{t:'ผัดไทย',p:'phàt-tai',e:'pad thai',s:'object',lv:2,c:'fd'},{t:'ข้าวผัด',p:'khâao-phàt',e:'fried rice',s:'object',lv:2,c:'fd'},
+{t:'ปลา',p:'bplaa',e:'fish',s:'object',lv:2,c:'fd'},{t:'ผลไม้',p:'phǒn-lá-máai',e:'fruit',s:'object',lv:2,c:'fd'},
+{t:'บ้าน',p:'bâan',e:'home',s:'object',lv:1,c:'lc'},{t:'ตลาด',p:'dtà-làat',e:'market',s:'object',lv:2,c:'lc'},
+{t:'โรงเรียน',p:'roong-riian',e:'school',s:'object',lv:2,c:'lc'},{t:'ร้านอาหาร',p:'ráan-aa-hǎan',e:'restaurant',s:'object',lv:2,c:'lc'},
+{t:'ร้านกาแฟ',p:'ráan-gaa-fae',e:'café',s:'object',lv:3,c:'lc'},{t:'โรงพยาบาล',p:'roong-phá-yaa-baan',e:'hospital',s:'object',lv:3,c:'lc'},
+{t:'เพื่อน',p:'phêuan',e:'friend',s:'object',lv:1,c:'pn'},{t:'พ่อ',p:'phɔ̂ɔ',e:'father',s:'object',lv:1,c:'pn'},
+{t:'แม่',p:'mâe',e:'mother',s:'object',lv:1,c:'pn'},{t:'ครู',p:'khruu',e:'teacher',s:'object',lv:2,c:'pn'},
+{t:'หมอ',p:'mǒɔ',e:'doctor',s:'object',lv:3,c:'pn'},{t:'ครอบครัว',p:'khrɔ̂ɔp-khrua',e:'family',s:'object',lv:2,c:'pn'},
+{t:'หนังสือ',p:'nǎng-sěu',e:'book',s:'object',lv:1,c:'th'},{t:'เงิน',p:'ngern',e:'money',s:'object',lv:2,c:'th'},
+{t:'ของ',p:'khɔ̌ɔng',e:'thing',s:'object',lv:2,c:'th'},{t:'หนัง',p:'nǎng',e:'movie',s:'object',lv:2,c:'md'},
 {t:'ภาษาไทย',p:'phaa-sǎa-tai',e:'Thai',s:'object',lv:2,c:'lg'},
-
-// ── ADJECTIVES (6) ── aa = which noun categories
-{t:'ดี',p:'dee',e:'good',s:'adj',lv:1},
-{t:'อร่อย',p:'à-ròi',e:'delicious',s:'adj',lv:1,aa:'fd'},
-{t:'ใหม่',p:'mài',e:'new',s:'adj',lv:1,aa:'fd,th,lc,pn'},
-{t:'ใหญ่',p:'yài',e:'big',s:'adj',lv:2,aa:'fd,th,lc'},
-{t:'เล็ก',p:'lék',e:'small',s:'adj',lv:2,aa:'fd,th,lc'},
-{t:'แพง',p:'phaaeng',e:'expensive',s:'adj',lv:2,aa:'fd,th'},
-
+// ── ADJECTIVES (6) ──
+{t:'ดี',p:'dee',e:'good',s:'adj',lv:1},{t:'อร่อย',p:'à-ròi',e:'delicious',s:'adj',lv:1,aa:'fd'},
+{t:'ใหม่',p:'mài',e:'new',s:'adj',lv:1,aa:'fd,th,lc,pn'},{t:'ใหญ่',p:'yài',e:'big',s:'adj',lv:2,aa:'fd,th,lc'},
+{t:'เล็ก',p:'lék',e:'small',s:'adj',lv:2,aa:'fd,th,lc'},{t:'แพง',p:'phaaeng',e:'expensive',s:'adj',lv:2,aa:'fd,th'},
 // ── DEGREE (1) ──
 {t:'มาก',p:'mâak',e:'very',s:'degree',lv:1},
-
 // ── POSTVERB (2) ──
-{t:'แล้ว',p:'láaeo',e:'already',s:'postverb',lv:1},
-{t:'ได้',p:'dâai',e:'can',s:'postverb',lv:3},
-
-// ── PREPOSITIONS (3) ── pa = accepted noun categories
-{t:'กับ',p:'gàp',e:'with',s:'preposition',lv:2,pa:'pn'},
-{t:'ที่',p:'thîi',e:'at',s:'preposition',lv:2,pa:'lc'},
+{t:'แล้ว',p:'láaeo',e:'already',s:'postverb',lv:1},{t:'ได้',p:'dâai',e:'can',s:'postverb',lv:3},
+// ── PREPOSITIONS (3) ──
+{t:'กับ',p:'gàp',e:'with',s:'preposition',lv:2,pa:'pn'},{t:'ที่',p:'thîi',e:'at',s:'preposition',lv:2,pa:'lc'},
 {t:'ใน',p:'nai',e:'in',s:'preposition',lv:3,pa:'lc'},
-
 // ── CONDITIONS (2) ──
-{t:'ถ้า',p:'thâa',e:'if',s:'condition',lv:3},
-{t:'เพราะว่า',p:'phrɔ́-wâa',e:'because',s:'condition',lv:3},
-
+{t:'ถ้า',p:'thâa',e:'if',s:'condition',lv:3},{t:'เพราะว่า',p:'phrɔ́-wâa',e:'because',s:'condition',lv:3},
 // ── CONJUNCTIONS (2) ──
-{t:'และ',p:'láe',e:'and',s:'conjunction',lv:3},
-{t:'แต่',p:'dtàe',e:'but',s:'conjunction',lv:3},
-
+{t:'และ',p:'láe',e:'and',s:'conjunction',lv:3},{t:'แต่',p:'dtàe',e:'but',s:'conjunction',lv:3},
 // ── QUESTION (3) ──
-{t:'อะไร',p:'à-rai',e:'what',s:'qobject',lv:2},
-{t:'ที่ไหน',p:'thîi-nǎi',e:'where',s:'qend',lv:2},
+{t:'อะไร',p:'à-rai',e:'what',s:'qobject',lv:2},{t:'ที่ไหน',p:'thîi-nǎi',e:'where',s:'qend',lv:2},
 {t:'ทำไม',p:'tam-mai',e:'why',s:'qstart',lv:3},
-
-// ── FINAL PARTICLES (3) ──
-{t:'ครับ',p:'khráp',e:'(polite, m)',s:'final',lv:1},
-{t:'ค่ะ',p:'khâ',e:'(polite, f)',s:'final',lv:1},
+// ── FINAL (3) ──
+{t:'ครับ',p:'khráp',e:'(polite, m)',s:'final',lv:1},{t:'ค่ะ',p:'khâ',e:'(polite, f)',s:'final',lv:1},
 {t:'ไหม',p:'mǎi',e:'(yes/no?)',s:'final',lv:1},
 ];
 
-/* ═══════════════════════════════════
-   TRANSITION TABLE
-═══════════════════════════════════ */
 var T={
-  START:      ['condition','time','subject','qstart'],
-  condition:  ['subject'],
-  qstart:     ['subject'],
-  time:       ['subject'],
-  subject:    ['preverb','verb'],
-  preverb:    ['verb'],
-  verb:       ['object','qobject','qend','postverb','preposition','final'],
-  object:     ['adj','degree','postverb','preposition','final'],
-  qobject:    ['final'],
-  adj:        ['degree','final'],
-  degree:     ['final'],
-  postverb:   ['preposition','final'],
-  preposition:['object'],
-  qend:       ['final'],
-  final:      [],
-  conjunction:['subject'],
+  START:['condition','time','subject','qstart'],condition:['subject'],qstart:['subject'],
+  time:['subject'],subject:['preverb','verb'],preverb:['verb'],
+  verb:['object','qobject','qend','postverb','preposition','final'],
+  object:['adj','degree','postverb','preposition','final'],qobject:['final'],
+  adj:['degree','final'],degree:['final'],postverb:['preposition','final'],
+  preposition:['object'],qend:['final'],final:[],conjunction:['subject'],
 };
 
-/* ═══════════════════════════════════
-   BRANCH PATTERNS
-═══════════════════════════════════ */
-var PATTERNS=[
-  [3,2,3,3,3,3],[2,3,3,2,3,3],[3,3,2,3,3,3],[3,2,2,3,3,3],
-];
-
+var PATTERNS=[[3,2,3,3,3,3],[2,3,3,2,3,3],[3,3,2,3,3,3],[3,2,2,3,3,3]];
 var MAX_DEPTH={1:3,2:5,3:6};
 
 /* ═══════════════════════════════════
    STATE
 ═══════════════════════════════════ */
-var level=1;
-var chosen=[];
-var rows=[];
-var shownWords={};
-var lastSlot='START';
-var lastWord=null;
-var pattern=PATTERNS[0];
-var hasFutureTime=false;
-var hasPastTime=false;
+var level=1,mode='free',gameScore=0,gameTotal=0;
+var chosen=[],rows=[],shownWords={},lastSlot='START',lastWord=null,pattern=PATTERNS[0];
+var hasFutureTime=false,hasPastTime=false;
 
 function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
 function pickPattern(){pattern=PATTERNS[Math.floor(Math.random()*PATTERNS.length)];}
@@ -237,6 +174,19 @@ function setLevel(lv){
   var btns=document.querySelectorAll('.lv-btn');
   for(var i=0;i<btns.length;i++){if(i+1===lv)btns[i].classList.add('on');else btns[i].classList.remove('on');}
   reset();
+}
+
+function setMode(m){
+  mode=m;
+  document.getElementById('mode-free').classList.toggle('on',m==='free');
+  document.getElementById('mode-game').classList.toggle('on',m==='game');
+  document.getElementById('score').classList.toggle('show',m==='game');
+  gameScore=0;gameTotal=0;updateScore();
+  reset();
+}
+
+function updateScore(){
+  document.getElementById('score').textContent=gameScore+'/'+gameTotal;
 }
 
 function isComplete(){
@@ -249,11 +199,9 @@ function isComplete(){
 }
 
 /* ═══════════════════════════════════
-   CANDIDATES — verb-centered, noun-aware
+   CANDIDATES
 ═══════════════════════════════════ */
-function usedSlots(){
-  var s={};for(var i=0;i<chosen.length;i++)s[chosen[i].word.s]=true;return s;
-}
+function usedSlots(){var s={};for(var i=0;i<chosen.length;i++)s[chosen[i].word.s]=true;return s;}
 
 function expandCats(catStr){
   var c=catStr.split(',');
@@ -262,9 +210,9 @@ function expandCats(catStr){
 }
 
 function getCandidates(depth){
-  if(depth>=MAX_DEPTH[level])return[];
+  if(depth>=MAX_DEPTH[level])return{good:[],bad:[]};
   var possible=T[lastSlot]||T.START;
-  if(!possible||possible.length===0)return[];
+  if(!possible||possible.length===0)return{good:[],bad:[]};
   var used=usedSlots();
   var noRepeat=['time','subject','qstart','qobject','qend','postverb','degree'];
   var filtered=possible.filter(function(s){
@@ -273,71 +221,45 @@ function getCandidates(depth){
   });
   if(filtered.length===0)filtered=possible;
 
-  var pool=W.filter(function(w){
-    return w.lv<=level&&filtered.indexOf(w.s)!==-1&&!shownWords[w.t];
-  });
-  if(pool.length===0){
-    pool=W.filter(function(w){return w.lv<=level&&filtered.indexOf(w.s)!==-1;});
-  }
+  var pool=W.filter(function(w){return w.lv<=level&&filtered.indexOf(w.s)!==-1&&!shownWords[w.t];});
+  if(pool.length===0)pool=W.filter(function(w){return w.lv<=level&&filtered.indexOf(w.s)!==-1;});
 
-  // ── TEMPORAL RULES ──
-  // Future time (พรุ่งนี้) → force จะ as only preverb
+  // Temporal rules
   if(hasFutureTime&&lastSlot==='subject'){
-    pool=pool.filter(function(w){
-      if(w.s==='preverb')return w.t==='จะ';
-      return true;
-    });
+    pool=pool.filter(function(w){if(w.s==='preverb')return w.t==='จะ';return true;});
   }
-  // Past time (เมื่อวาน) → remove จะ from preverbs
   if(hasPastTime&&lastSlot==='subject'){
-    pool=pool.filter(function(w){
-      if(w.s==='preverb'&&w.t==='จะ')return false;
-      return true;
-    });
+    pool=pool.filter(function(w){if(w.s==='preverb'&&w.t==='จะ')return false;return true;});
   }
 
-  // ── VERB SEMANTIC FILTER ──
+  // Verb semantic filter
   if(lastWord&&lastWord.s==='verb'&&lastWord.va){
     if(lastWord.va==='_'){
       pool=pool.filter(function(w){return w.s!=='object'&&w.s!=='qobject';});
     } else {
       var va=expandCats(lastWord.va);
-      var sem=pool.filter(function(w){
-        if(w.s!=='object')return true;
-        return w.c&&va.indexOf(w.c)!==-1;
-      });
+      var sem=pool.filter(function(w){if(w.s!=='object')return true;return w.c&&va.indexOf(w.c)!==-1;});
       if(sem.length>0)pool=sem;
     }
   }
-
-  // ── PREPOSITION SEMANTIC FILTER ──
+  // Preposition semantic filter
   if(lastWord&&lastWord.s==='preposition'&&lastWord.pa){
     var pa=expandCats(lastWord.pa);
-    var sem=pool.filter(function(w){
-      if(w.s!=='object')return true;
-      return w.c&&pa.indexOf(w.c)!==-1;
-    });
+    var sem=pool.filter(function(w){if(w.s!=='object')return true;return w.c&&pa.indexOf(w.c)!==-1;});
     if(sem.length>0)pool=sem;
   }
-
-  // ── ADJECTIVE SEMANTIC FILTER ──
+  // Adjective semantic filter
   if(lastWord&&lastWord.s==='object'&&lastWord.c){
-    var nc=lastWord.c;
-    var ncx=[nc];if('md,dc,an,lg'.indexOf(nc)!==-1)ncx.push('th');
+    var nc=lastWord.c;var ncx=[nc];if('md,dc,an,lg'.indexOf(nc)!==-1)ncx.push('th');
     var sem=pool.filter(function(w){
-      if(w.s!=='adj')return true;
-      if(!w.aa)return true;
-      var aa=w.aa.split(',');
-      for(var k=0;k<ncx.length;k++){if(aa.indexOf(ncx[k])!==-1)return true;}
-      return false;
+      if(w.s!=='adj')return true;if(!w.aa)return true;
+      var aa=w.aa.split(',');for(var k=0;k<ncx.length;k++){if(aa.indexOf(ncx[k])!==-1)return true;}return false;
     });
     if(sem.length>0)pool=sem;
   }
-
-  // ── ALWAYS OFFER FINAL IF SENTENCE COMPLETE (not after preposition) ──
+  // Inject final if complete
   if(isComplete()&&pool.length>0&&lastSlot!=='preposition'){
-    var hasFin=false;
-    for(var i=0;i<pool.length;i++){if(pool[i].s==='final'){hasFin=true;break;}}
+    var hasFin=false;for(var i=0;i<pool.length;i++){if(pool[i].s==='final'){hasFin=true;break;}}
     if(!hasFin){
       var fins=W.filter(function(w){return w.s==='final'&&w.lv<=level&&!shownWords[w.t];});
       if(fins.length>0)pool.push(shuffle(fins)[0]);
@@ -345,7 +267,39 @@ function getCandidates(depth){
   }
 
   var count=pattern[Math.min(depth,pattern.length-1)];
-  return shuffle(pool).slice(0,count);
+  var good=shuffle(pool).slice(0,count);
+
+  // ── GAME MODE: generate wrong options ──
+  var bad=[];
+  if(mode==='game'&&depth>0){
+    var wrongCount=level; // lv1=1 wrong, lv2=2 wrong, lv3=3 wrong
+    // Wrong options = words that FAIL current filters (wrong slot or wrong category)
+    var wrongPool=W.filter(function(w){
+      if(w.lv>level)return false;
+      if(shownWords[w.t])return false;
+      // Must not be in the good pool
+      for(var i=0;i<good.length;i++){if(good[i].t===w.t)return false;}
+      // Must be wrong: either wrong slot type OR wrong noun category
+      if(filtered.indexOf(w.s)!==-1){
+        // Right slot type — only wrong if it's a noun with wrong category for current verb/prep
+        if(w.s==='object'&&lastWord){
+          if(lastWord.s==='verb'&&lastWord.va&&lastWord.va!=='_'){
+            var va=expandCats(lastWord.va);
+            if(w.c&&va.indexOf(w.c)===-1)return true; // wrong category for this verb
+          }
+          if(lastWord.s==='preposition'&&lastWord.pa){
+            var pa=expandCats(lastWord.pa);
+            if(w.c&&pa.indexOf(w.c)===-1)return true; // wrong category for this prep
+          }
+        }
+        return false; // right slot, right category = not wrong
+      }
+      return true; // wrong slot type = definitely wrong
+    });
+    bad=shuffle(wrongPool).slice(0,wrongCount);
+  }
+
+  return{good:good,bad:bad};
 }
 
 /* ═══════════════════════════════════
@@ -367,30 +321,48 @@ function renderSentence(){
   document.getElementById('badge').textContent=c?'valid sentence':'';
 }
 
-function createNode(word,depth,idx){
+function createNode(word,depth,idx,isWrong){
   var el=document.createElement('div');
   el.className='node s-'+word.s;
   el.style.animationDelay=(idx*0.07)+'s';
   el.innerHTML='<div class="nt">'+word.t+'</div><div class="np">'+word.p+'</div><div class="ne">'+word.e+'</div><div class="ns">'+word.s+'</div>';
-  el.onclick=function(){tapNode(depth,word,el);};
+  if(isWrong){
+    el.onclick=function(){tapWrong(el);};
+  } else {
+    el.onclick=function(){tapNode(depth,word,el);};
+  }
   return el;
 }
 
 function showBranches(depth){
-  var cands=getCandidates(depth);
-  if(cands.length===0)return;
+  var result=getCandidates(depth);
+  var good=result.good,bad=result.bad;
+  if(good.length===0&&bad.length===0)return;
   var conn=document.createElement('div');conn.className='conn';grow.appendChild(conn);
   var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',depth);
   var rd={depth:depth,nodes:[],savedSlot:lastSlot,savedWord:lastWord,savedFuture:hasFutureTime,savedPast:hasPastTime};
-  for(var i=0;i<cands.length;i++){
-    var el=createNode(cands[i],depth,i);
+
+  // Merge good and bad, shuffle together
+  var all=[];
+  for(var i=0;i<good.length;i++)all.push({word:good[i],wrong:false});
+  for(var i=0;i<bad.length;i++)all.push({word:bad[i],wrong:true});
+  all=shuffle(all);
+
+  for(var i=0;i<all.length;i++){
+    var el=createNode(all[i].word,depth,i,all[i].wrong);
     row.appendChild(el);
-    rd.nodes.push({word:cands[i],el:el,state:'active'});
-    shownWords[cands[i].t]=true;
+    rd.nodes.push({word:all[i].word,el:el,state:'active',wrong:all[i].wrong});
+    shownWords[all[i].word.t]=true;
   }
   grow.appendChild(row);
   rows.push(rd);
   setTimeout(function(){grow.scrollTop=grow.scrollHeight;},50);
+}
+
+function tapWrong(el){
+  el.classList.add('wrong','revealed');
+  el.style.pointerEvents='none';
+  if(mode==='game'){gameTotal++;updateScore();}
 }
 
 function tapNode(depth,word,el){
@@ -413,10 +385,10 @@ function tapNode(depth,word,el){
   chosen=chosen.filter(function(c){return c.depth<depth;});
   chosen.push({word:word,depth:depth});
   chosen.sort(function(a,b){return a.depth-b.depth;});
-  lastSlot=word.s;
-  lastWord=word;
+  lastSlot=word.s;lastWord=word;
   if(word.future)hasFutureTime=true;
   if(word.past)hasPastTime=true;
+  if(mode==='game'){gameScore++;gameTotal++;updateScore();}
   renderSentence();
   showBranches(depth+1);
 }
@@ -429,16 +401,15 @@ function undo(){
   for(var j=0;j<rem.nodes.length;j++)delete shownWords[rem.nodes[j].word.t];
   chosen=chosen.filter(function(c){return c.depth<rem.depth;});
   if(rows.length>0){
-    var lr=rows[rows.length-1];
-    var ch=null;
+    var lr=rows[rows.length-1];var ch=null;
     for(var i=0;i<lr.nodes.length;i++){if(lr.nodes[i].state==='chosen'){ch=lr.nodes[i];break;}}
     if(ch){lastSlot=ch.word.s;lastWord=ch.word;hasFutureTime=lr.savedFuture||(ch.word.future?true:false);hasPastTime=lr.savedPast||(ch.word.past?true:false);}
     else{
       lastSlot=lr.savedSlot;lastWord=lr.savedWord;hasFutureTime=lr.savedFuture;hasPastTime=lr.savedPast;
       for(var i=0;i<lr.nodes.length;i++){
-        lr.nodes[i].state='active';
-        lr.nodes[i].el.classList.remove('chosen','faded','revealed');
-        (function(n,d){n.el.onclick=function(){tapNode(d,n.word,n.el);};})(lr.nodes[i],lr.depth);
+        lr.nodes[i].state='active';lr.nodes[i].el.classList.remove('chosen','faded','revealed','wrong');
+        lr.nodes[i].el.style.pointerEvents='';
+        (function(n,d,w){n.el.onclick=w?function(){tapWrong(n.el);}:function(){tapNode(d,n.word,n.el);};})(lr.nodes[i],lr.depth,lr.nodes[i].wrong);
       }
     }
   }else{lastSlot='START';lastWord=null;hasFutureTime=false;hasPastTime=false;}
@@ -460,9 +431,9 @@ function start(){
   var row=document.createElement('div');row.className='depth-row';row.setAttribute('data-depth',0);
   var rd={depth:0,nodes:[],savedSlot:'START',savedWord:null,savedFuture:false,savedPast:false};
   for(var i=0;i<picks.length;i++){
-    var el=createNode(picks[i],0,i);
+    var el=createNode(picks[i],0,i,false);
     row.appendChild(el);
-    rd.nodes.push({word:picks[i],el:el,state:'active'});
+    rd.nodes.push({word:picks[i],el:el,state:'active',wrong:false});
     shownWords[picks[i].t]=true;
   }
   grow.appendChild(row);
